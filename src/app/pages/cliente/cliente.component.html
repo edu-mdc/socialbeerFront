@@ -1,0 +1,74 @@
+<mat-accordion class="example-headers-align mat-primary contenido" multi >
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="texto"> {{nombreUsuario}} </mat-panel-title>
+      <mat-panel-description class="texto">
+        {{email}}
+        <mat-icon (click)="desconectar()">account_circle</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="form-container" [formGroup]="clienteForm">
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Primer Apellido</mat-label>
+        <input matInput formControlName="apellido_1" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Segundo Apellido</mat-label>
+        <input matInput formControlName="apellido_2" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>D.N.I</mat-label>
+        <input matInput formControlName="dni" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="telefono" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Fecha Nacimiento</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento" />
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Dirección</mat-label>
+        <input matInput formControlName="direccion" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Provincia</mat-label>
+        <input matInput formControlName="provincia" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Población</mat-label>
+        <input matInput formControlName="poblacion" />
+      </mat-form-field>
+
+      <div class="flex">
+        <button mat-flat-button color="primary" (click)="guardar()"> <span class="material-symbols-outlined">save</span></button>
+        <button mat-flat-button color="warn" (click)="eliminarCliente()"><span class="material-symbols-outlined">delete</span></button>
+      </div>
+    </div>
+
+    
+
+   
+  </mat-expansion-panel>
+</mat-accordion>
+@if(spinner){
+  <div class="spinner-container">
+  <mat-spinner></mat-spinner>
+</div>
+}

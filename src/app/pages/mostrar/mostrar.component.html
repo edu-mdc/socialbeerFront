@@ -1,0 +1,141 @@
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+  <!-- Pestaña para Eventos -->
+  <mat-tab label="Eventos">
+    <div class="card-grid">
+      @for(evento of eventos; track $index){
+      <div class="card-container">
+        <mat-card class="example-card" appearance="outlined">
+          <mat-card-header>
+            <mat-card-title>{{ evento.nombreGrupo }}</mat-card-title>
+            <mat-card-subtitle>{{ evento.nombreEstablecimiento }}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Foto del evento">
+
+          <!-- Contenido con fecha y hora separadas -->
+          <mat-card-content>
+            <div class="event-details">
+              <p>Fecha: {{ evento.fechaEvento }}</p>
+              <p>Hora: {{ evento.horaEvento }}</p>
+            </div>
+          </mat-card-content>
+
+          <!-- Contenido con precio y estado separados -->
+          <mat-card-actions>
+            <div class="event-pricing">
+              <p>Precio: {{ evento.precio }} €</p>
+              @if(evento.estado == "disponible"){
+              
+              <p class="disponible" style="background-color: rgb(102, 255, 47); border-radius: 5px; padding: 1.5px;">{{
+                evento.estado }}</p>
+                <button class="comprar-btn" (click)="verEvento(evento.id, $event)">Comprar</button>
+              }@else {
+              <p class="agotado">{{ evento.estado }}</p>
+              }
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
+      }
+      @if(spinner){
+        <div class="spinner-container">
+          <mat-spinner></mat-spinner>
+        </div>
+      }
+    </div>
+    <mat-paginator [length]="totalEventos" [pageSize]="pageSizeEventos" [pageSizeOptions]="[6, 12, 24, 100]"
+      (page)="onPageChangeEventos($event)">
+    </mat-paginator>
+  </mat-tab>
+
+  <!-- Pestaña para Grupos -->
+  <mat-tab label="Grupos">
+    <div class="card-grid">
+      @for (grupo of grupos; track $index) {
+      <div class="card-container" (click)="verGrupo(grupo.id, $event)">
+        <mat-card class="example-card" appearance="outlined">
+          <mat-card-header>
+            <mat-card-title>{{ grupo.grupo }}</mat-card-title>
+            <mat-card-subtitle>{{ grupo.estilo }}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Foto del grupo">
+          <mat-card-content>
+            <div class="grupo-details">
+            <p>Duracion: {{grupo.duracion}}h</p>
+            <p>Provincia: {{grupo.provincia}}h</p>
+          </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <div class="valoracion-details">
+            <button mat-button>Valoraciones</button>
+            <div class="rating">
+              <span class="star" data-value="1">&#9733;</span>
+              <span class="star" data-value="2">&#9733;</span>
+              <span class="star" data-value="3">&#9733;</span>
+              <span class="star" data-value="4">&#9733;</span>
+              <span class="star" data-value="5">&#9733;</span>
+            </div>
+          </div>
+          </mat-card-actions>
+          
+        </mat-card>
+        
+      </div>
+     
+      }
+      @if(spinner){
+        <div class="spinner-container">
+          <mat-spinner></mat-spinner>
+        </div>
+      }
+    </div>
+    <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageSizeOptions]="[6, 12, 24, 100]"
+      (page)="onPageChange($event)">
+    </mat-paginator>
+  </mat-tab>
+
+  <!-- Pestaña para Establecimientos -->
+  <mat-tab label="Establecimientos">
+    <div class="card-grid">
+      @for (establecimiento of establecimientos; track $index){
+      <div class="card-container" (click)="verEstablecimiento(establecimiento.id, $event)">
+        <mat-card class="example-card" appearance="outlined">
+          <mat-card-header>
+            <mat-card-title>{{ establecimiento.establecimiento }}</mat-card-title>
+            <mat-card-subtitle>{{ establecimiento.direccion }}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+            alt="Foto del establecimiento">
+          <mat-card-content>
+            <div class="location-details">
+              <p>Poblacion: {{ establecimiento.poblacion }}</p>
+              <p>Provincia: {{ establecimiento.provincia }}</p>
+            </div>
+          </mat-card-content>
+            <mat-card-actions>
+              <div class="valoracion-details">
+              <button mat-button>Valoraciones</button>
+              <div class="rating">
+                <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
+              </div>
+            </div>
+            </mat-card-actions>
+          
+        </mat-card>
+      </div>
+      }
+      @if(spinner){
+        <div class="spinner-container">
+          <mat-spinner></mat-spinner>
+        </div>
+      }
+    </div>
+    <mat-paginator [length]="totalEstablecimientos" [pageSize]="pageSizeEstablecimientos"
+      [pageSizeOptions]="[6, 12, 24, 100]" (page)="onPageChangeEstablecimientos($event)">
+    </mat-paginator>
+  </mat-tab>
+</mat-tab-group>

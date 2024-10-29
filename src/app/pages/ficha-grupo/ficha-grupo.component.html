@@ -1,0 +1,53 @@
+<app-cliente></app-cliente>
+<div class="grid-container">
+    <!-- Parte superior izquierda: Datos del grupo -->
+    <div class="group-info">
+      
+      <mat-card class="example-card" appearance="outlined">
+        <mat-card-header>
+          
+          <mat-card-title>{{grupo?.grupo}}</mat-card-title>
+          <mat-card-subtitle>estilo</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <mat-card-content>
+          <p>
+           provincia
+          </p>
+        </mat-card-content>
+        
+      </mat-card>
+    </div>
+  
+    <!-- Parte inferior izquierda: Valoraciones del grupo -->
+    <div class="group-reviews">
+      <h3>Valoraciones</h3>
+      
+    </div>
+  
+    <!-- Parte superior derecha: Eventos del grupo -->
+    <div class="group-events">
+      <h3>Eventos</h3>
+      @for(evento of eventos; track $index){
+        <mat-card class="example-card" appearance="outlined">
+            <mat-card-header>
+              <mat-card-title-group>
+                <mat-card-title>{{evento.nombreEstablecimiento}}</mat-card-title>
+                <mat-card-subtitle>{{evento.fechaEvento}}</mat-card-subtitle>
+                <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
+              </mat-card-title-group>
+            </mat-card-header>
+            <mat-card-content>
+              longText
+            </mat-card-content>
+          </mat-card>
+      }
+      
+    </div>
+  
+    <!-- Parte inferior derecha: Dejar una valoración -->
+    <div class="leave-review">
+      <h3>Dejar una valoración</h3>
+     
+    </div>
+  </div>

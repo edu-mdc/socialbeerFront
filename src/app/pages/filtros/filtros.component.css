@@ -1,0 +1,55 @@
+/* Estilos para el contenedor de filtros */
+
+
+/* Estilo para los checkboxes en pantallas grandes (2 columnas) */
+.checkbox-columns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+/* Pantallas móviles: una sola columna */
+@media (max-width: 768px) {
+  .checkbox-columns.single-column {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-container {
+    width: 100%;
+    top: 60px;
+    left: 0;
+    padding: 10px;
+    position: fixed;
+  }
+}
+
+.filter-buttons button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  margin-right: 10px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.filter-buttons button#clearFilters {
+  background-color: #dc3545;
+}
+
+.filter-buttons button:hover {
+  background-color: #0056b3;
+}
+
+.filter-buttons button#clearFilters:hover {
+  background-color: #c82333;
+}
+
+.large-input {
+  width: 90%;
+}
+
+.large-select {
+  width: 90%;
+}

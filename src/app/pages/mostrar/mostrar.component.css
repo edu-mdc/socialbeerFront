@@ -1,0 +1,161 @@
+.mat-tab-group {
+    margin-bottom: 48px;
+  }
+
+  .example-card {
+    max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Agrega sombra suave */
+  transition: box-shadow 0.3s ease; /* Transición para el efecto hover */
+  margin: 20px; /* Agrega separación entre las tarjetas */
+  cursor: pointer;
+  }
+
+  .example-card:hover {
+    box-shadow: 0 8px 16px rgba(94, 46, 239, 0.3); /* Sombra más pronunciada al pasar el ratón */
+  }
+  
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas en pantallas grandes */
+    grid-gap: 20px; /* Espacio entre las tarjetas */
+    margin-top: 20px;
+  }
+  
+  .card-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  @media (max-width: 1024px) {
+    /* Ajustar a 2 columnas en pantallas medianas */
+    .card-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 600px) {
+    /* Ajustar a 1 columna en pantallas pequeñas */
+    .card-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .fecha-hora {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .fecha {
+    font-weight: bold;
+  }
+  
+  .hora {
+    font-weight: bold;
+    text-align: right;
+  }
+
+  /* Estilo para separar la fecha y la hora */
+.event-details {
+  display: flex;
+  justify-content: space-between;
+  
+}
+
+.grupo-details{
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Estilo para separar el precio y el estado */
+.event-pricing {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* Para que ambos elementos ocupen todo el ancho */
+  margin-left: 7px;
+}
+
+/* Asegurarte de que el contenido se vea bien en diferentes tamaños de pantalla */
+@media (max-width: 600px) {
+  .event-details, .event-pricing {
+    flex-direction: column; /* Para que se apilen en pantallas más pequeñas */
+    align-items: flex-start;
+  }
+}
+
+.comprar-btn {
+  background-color: #3F51B5;
+  color: white;
+  border-radius: 10px; /* Bordes redondeados */
+  border: none;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  padding: 10px 20px; /* Un poco de padding para que se vea mejor */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transición suave */
+}
+
+.comprar-btn:hover {
+  background-color: #8f9eff; /* Color más oscuro al pasar el mouse */
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3); /* Incremento de la sombra */
+}
+
+.location-details {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Para separar aforo y teléfono en establecimientos */
+.capacity-details {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.valoracion-details{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.rating {
+  direction: rtl;
+  display: inline-block;
+  font-size: 30px;
+  color: lightgray;
+  cursor: pointer;
+}
+
+.rating .star {
+  padding: 0 5px;
+  transition: color 0.2s;
+}
+
+.rating .star:hover,
+.rating .star:hover ~ .star {
+  color: gold;
+}
+
+.rating .selected {
+  color: gold;
+}
+  
+
+.spinner-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+  width: 100vw;
+  height: 100vh;
+}
