@@ -9,12 +9,13 @@ import { VistaClienteComponent } from './vistas/vista-cliente/vista-cliente.comp
 import { FichaGrupoComponent } from './pages/ficha-grupo/ficha-grupo.component';
 import { FichaEstablecimientoComponent } from './pages/ficha-establecimiento/ficha-establecimiento.component';
 import { FichaEventoComponent } from './pages/ficha-evento/ficha-evento.component';
+import { authGuard } from './custom/auth.guard';
 
 export const routes: Routes = [
     {path:"",component:LoginComponent},
     {path:"registro",component:RegistroComponent},
     {path:"inicio", component:InicioComponent},
-    {path:"cliente", component:VistaClienteComponent},
+    {path:"cliente", component:VistaClienteComponent, canActivate:[authGuard]},
     {path:"establecimiento", component:EstablecimientoComponent},
     {path:"grupo", component:GrupoComponent},
     {path:"fichaGrupo/:id", component:FichaGrupoComponent},
