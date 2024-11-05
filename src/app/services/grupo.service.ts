@@ -17,6 +17,10 @@ export class GrupoService {
     return this.http.get<any>(`${this.baseUrl}/usuarios/grupos?pageNo=${pageNo}&pageSize=${pageSize}&sortBy=${sortBy}&sortDir=${sortDir}`);
   }
 
+  getGrupoByUserId(userId: number): Observable<Grupo> {
+    return this.http.get<Grupo>(`${this.baseUrl}/usuarios/grupos/usuario/${userId}`);
+  }
+
   // Obtener un grupo por su ID
   getGrupoById(grupoId: number): Observable<Grupo> {
     return this.http.get<Grupo>(`${this.baseUrl}/usuarios/grupos/${grupoId}`);
@@ -28,8 +32,8 @@ export class GrupoService {
   }
 
   // Actualizar un grupo existente por su ID
-  updateGrupo(grupoId: number, grupoData: Grupo): Observable<Grupo> {
-    return this.http.put<Grupo>(`${this.baseUrl}/usuarios/grupos/${grupoId}`, grupoData);
+  updateGrupo(userId: number, grupoData: Grupo): Observable<Grupo> {
+    return this.http.put<Grupo>(`${this.baseUrl}/usuarios/grupos/${userId}`, grupoData);
   }
 
   // Eliminar un grupo por su ID

@@ -1,0 +1,103 @@
+/* Establece el color primario para el fondo del encabezado del panel */
+.mat-expansion-panel-header {
+    background-color: #3F51B5; /* Color primario */
+    color: white; /* Texto blanco */
+  }
+  .mat-expansion-panel {
+    position: relative; /* Necesario para que el z-index funcione */
+    z-index: 1000; /* Asegura que sobresalga sobre el filtro */
+  }
+  
+  .mat-expansion-panel.mat-expanded {
+    z-index: 1000; /* Mayor z-index cuando está expandido */
+  }
+  
+  
+  
+  /* Mantén el color primario cuando pasas el ratón */
+  .mat-expansion-panel-header:hover {
+    background-color: #3F51B5; /* Mantener color primario en hover */
+    color: white;
+   /* Mantén el texto blanco */
+  }
+  
+  /* Sobrescribe el color de fondo predeterminado de Angular Material */
+  .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover {
+    background-color: #3F51B5;
+    transform: none; /* Evita que se vuelva gris en hover */
+  }
+  
+  /* Colorea el panel expandido también en color primario */
+  .mat-expansion-panel.mat-expanded .mat-expansion-panel-header {
+    background-color: #3F51B5;
+    transform: none; /* Color primario para el panel expandido */
+  }
+  
+  /* Para mantener el color del borde (si hay alguno) */
+  .mat-expansion-panel-header.mat-expanded {
+    border-color: #3F51B5; /* Borde del color primario al expandir */
+  }
+  
+  .texto{
+    color:#FFFFFF   ;
+  }
+  
+  
+  .example-action-buttons {
+      padding-bottom: 20px;
+    }
+    
+    .example-headers-align .mat-expansion-panel-header-description {
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+  
+    .form-container {
+      padding-top: 17px;
+      display: grid;
+      grid-template-columns: 1fr; /* Un campo por fila */
+      gap: 16px; /* Espacio entre los campos */
+    }
+  
+    .form-container > mat-form-field {
+      margin: 0; /* Asegúrate de que todos los campos tengan márgenes iguales */
+    }
+    
+    @media (min-width: 768px) {
+      .form-container {
+        grid-template-columns: repeat(2, 1fr); /* Dos columnas en pantallas grandes */
+      }
+    }
+    
+    @media (min-width: 1200px) {
+      .form-container {
+        grid-template-columns: repeat(5, 1fr); /* Máximo de 5 ítems por fila */
+      }
+    }
+    
+    .flex {
+      display: flex;
+      justify-content:flex-end ;
+      margin-top: 16px;
+    }
+  
+    .flex button {
+      margin-left: 16px; /* Aumenta el espacio entre los botones */
+    }
+  
+    .spinner-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+      background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+      width: 100vw;
+      height: 100vh;
+    }
+    
+  
