@@ -51,6 +51,7 @@ export class MostrarComponent implements OnInit{
   obtenerGrupos(page: number = this.currentPage, size: number = this.pageSize): void {
     this.grupoService.getGrupos(page, size).subscribe({
       next: (response) => {
+        console.log('Grupos:', response);
         this.grupos = response.contenido;
         this.totalItems = response.totalElementos;
       },
@@ -62,6 +63,7 @@ export class MostrarComponent implements OnInit{
   obtenerEstablecimientos(page: number = this.currentPageEstablecimientos, size: number = this.pageSizeEstablecimientos): void {
     this.establecimientoService.getEstablecimientos(page, size).subscribe({
       next: (response) => {
+        console.log('Establecimientos:', response);
         this.establecimientos = response.contenido;
         this.totalEstablecimientos = response.totalElementos;
       },

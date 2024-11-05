@@ -15,6 +15,7 @@ import { ClienteService } from '../../services/cliente.service';
 import { Cliente } from '../../interfaces/Cliente';
 import Swal from 'sweetalert2';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { AccesoService } from '../../services/acceso.service';
 
 
 @Component({
@@ -41,7 +42,7 @@ export class ClienteComponent implements OnInit{
 
   private usuarioService = inject(UsuarioService);
   private clienteService = inject(ClienteService);
-
+  private accesoService = inject(AccesoService);
   constructor() {
     // Inicializamos el formulario usando FormBuilder
     this.clienteForm = this.formBuilder.group({
@@ -237,8 +238,7 @@ export class ClienteComponent implements OnInit{
         // Simular el proceso de desconexión con un timeout
         setTimeout(() => {
           // Eliminar la información de autenticación
-          localStorage.removeItem('token');
-          localStorage.removeItem('userId');
+          this.accesoService.logout();
           
           // Ocultar el spinner
           this.spinner = false;

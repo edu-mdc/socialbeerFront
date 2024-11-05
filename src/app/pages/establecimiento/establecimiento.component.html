@@ -1,1 +1,62 @@
-<p>establecimiento works!</p>
+<mat-accordion class="example-headers-align mat-primary contenido" multi >
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title class="texto"> {{nombreUsuario}} </mat-panel-title>
+        <mat-panel-description class="texto">
+          {{email}}
+          <mat-icon (click)="desconectar()">account_circle</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <div class="form-container" [formGroup]="establecimientoForm">
+        <mat-form-field>
+          <mat-label>Establecimiento</mat-label>
+          <input matInput formControlName="establecimiento" />
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>C.I.F</mat-label>
+          <input matInput formControlName="cif" />
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>Aforo</mat-label>
+          <input matInput formControlName="aforo" />
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>Teléfono</mat-label>
+          <input matInput formControlName="telefono" />
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>Dirección</mat-label>
+          <input matInput formControlName="direccion" />
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>Provincia</mat-label>
+          <input matInput formControlName="provincia" />
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>Población</mat-label>
+          <input matInput formControlName="poblacion" />
+        </mat-form-field>
+  
+        <div class="flex">
+          <button mat-flat-button color="primary" (click)="guardar()"> <span class="material-symbols-outlined">save</span></button>
+          <button mat-flat-button color="warn" (click)="eliminarCliente()"><span class="material-symbols-outlined">delete</span></button>
+        </div>
+      </div>
+  
+      
+  
+     
+    </mat-expansion-panel>
+  </mat-accordion>
+  @if(spinner){
+    <div class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+  }

@@ -18,6 +18,12 @@ export class EstablecimientoService {
     return this.http.get<any>(`${this.baseUrl}/usuarios/establecimientos?pageNo=${pageNo}&pageSize=${pageSize}&sortBy=${sortBy}&sortDir=${sortDir}`);
   }
 
+  
+
+  getEstablecimientoByUserId(userId: number): Observable<Establecimiento> {
+    return this.http.get<Establecimiento>(`${this.baseUrl}/usuarios/establecimientos/usuario/${userId}`);
+  }
+
   // Obtener un establecimiento por su ID
   getEstablecimientoById(establecimientoId: number): Observable<Establecimiento> {
     return this.http.get<Establecimiento>(`${this.baseUrl}/usuarios/establecimientos/${establecimientoId}`);
@@ -29,8 +35,8 @@ export class EstablecimientoService {
   }
 
   // Actualizar un establecimiento existente por su ID
-  updateEstablecimiento(establecimientoId: number, establecimientoData: Establecimiento): Observable<Establecimiento> {
-    return this.http.put<Establecimiento>(`${this.baseUrl}/usuarios/establecimientos/${establecimientoId}`, establecimientoData);
+  updateEstablecimiento(userId: number, establecimientoData: Establecimiento): Observable<Establecimiento> {
+    return this.http.put<Establecimiento>(`${this.baseUrl}/usuarios/establecimientos/${userId}`, establecimientoData);
   }
 
   // Eliminar un establecimiento por su ID

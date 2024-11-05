@@ -24,4 +24,15 @@ export class AccesoService {
   login(objeto: Login): Observable<ResponseAcceso> {
     return this.http.post<ResponseAcceso>(`${this.baseUrl}/iniciarSesion`, objeto);
   }
+
+  logout() {
+    // Eliminar token y otros datos de usuario del localStorage
+    localStorage.removeItem('token');
+    localStorage.removeItem('nombreUsuario');
+    localStorage.removeItem('rol');
+    localStorage.removeItem('userId');
+
+    // Redireccionar a la página de inicio de sesión u otra página
+    
+  }
 }

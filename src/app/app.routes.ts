@@ -10,13 +10,14 @@ import { FichaGrupoComponent } from './pages/ficha-grupo/ficha-grupo.component';
 import { FichaEstablecimientoComponent } from './pages/ficha-establecimiento/ficha-establecimiento.component';
 import { FichaEventoComponent } from './pages/ficha-evento/ficha-evento.component';
 import { authGuard } from './custom/auth.guard';
+import { VistaEstablecimientoComponent } from './vistas/vista-establecimiento/vista-establecimiento.component';
 
 export const routes: Routes = [
     {path:"",component:LoginComponent},
     {path:"registro",component:RegistroComponent},
     {path:"inicio", component:InicioComponent},
     {path:"cliente", component:VistaClienteComponent, canActivate:[authGuard]},
-    {path:"establecimiento", component:EstablecimientoComponent},
+    {path:"establecimiento", component:VistaEstablecimientoComponent, canActivate:[authGuard]},
     {path:"grupo", component:GrupoComponent},
     {path:"fichaGrupo/:id", component:FichaGrupoComponent},
     {path:"fichaEstablecimiento/:id", component:FichaEstablecimientoComponent},
