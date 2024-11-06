@@ -4,13 +4,11 @@ import { Establecimiento } from "./Establecimiento"
 
 export interface Evento{
     id:number,
-    fechaContratacion:Date,
-    fechaEvento:Date,
-    horaEvento: Time,
-    precio:number,
-    ventas:number,
+    fechaContratacion:string,
+    fechaEvento:string,
+    horaEvento: String,
     estado:String,
-    nombreGrupo:Grupo,
-    nombreEstablecimiento:Establecimiento
-    entradas:any
+    nombreGrupo:String,
+    nombreEstablecimiento:String
+  
 }

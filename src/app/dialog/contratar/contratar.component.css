@@ -1,0 +1,64 @@
+
+.dialog-title {
+    text-align: center;
+  }
+  
+  .dialog-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  
+  .form-field-left {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .form-field-right {
+    flex: 1;
+    margin-left: 10px;
+  }
+  
+  .dialog-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding-top: 10px;
+  }
+  
+  .dialog-actions button {
+    margin: 5px;
+  }
+
+  .dialog-actions button {
+    width: 60px; /* Ajusta el tamaño del botón */
+    height: 40px; /* Ajusta el tamaño del botón */
+    margin: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra */
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+  }
+  
+  /* Botón de borrar en rojo */
+  .dialog-actions button[color="warn"] {
+    background-color: #d9534f; /* Rojo */
+    color: white;
+  }
+  
+  .dialog-actions button[color="warn"]:hover {
+    background-color: #c9302c; /* Rojo más oscuro al hacer hover */
+  }
+  
+  /* Botón de pagar en verde */
+  .dialog-actions button[color="primary"] {
+    background-color: #5cb85c; /* Verde */
+    color: white;
+  }
+  
+  .dialog-actions button[color="primary"]:hover {
+    background-color: #4cae4c; /* Verde más oscuro al hacer hover */
+  }
+  

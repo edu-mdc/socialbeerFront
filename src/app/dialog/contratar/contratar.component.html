@@ -1,0 +1,25 @@
+<h2 mat-dialog-title class="dialog-title">Selecciona un día para el evento</h2>
+<div mat-dialog-content class="dialog-content">
+  <mat-form-field class="form-field-left">
+    <mat-label>Fecha</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="form-field-right">
+    <mat-label>Hora</mat-label>
+    <input matInput type="time" [(ngModel)]="selectedTime">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-fab color="warn" aria-label="Cancelar" (click)="onCancel()">
+    <mat-icon>delete</mat-icon>
+</button>
+  
+  
+  <button mat-fab color="primary" aria-label="Pagar" (click)="onPay()">
+    <mat-icon>payment</mat-icon>
+</button>
+  
+</div>

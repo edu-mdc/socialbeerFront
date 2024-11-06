@@ -11,17 +11,20 @@ import { EventoService } from '../../services/evento.service';
 import { Evento } from '../../interfaces/Evento';
 import { Router } from '@angular/router';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
+import {MatIconModule} from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { ContratarComponent } from '../../dialog/contratar/contratar.component';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog'
 
 @Component({
   selector: 'app-mostrar',
   standalone: true,
-  imports: [MatProgressSpinnerModule,MatTabsModule, MatCardModule, MatButtonModule, MatPaginatorModule],
+  imports: [MatProgressSpinnerModule,MatTabsModule, MatCardModule, MatButtonModule, MatPaginatorModule, MatIconModule, ],
   templateUrl: './mostrar.component.html',
   styleUrl: './mostrar.component.css'
 })
 export class MostrarComponent implements OnInit{
-
+  rol: string | null = null;
   spinner: boolean = false;
 
   grupos: Grupo[] = [];
@@ -39,12 +42,13 @@ export class MostrarComponent implements OnInit{
   pageSizeEventos: number = 6;
   currentPageEventos: number = 0;
 
-  constructor( private router: Router, private grupoService: GrupoService, private establecimientoService: EstablecimientoService, private eventoService: EventoService) {}
+  constructor(private dialog: MatDialog, private router: Router, private grupoService: GrupoService, private establecimientoService: EstablecimientoService, private eventoService: EventoService) {}
 
   ngOnInit(): void {
     this.obtenerGrupos();
     this.obtenerEstablecimientos();
-    this.obtenerEventos();  // Obtener eventos también
+    this.obtenerEventos();
+    this.rol = localStorage.getItem('rol');  // Obtener eventos también
   }
 
   // Obtener Grupos
@@ -132,4 +136,22 @@ export class MostrarComponent implements OnInit{
       });
     }, 1000);
   }
+
+  openDialog(grupoId: number, grupo: string): void {
+    const dialogRef = this.dialog.open(ContratarComponent, {
+      width: '550px',
+      height: '250px',
+      data: { 
+        userId: localStorage.getItem('userId'),
+        grupoId: grupoId
+       } // Puedes ajustar el tamaño según prefieras
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Aquí puedes manejar el resultado, como procesar el pago
+        console.log('Día seleccionado:', result);
+      }
+    });
+}
 }

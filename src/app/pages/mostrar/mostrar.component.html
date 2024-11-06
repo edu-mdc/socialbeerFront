@@ -22,7 +22,7 @@
           <!-- Contenido con precio y estado separados -->
           <mat-card-actions>
             <div class="event-pricing">
-              <p>Precio: {{ evento.precio }} €</p>
+              
               @if(evento.estado == "disponible"){
               
               <p class="disponible" style="background-color: rgb(102, 255, 47); border-radius: 5px; padding: 1.5px;">{{
@@ -52,31 +52,41 @@
   <mat-tab label="Grupos">
     <div class="card-grid">
       @for (grupo of grupos; track $index) {
-      <div class="card-container" (click)="verGrupo(grupo.id, $event)">
+      <div class="card-container" >
         <mat-card class="example-card" appearance="outlined">
-          <mat-card-header>
+          <mat-card-header class="header-container" (click)="verGrupo(grupo.id, $event)">
+            <div class="title-section">
             <mat-card-title>{{ grupo.grupo }}</mat-card-title>
             <mat-card-subtitle>{{ grupo.estilo }}</mat-card-subtitle>
+          </div>
+          <div class="button-section">
+            <mat-card-actions>
+              <div class="valoracion-details">
+              <div class="rating">
+                <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
+              </div>
+            </div>
+            </mat-card-actions>
+           
+          </div>
           </mat-card-header>
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Foto del grupo">
-          <mat-card-content>
+          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Foto del grupo" (click)="verGrupo(grupo.id, $event)">
+          <mat-card-content (click)="verGrupo(grupo.id, $event)">
             <div class="grupo-details">
             <p>Duracion: {{grupo.duracion}}h</p>
-            <p>Provincia: {{grupo.provincia}}h</p>
+            <p>{{grupo.provincia}}h</p>
           </div>
           </mat-card-content>
-          <mat-card-actions>
-            <div class="valoracion-details">
-            <button mat-button>Valoraciones</button>
-            <div class="rating">
-              <span class="star" data-value="1">&#9733;</span>
-              <span class="star" data-value="2">&#9733;</span>
-              <span class="star" data-value="3">&#9733;</span>
-              <span class="star" data-value="4">&#9733;</span>
-              <span class="star" data-value="5">&#9733;</span>
-            </div>
-          </div>
-          </mat-card-actions>
+           @if(rol == 'ROLE_ESTABLECIMIENTO'){
+            <button mat-fab extended class="green-button" (click)="openDialog(grupo.id, grupo.grupo)">
+              <mat-icon>handshake</mat-icon>
+              contratar
+            </button>  
+          }
           
         </mat-card>
         
@@ -100,31 +110,34 @@
       @for (establecimiento of establecimientos; track $index){
       <div class="card-container" (click)="verEstablecimiento(establecimiento.id, $event)">
         <mat-card class="example-card" appearance="outlined">
-          <mat-card-header>
+          <mat-card-header class="header-container">
+            <div class="title-section">
             <mat-card-title>{{ establecimiento.establecimiento }}</mat-card-title>
-            <mat-card-subtitle>{{ establecimiento.direccion }}</mat-card-subtitle>
+            <mat-card-subtitle>{{ establecimiento.provincia }}</mat-card-subtitle>
+              </div>
+              <div class="button-section">
+                <mat-card-actions>
+                  <div class="valoracion-details">
+                  <div class="rating">
+                    <span class="star" data-value="1">&#9733;</span>
+                    <span class="star" data-value="2">&#9733;</span>
+                    <span class="star" data-value="3">&#9733;</span>
+                    <span class="star" data-value="4">&#9733;</span>
+                    <span class="star" data-value="5">&#9733;</span>
+                  </div>
+                </div>
+                </mat-card-actions>
+
+              </div>
           </mat-card-header>
           <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
             alt="Foto del establecimiento">
           <mat-card-content>
             <div class="location-details">
-              <p>Poblacion: {{ establecimiento.poblacion }}</p>
-              <p>Provincia: {{ establecimiento.provincia }}</p>
+              <p>Direccion: {{ establecimiento.direccion }}</p>
+              <p>Aforo: {{ establecimiento.aforo }}</p>
             </div>
-          </mat-card-content>
-            <mat-card-actions>
-              <div class="valoracion-details">
-              <button mat-button>Valoraciones</button>
-              <div class="rating">
-                <span class="star" data-value="1">&#9733;</span>
-                <span class="star" data-value="2">&#9733;</span>
-                <span class="star" data-value="3">&#9733;</span>
-                <span class="star" data-value="4">&#9733;</span>
-                <span class="star" data-value="5">&#9733;</span>
-              </div>
-            </div>
-            </mat-card-actions>
-          
+          </mat-card-content>         
         </mat-card>
       </div>
       }
