@@ -1,48 +1,131 @@
 <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
   <!-- Pestaña para Eventos -->
   <mat-tab label="Eventos">
-    <div class="card-grid">
-      @for(evento of eventos; track $index){
-      <div class="card-container">
-        <mat-card class="example-card" appearance="outlined">
-          <mat-card-header>
-            <mat-card-title>{{ evento.nombreGrupo }}</mat-card-title>
-            <mat-card-subtitle>{{ evento.nombreEstablecimiento }}</mat-card-subtitle>
-          </mat-card-header>
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Foto del evento">
-
-          <!-- Contenido con fecha y hora separadas -->
-          <mat-card-content>
-            <div class="event-details">
-              <p>Fecha: {{ evento.fechaEvento }}</p>
-              <p>Hora: {{ evento.horaEvento }}</p>
+    @if(rol == 'ROLE_GRUPO'){
+      <div class="card-grid">
+        @for(evento of eventosGrupo; track $index){
+        <div class="card-container">
+          <mat-card class="example-card" appearance="outlined">
+            <mat-card-header class="header-container" (click)="verGrupo(evento.id, $event)">
+              <div class="title-section">
+              <mat-card-title>{{ evento.nombreGrupo }}</mat-card-title>
+              <mat-card-subtitle>{{ evento.nombreEstablecimiento }}</mat-card-subtitle>
             </div>
-          </mat-card-content>
-
-          <!-- Contenido con precio y estado separados -->
-          <mat-card-actions>
-            <div class="event-pricing">
-              
-              @if(evento.estado == "disponible"){
-              
-              <p class="disponible" style="background-color: rgb(102, 255, 47); border-radius: 5px; padding: 1.5px;">{{
-                evento.estado }}</p>
-                <button class="comprar-btn" (click)="verEvento(evento.id, $event)">Comprar</button>
-              }@else {
-              <p class="agotado">{{ evento.estado }}</p>
-              }
+            <div class="button-section">
+              <mat-card-actions>
+                <div class="title-section">
+                  <mat-card-subtitle>{{ evento.fechaEvento }}</mat-card-subtitle>
+                  <mat-card-subtitle>{{ evento.horaEvento }}</mat-card-subtitle>
+              </div>
+              </mat-card-actions>
             </div>
-          </mat-card-actions>
-        </mat-card>
-      </div>
-
-      }
-      @if(spinner){
-        <div class="spinner-container">
-          <mat-spinner></mat-spinner>
+            </mat-card-header>
+            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Foto del evento">
+  
+            <!-- Contenido con fecha y hora separadas -->
+            <mat-card-content>
+              <div class="event-details">
+                <p class="contratado">Contratado: {{ evento.fechaContratacion }}</p>
+                <button class="comprar-btn" (click)="openDialog2(evento.id)"><mat-icon>edit</mat-icon></button>
+              </div>
+            </mat-card-content>
+  
+            <!-- Contenido con precio y estado separados -->
+            
+          </mat-card>
         </div>
-      }
-    </div>
+  
+        }
+        @if(spinner){
+          <div class="spinner-container">
+            <mat-spinner></mat-spinner>
+          </div>
+        }
+      </div>
+    }@else if (rol == 'ROLE_ESTABLECIMIENTO') {
+      <div class="card-grid">
+        @for(evento of eventosGrupo; track $index){
+        <div class="card-container">
+          <mat-card class="example-card" appearance="outlined">
+            <mat-card-header class="header-container" (click)="verGrupo(evento.id, $event)">
+              <div class="title-section">
+              <mat-card-title>{{ evento.nombreGrupo }}</mat-card-title>
+              <mat-card-subtitle>{{ evento.nombreEstablecimiento }}</mat-card-subtitle>
+            </div>
+            <div class="button-section">
+              <mat-card-actions>
+                <div class="title-section">
+                  <mat-card-subtitle>{{ evento.fechaEvento }}</mat-card-subtitle>
+                  <mat-card-subtitle>{{ evento.horaEvento }}</mat-card-subtitle>
+              </div>
+              </mat-card-actions>
+            </div>
+            </mat-card-header>  
+            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Foto del evento">
+            <!-- Contenido con fecha y hora separadas -->
+            <mat-card-content>
+              <div class="event-details">
+                <p class="contratado">Contratado: {{ evento.fechaContratacion }}</p>
+                <button class="comprar-btn" (click)="openDialog2(evento.id)"><mat-icon>edit</mat-icon></button>
+              </div>
+            </mat-card-content>
+            <!-- Contenido con precio y estado separados -->
+            
+          </mat-card>
+        </div>
+  
+        }
+        @if(spinner){
+          <div class="spinner-container">
+            <mat-spinner></mat-spinner>
+          </div>
+        }
+      </div>
+    }@else {
+      <div class="card-grid">
+      
+        @for(evento of eventos; track $index){
+        <div class="card-container">
+          <mat-card class="example-card" appearance="outlined">
+            <mat-card-header>
+              <mat-card-title>{{ evento.nombreGrupo }}</mat-card-title>
+              <mat-card-subtitle>{{ evento.nombreEstablecimiento }}</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Foto del evento">
+  
+            <!-- Contenido con fecha y hora separadas -->
+            <mat-card-content>
+              <div class="event-details">
+                <p>Fecha: {{ evento.fechaEvento }}</p>
+                <p>Hora: {{ evento.horaEvento }}</p>
+              </div>
+            </mat-card-content>
+  
+            <!-- Contenido con precio y estado separados -->
+            <mat-card-actions>
+              <div class="event-pricing">
+                
+                @if(evento.estado == "disponible"){
+                
+                <p class="disponible" style="background-color: rgb(102, 255, 47); border-radius: 5px; padding: 1.5px;">{{
+                  evento.estado }}</p>
+                  <button class="comprar-btn" (click)="verEvento(evento.id, $event)">Comprar</button>
+                }@else {
+                <p class="agotado">{{ evento.estado }}</p>
+                }
+              </div>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+  
+        }
+        @if(spinner){
+          <div class="spinner-container">
+            <mat-spinner></mat-spinner>
+          </div>
+        }
+      </div>
+    }
     <mat-paginator [length]="totalEventos" [pageSize]="pageSizeEventos" [pageSizeOptions]="[6, 12, 24, 100]"
       (page)="onPageChangeEventos($event)">
     </mat-paginator>

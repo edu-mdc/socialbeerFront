@@ -52,6 +52,16 @@
   .dialog-actions button[color="warn"]:hover {
     background-color: #c9302c; /* Rojo más oscuro al hacer hover */
   }
+
+  .dialog-actions button[color="yellow"] {
+    width: 150px;
+    background-color: #f7ca39; 
+    color: white;
+  }
+  
+  .dialog-actions button[color="yellow"]:hover {
+    background-color: #b1982a; /* Rojo más oscuro al hacer hover */
+  }
   
   /* Botón de pagar en verde */
   .dialog-actions button[color="primary"] {

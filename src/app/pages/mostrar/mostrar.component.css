@@ -88,8 +88,12 @@
   }
 }
 
+.contratado{
+  margin-top: 30px ;
+}
+
 .comprar-btn {
-  background-color: #3F51B5;
+  background-color: #f8a01c;
   color: white;
   border-radius: 10px; /* Bordes redondeados */
   border: none;
@@ -97,6 +101,7 @@
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
   padding: 10px 20px; /* Un poco de padding para que se vea mejor */
   transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transición suave */
+  margin-top: 10px;
 }
 
 .comprar-btn:hover {

@@ -1,4 +1,4 @@
-<h2 mat-dialog-title class="dialog-title">Selecciona un día para el evento</h2>
+<h2 mat-dialog-title class="dialog-title">Cambiar evento</h2>
 <div mat-dialog-content class="dialog-content">
   <mat-form-field class="form-field-left">
     <mat-label>Fecha</mat-label>
@@ -13,13 +13,17 @@
   </mat-form-field>
 </div>
 <div mat-dialog-actions class="dialog-actions">
-  <button mat-fab color="warn" aria-label="Cancelar" (click)="onCancel()">Descartar
-    <mat-icon>delete</mat-icon>
+  <button mat-fab color="yellow" aria-label="Cancelar" (click)="onCancel()">Salir&nbsp;
+    <mat-icon>cancel</mat-icon>
 </button>
   
   
-  <button mat-fab color="primary" aria-label="Pagar" (click)="onPay()">Contratar 
+  <button mat-fab color="primary" aria-label="Pagar" (click)="onPay()">Modificar&nbsp; 
     <mat-icon>payment</mat-icon>
+</button>
+
+<button mat-fab color="warn" aria-label="Pagar" (click)="eliminar()">Eliminar
+  <mat-icon>delete</mat-icon>
 </button>
   
 </div>

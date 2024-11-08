@@ -30,7 +30,7 @@ export class EventoService {
 
   // Obtener un evento por su ID
   getEventoById(eventoId: number): Observable<Evento> {
-    return this.http.get<Evento>(`${this.baseUrl}/usuarios/eventos/${eventoId}`);
+    return this.http.get<Evento>(`${this.baseUrl}/usuarios/eventos/evento/${eventoId}`);
   }
 
   // Crear un nuevo evento asociado a un grupo y un establecimiento
@@ -39,12 +39,16 @@ export class EventoService {
   }
 
   // Actualizar un evento existente por su ID
-  updateEvento(establecimientoId: number, eventoId: number, eventoData: Evento): Observable<Evento> {
-    return this.http.put<Evento>(`${this.baseUrl}/usuarios/eventos/evento/${establecimientoId}/${eventoId}`, eventoData);
+  updateEvento(eventoId: number, eventoData: Evento): Observable<Evento> {
+    return this.http.put<Evento>(`${this.baseUrl}/usuarios/eventos/evento/${eventoId}`, eventoData);
   }
 
   // Eliminar un evento por su ID
-  eliminarEvento(establecimientoId: number, eventoId: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/usuarios/eventos/evento/${establecimientoId}/${eventoId}`, { responseType: 'text' });
+  eliminarEvento(eventoId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/usuarios/eventos/evento/${eventoId}`, { responseType: 'text' });
+  }
+
+  verificarDisponibilidad(grupoId: number, establecimientoId: number, fechaEvento: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}/usuarios/eventos/verificar?grupoId=${grupoId}&establecimientoId=${establecimientoId}&fechaEvento=${fechaEvento}`);
   }
 }

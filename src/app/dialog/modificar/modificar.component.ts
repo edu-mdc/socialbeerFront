@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit, Inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, Inject  } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA  } from '@angular/material/dialog';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
@@ -10,41 +10,35 @@ import { GrupoService } from '../../services/grupo.service';
 import { EstablecimientoService } from '../../services/establecimiento.service';
 import { EventoService } from '../../services/evento.service';
 import Swal from 'sweetalert2';
-
+import { Evento } from '../../interfaces/Evento';
 
 @Component({
-  selector: 'app-contratar',
+  selector: 'app-modificar',
   standalone: true,
   providers: [provideNativeDateAdapter()],
   imports: [MatFormFieldModule, MatInputModule, MatDatepickerModule, FormsModule, MatIconModule],
-  templateUrl: './contratar.component.html',
-  styleUrl: './contratar.component.css'
+  templateUrl: './modificar.component.html',
+  styleUrl: './modificar.component.css'
 })
-export class ContratarComponent implements OnInit{
+export class ModificarComponent implements OnInit{
   selectedDate: Date | null = null;
   selectedTime: string | null = null;
-  grupoId: any;
-  userId:any;
-  fechaContratacion: Date | null = null;
-  fechaContratacionValida :any;
-  establecimientoId: any;
-  establecimiento:any;
-  grupo:any;
+ 
+  evento: Evento | null = null;
 
   constructor(
-    public dialogRef: MatDialogRef<ContratarComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { userId: string | null; grupoId: number, grupo: string },private grupoService: GrupoService, private establecimientoService: EstablecimientoService, private eventoService: EventoService
+    public dialogRef: MatDialogRef<ModificarComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { eventoId: number | null },private grupoService: GrupoService, private establecimientoService: EstablecimientoService, private eventoService: EventoService
   ) {}
 
   ngOnInit(): void {
-    
-    this.grupoId=this.data.grupoId;
-    this.userId = this.data.userId;
-    this.grupo = this.data.grupo;
-    this.fechaContratacion = new Date();
-    this.fechaContratacionValida = this.convertDateToString(this.fechaContratacion);
-    this.obtenerEstablecimiento(Number(this.data.userId));
-    console.log('userId:', this.data.userId, 'grupoId:', this.data.grupoId );
+    this.eventoService.getEventoById(Number(this.data.eventoId)).subscribe({
+      next: (response) => {
+        this.evento=response;
+       
+      },
+      error: (error) => console.error('Error al obtener los grupos', error)
+    });
   }
   onCancel(): void {
     this.dialogRef.close(); // Cierra el diálogo sin enviar datos
@@ -57,19 +51,19 @@ export class ContratarComponent implements OnInit{
   
       const eventoData = {
         id: 0,
-        fechaContratacion: this.convertDateToString(this.fechaContratacion!), // Convierte a 'dd-MM-yyyy'
+        fechaContratacion: this.evento?.fechaContratacion || '', // Convierte a 'dd-MM-yyyy'
         fechaEvento: fechaEventoFormatted,
         horaEvento: `${hora}:${minutos}`, // Formato 'HH:mm'
         estado: 'disponible',
-        nombreGrupo: this.grupo,
-        nombreEstablecimiento: this.establecimiento,
+        nombreGrupo: this.evento?.nombreGrupo || '',
+        nombreEstablecimiento: this.evento?.nombreEstablecimiento || '',
       };
   
-      this.eventoService.createEvento(this.establecimientoId, this.grupoId, eventoData).subscribe({
+      this.eventoService.updateEvento(Number(this.evento?.id), eventoData).subscribe({
         next: (response) => {
           Swal.fire({
             title: "Genial!",
-            text: "Evento creado a disfrutar.!!",
+            text: "Evento modificado a disfrutar.!!",
             imageUrl: "../../../assets/imagenes/2547.jpg",
             imageWidth: 400,
             imageHeight: 200,
@@ -113,16 +107,34 @@ export class ContratarComponent implements OnInit{
     return `${day}-${month}-${year}`;
   }
 
-  obtenerEstablecimiento(userId: number){
-    this.establecimientoService.getEstablecimientoByUserId(userId).subscribe({
-      next: (response) => {
-        this.establecimientoId = response.id
-        this.establecimiento = response.establecimiento
-        console.log('EstablecimientoId obtenido:', this.establecimientoId);
-      },
-      error: (error) => console.error('Error al obtener los grupos', error)
-    });     
-  }
+  eliminar(){
+    Swal.fire({
+      title: "¿Seguro que quieres eliminar el evento?",
+      text: "No habra vuelta atrás",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Eliminar",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.eventoService.eliminarEvento(Number(this.evento?.id)).subscribe({
+          next: (response) => {
+            this.evento=response;
+           
+          },
+          error: (error) => console.error('Error al obtener los grupos', error)
+        });
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success"
+        });
+      }
+    });
+   
+    this.dialogRef.close();
+    }
+  
 }
-
-

@@ -15,6 +15,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { ContratarComponent } from '../../dialog/contratar/contratar.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { ModificarComponent } from '../../dialog/modificar/modificar.component';
 
 @Component({
   selector: 'app-mostrar',
@@ -26,7 +27,12 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog'
 export class MostrarComponent implements OnInit{
   rol: string | null = null;
   spinner: boolean = false;
-
+  userId:string | null = null;
+  grupo: Grupo | null = null;
+  eventosGrupo: Evento[]=[];
+  establecimiento: Establecimiento | null = null;
+  eventosEstablecimiento: Evento[]=[];
+  
   grupos: Grupo[] = [];
   totalItems: number = 0;
   pageSize: number = 6;
@@ -49,6 +55,10 @@ export class MostrarComponent implements OnInit{
     this.obtenerEstablecimientos();
     this.obtenerEventos();
     this.rol = localStorage.getItem('rol');  // Obtener eventos también
+    this.userId = localStorage.getItem('userId');
+    console.log('userId desde localStorage:', this.userId);
+    this.obtenerGrupoLoginYSusEventos(Number(this.userId));
+    this.obtenerEstablecimientoLoginYSusEventos(Number(this.userId));
   }
 
   // Obtener Grupos
@@ -62,6 +72,75 @@ export class MostrarComponent implements OnInit{
       error: (error) => console.error('Error al obtener los grupos', error)
     });
   }
+
+  obtenerGrupoLoginYSusEventos(userId: number): void {
+    if (!userId || isNaN(userId)) {
+      console.error('userId no es válido:', userId);
+      return;
+    }
+  
+    console.log('Llamando a getGrupoByUserId con userId:', userId);
+    this.grupoService.getGrupoByUserId(userId).subscribe({
+      next: (grupo: Grupo) => {
+        if (grupo && grupo.id) {
+          this.grupo = grupo;
+          console.log('Grupo recibido:', grupo);
+          this.eventoService.getEventosPorGrupo(grupo.id).subscribe({
+            next: (eventos: Evento[]) => {
+              this.eventosGrupo = eventos;
+              console.log('Eventos del grupo:', eventos);
+            },
+            error: (error) => {
+              console.error('Error al obtener los eventos del grupo:', error);
+            }
+          });
+        } else {
+          console.error('Grupo no encontrado o el ID es inválido:', grupo);
+        }
+      },
+      error: (error) => {
+        console.error('Error al obtener los detalles del grupo:', error);
+      }
+    });
+  }
+  
+  
+  
+  
+
+  obtenerEstablecimientoLoginYSusEventos(userId: number): void {
+    if (!userId || isNaN(userId)) {
+      console.error('userId no es válido:', userId);
+      return;
+    }
+  
+    console.log('Llamando a getEstablecimientoByUserId con userId:', userId);
+    this.establecimientoService.getEstablecimientoByUserId(userId).subscribe({
+      next: (establecimiento: Establecimiento) => {
+        if (establecimiento && establecimiento.id) {
+          this.establecimiento = establecimiento;
+          console.log('Establecimiento recibido:', establecimiento);
+          this.eventoService.getEventosPorEstablecimiento(establecimiento.id).subscribe({
+            next: (eventos: Evento[]) => {
+              this.eventosEstablecimiento = eventos;
+              console.log('Eventos del establecimiento:', eventos);
+            },
+            error: (error) => {
+              console.error('Error al obtener los eventos del establecimiento:', error);
+            }
+          });
+        } else {
+          console.error('Establecimiento no encontrado o el ID es inválido:', establecimiento);
+        }
+      },
+      error: (error) => {
+        console.error('Error al obtener los detalles del establecimiento:', error);
+      }
+    });
+  }
+
+
+ 
 
   // Obtener Establecimientos
   obtenerEstablecimientos(page: number = this.currentPageEstablecimientos, size: number = this.pageSizeEstablecimientos): void {
@@ -117,6 +196,8 @@ export class MostrarComponent implements OnInit{
     }, 1000); 
   }
 
+  
+
   verEstablecimiento(establecimientoId: number, event: Event){
     event.stopPropagation();
     this.spinner = true;
@@ -153,5 +234,22 @@ export class MostrarComponent implements OnInit{
         console.log('Día seleccionado:', result);
       }
     });
+}
+
+openDialog2(eventoId: number): void {
+  const dialogRef = this.dialog.open(ModificarComponent, {
+    width: '550px',
+    height: '250px',
+    data: {     
+      eventoId:eventoId, 
+     } // Puedes ajustar el tamaño según prefieras
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      // Aquí puedes manejar el resultado, como procesar el pago
+      console.log('Día seleccionado:', result);
+    }
+  });
 }
 }
