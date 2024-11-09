@@ -25,13 +25,16 @@ export class ModificarComponent implements OnInit{
   selectedTime: string | null = null;
  
   evento: Evento | null = null;
+  rol: string | null = null;
 
   constructor(
     public dialogRef: MatDialogRef<ModificarComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { eventoId: number | null },private grupoService: GrupoService, private establecimientoService: EstablecimientoService, private eventoService: EventoService
+    @Inject(MAT_DIALOG_DATA) public data: { eventoId: number | null, rol: string | null },private grupoService: GrupoService, private establecimientoService: EstablecimientoService, private eventoService: EventoService
   ) {}
 
   ngOnInit(): void {
+    this.rol = this.data.rol;
+    console.log('Rol recibido:', this.rol);
     this.eventoService.getEventoById(Number(this.data.eventoId)).subscribe({
       next: (response) => {
         this.evento=response;
@@ -81,7 +84,7 @@ export class ModificarComponent implements OnInit{
       }
       });
   
-      this.dialogRef.close();
+      this.dialogRef.close({ eventoModificado: true });
     } else {
       Swal.fire({
         icon: "error",
@@ -107,10 +110,10 @@ export class ModificarComponent implements OnInit{
     return `${day}-${month}-${year}`;
   }
 
-  eliminar(){
+  eliminar() {
     Swal.fire({
       title: "¿Seguro que quieres eliminar el evento?",
-      text: "No habra vuelta atrás",
+      text: "No habrá vuelta atrás",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -121,20 +124,26 @@ export class ModificarComponent implements OnInit{
       if (result.isConfirmed) {
         this.eventoService.eliminarEvento(Number(this.evento?.id)).subscribe({
           next: (response) => {
-            this.evento=response;
-           
+            Swal.fire({
+              title: "Deleted!",
+              text: "El evento ha sido eliminado.",
+              icon: "success"
+            });
+            // Actualizar la lista de eventos después de eliminar
+            this.dialogRef.close({ eventoModificado: true });
           },
-          error: (error) => console.error('Error al obtener los grupos', error)
-        });
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success"
+          error: (error) => {
+            console.error('Error al eliminar el evento', error);
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Error al eliminar el evento",
+            });
+          }
         });
       }
     });
-   
-    this.dialogRef.close();
-    }
+  }
+  
   
 }

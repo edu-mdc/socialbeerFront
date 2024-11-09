@@ -13,17 +13,24 @@
   </mat-form-field>
 </div>
 <div mat-dialog-actions class="dialog-actions">
-  <button mat-fab color="yellow" aria-label="Cancelar" (click)="onCancel()">Salir&nbsp;
-    <mat-icon>cancel</mat-icon>
-</button>
-  
-  
-  <button mat-fab color="primary" aria-label="Pagar" (click)="onPay()">Modificar&nbsp; 
-    <mat-icon>payment</mat-icon>
-</button>
 
-<button mat-fab color="warn" aria-label="Pagar" (click)="eliminar()">Eliminar
-  <mat-icon>delete</mat-icon>
-</button>
+  @if(rol == "ROLE_ESTABLECIMIENTO"){
+    <button mat-fab color="yellow" aria-label="Cancelar" (click)="onCancel()">Salir&nbsp;
+      <mat-icon>cancel</mat-icon>
+  </button>
+    
+    <button mat-fab color="primary" aria-label="Pagar" (click)="onPay()">Modificar&nbsp; 
+      <mat-icon>payment</mat-icon>
+  </button>
+  
+  <button mat-fab color="warn" aria-label="Pagar" (click)="eliminar()">Eliminar
+    <mat-icon>delete</mat-icon>
+  </button>
+  }@else {
+    <button mat-fab color="warn" aria-label="Pagar" (click)="eliminar()">Eliminar
+      <mat-icon>delete</mat-icon>
+    </button>
+  }
+ 
   
 </div>

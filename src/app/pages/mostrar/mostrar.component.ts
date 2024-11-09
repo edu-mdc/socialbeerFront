@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ContratarComponent } from '../../dialog/contratar/contratar.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { ModificarComponent } from '../../dialog/modificar/modificar.component';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-mostrar',
@@ -24,7 +25,7 @@ import { ModificarComponent } from '../../dialog/modificar/modificar.component';
   templateUrl: './mostrar.component.html',
   styleUrl: './mostrar.component.css'
 })
-export class MostrarComponent implements OnInit{
+export class MostrarComponent implements OnInit {
   rol: string | null = null;
   spinner: boolean = false;
   userId:string | null = null;
@@ -48,9 +49,12 @@ export class MostrarComponent implements OnInit{
   pageSizeEventos: number = 6;
   currentPageEventos: number = 0;
 
+  updateSubject: Subject<void> = new Subject<void>();
+
   constructor(private dialog: MatDialog, private router: Router, private grupoService: GrupoService, private establecimientoService: EstablecimientoService, private eventoService: EventoService) {}
 
   ngOnInit(): void {
+    this.updateSubject.subscribe(() => {
     this.obtenerGrupos();
     this.obtenerEstablecimientos();
     this.obtenerEventos();
@@ -59,7 +63,10 @@ export class MostrarComponent implements OnInit{
     console.log('userId desde localStorage:', this.userId);
     this.obtenerGrupoLoginYSusEventos(Number(this.userId));
     this.obtenerEstablecimientoLoginYSusEventos(Number(this.userId));
+    });
+    this.updateSubject.next();
   }
+
 
   // Obtener Grupos
   obtenerGrupos(page: number = this.currentPage, size: number = this.pageSize): void {
@@ -104,10 +111,6 @@ export class MostrarComponent implements OnInit{
     });
   }
   
-  
-  
-  
-
   obtenerEstablecimientoLoginYSusEventos(userId: number): void {
     if (!userId || isNaN(userId)) {
       console.error('userId no es válido:', userId);
@@ -138,9 +141,6 @@ export class MostrarComponent implements OnInit{
       }
     });
   }
-
-
- 
 
   // Obtener Establecimientos
   obtenerEstablecimientos(page: number = this.currentPageEstablecimientos, size: number = this.pageSizeEstablecimientos): void {
@@ -196,8 +196,6 @@ export class MostrarComponent implements OnInit{
     }, 1000); 
   }
 
-  
-
   verEstablecimiento(establecimientoId: number, event: Event){
     event.stopPropagation();
     this.spinner = true;
@@ -229,9 +227,9 @@ export class MostrarComponent implements OnInit{
     });
   
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // Aquí puedes manejar el resultado, como procesar el pago
-        console.log('Día seleccionado:', result);
+      if (result && result.eventoModificado) {
+        // Realiza las actualizaciones necesarias
+        this.updateSubject.next();
       }
     });
 }
@@ -242,13 +240,14 @@ openDialog2(eventoId: number): void {
     height: '250px',
     data: {     
       eventoId:eventoId, 
+      rol: this.rol
      } // Puedes ajustar el tamaño según prefieras
   });
 
   dialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      // Aquí puedes manejar el resultado, como procesar el pago
-      console.log('Día seleccionado:', result);
+    if (result && result.eventoModificado) {
+      // Realiza las actualizaciones necesarias
+      this.updateSubject.next();
     }
   });
 }

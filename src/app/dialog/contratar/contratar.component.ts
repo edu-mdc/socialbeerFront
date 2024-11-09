@@ -87,7 +87,7 @@ export class ContratarComponent implements OnInit{
       }
       });
   
-      this.dialogRef.close();
+      this.dialogRef.close({ eventoModificado: true });
     } else {
       Swal.fire({
         icon: "error",

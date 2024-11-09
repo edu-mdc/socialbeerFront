@@ -44,7 +44,7 @@
       </div>
     }@else if (rol == 'ROLE_ESTABLECIMIENTO') {
       <div class="card-grid">
-        @for(evento of eventosGrupo; track $index){
+        @for(evento of eventosEstablecimiento; track $index){
         <div class="card-container">
           <mat-card class="example-card" appearance="outlined">
             <mat-card-header class="header-container" (click)="verGrupo(evento.id, $event)">
