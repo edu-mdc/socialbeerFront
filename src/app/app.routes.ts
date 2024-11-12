@@ -20,7 +20,7 @@ export const routes: Routes = [
     {path:"cliente", component:VistaClienteComponent, canActivate:[authGuard]},
     {path:"establecimiento", component:VistaEstablecimientoComponent, canActivate:[authGuard]},
     {path:"grupo", component:VistaGrupoComponent, canActivate:[authGuard]},
-    {path:"fichaGrupo/:id", component:FichaGrupoComponent},
+    {path:"fichaGrupo/:id", component:FichaGrupoComponent, canActivate:[authGuard]},
     {path:"fichaEstablecimiento/:id", component:FichaEstablecimientoComponent},
     {path:"fichaEvento/:id", component: FichaEventoComponent}
 ];

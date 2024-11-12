@@ -21,33 +21,81 @@
   
     <!-- Parte inferior izquierda: Valoraciones del grupo -->
     <div class="group-reviews">
-      <h3>Valoraciones</h3>
       
+      <h3>Dejar una valoración</h3>
+  <mat-card class="review-card">
+    <mat-card-header>
+      <mat-card-title>Valora este grupo y cuéntanos tu experiencia</mat-card-title>
+      
+    </mat-card-header>
+    <mat-card-content>
+      <div class="full-width">
+        <label for="comentario" class="custom-label">Comentario</label>
+        <textarea id="comentario" class="custom-textarea" placeholder="Escribe tu comentario aquí..." rows="3"[(ngModel)]="comentario"></textarea>
+      </div>
+      <div class="rating-container">
+        <span class="rating-label">Calificación:</span>
+        <mat-icon class="star" (click)="seleccionarPuntuacion(1)">star_border</mat-icon>
+        <mat-icon class="star" (click)="seleccionarPuntuacion(2)">star_border</mat-icon>
+        <mat-icon class="star" (click)="seleccionarPuntuacion(3)">star_border</mat-icon>
+        <mat-icon class="star" (click)="seleccionarPuntuacion(4)">star_border</mat-icon>
+        <mat-icon class="star" (click)="seleccionarPuntuacion(5)">star_border</mat-icon>
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary" (click)="enviarValoracion()">Enviar valoración</button>
+    </mat-card-actions>
+  </mat-card>
     </div>
   
     <!-- Parte superior derecha: Eventos del grupo -->
     <div class="group-events">
-      <h3>Eventos</h3>
-      @for(evento of eventos; track $index){
-        <mat-card class="example-card" appearance="outlined">
-            <mat-card-header>
-              <mat-card-title-group>
-                <mat-card-title>{{evento.nombreEstablecimiento}}</mat-card-title>
-                <mat-card-subtitle>{{evento.fechaEvento}}</mat-card-subtitle>
-                <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
-              </mat-card-title-group>
-            </mat-card-header>
-            <mat-card-content>
-              longText
-            </mat-card-content>
-          </mat-card>
-      }
-      
+      <h3>Próximos Eventos</h3>
+      <div class="events-grid">
+        @if (eventos.length > 0) {
+          @for (evento of eventos; track evento.id) {
+            @if(esFechaFutura(evento.fechaEvento)){
+              <mat-card class="event-card" (click)="verEstablecimiento(obtenerEstablecimientoId(evento.nombreEstablecimiento), $event)">
+                <mat-card-header>
+                  <div class="header-container">
+                    <div class="header-left">
+                      <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+                    </div>
+                    <div class="header-right">
+                      <mat-card-title>{{ evento.fechaEvento }}</mat-card-title>
+                      <mat-card-subtitle><b>{{ evento.horaEvento }}</b></mat-card-subtitle>
+                    </div>
+                  </div>
+                </mat-card-header>
+                
+                <mat-card-content>
+                  <div class="content-container">
+                    <div class="content-left">
+                      <p>{{ evento.nombreEstablecimiento }}</p>
+                    </div>
+                    <div class="content-right">
+                      <p><b>Dirección: C/ {{ obtenerDireccion(evento.nombreEstablecimiento) }}</b></p>
+                    </div>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            
+          }}} @else {
+            <p>No hay eventos disponibles en este momento.</p>
+          }
+        </div>
+            
+           
     </div>
+    
   
     <!-- Parte inferior derecha: Dejar una valoración -->
     <div class="leave-review">
-      <h3>Dejar una valoración</h3>
-     
-    </div>
+      <h3>Valoraciones</h3>
+</div>
   </div>
+  @if(spinner){
+    <div class="spinner-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  }
