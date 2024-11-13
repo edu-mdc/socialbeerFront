@@ -1,31 +1,42 @@
 <app-cliente></app-cliente>
+<h1 class="cabecera">{{grupo?.grupo}}</h1>
 <div class="grid-container">
+
     <!-- Parte superior izquierda: Datos del grupo -->
     <div class="group-info">
-      
-      <mat-card class="example-card" appearance="outlined">
-        <mat-card-header>
-          
-          <mat-card-title>{{grupo?.grupo}}</mat-card-title>
-          <mat-card-subtitle>estilo</mat-card-subtitle>
-        </mat-card-header>
-        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-        <mat-card-content>
-          <p>
-           provincia
-          </p>
-        </mat-card-content>
-        
-      </mat-card>
+        <div class="top-section">
+            <div class="group-image">
+                <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Imagen del grupo">
+            </div>
+            <div class="rating-star-container">
+              <div class="rotating-wrapper"> <!-- Contenedor que envuelve la estrella y la puntuación -->
+                <span class="star-grande">&#9733;</span> <!-- Ícono de estrella con carácter Unicode -->
+                <span class="puntuacion-media">{{ puntuacionMedia }}</span>
+              </div>
+              <div class="shadow-below"></div> <!-- Nueva sombra en el suelo -->
+            </div>
+            
+        </div>
+
+        <!-- Nombre del grupo debajo de la parte superior -->
+       
+
+        <!-- Detalles del grupo en la parte inferior izquierda -->
+        <div class="group-details">
+            <p><strong>Estilo:</strong> {{ grupo?.estilo }}</p>
+            <p><strong>Duración del concierto:</strong> {{ grupo?.duracion }}</p>
+            <p><strong>Provincia:</strong> {{ grupo?.provincia }}</p>
+        </div>
     </div>
+    
   
     <!-- Parte inferior izquierda: Valoraciones del grupo -->
     <div class="group-reviews">
       
-      <h3>Dejar una valoración</h3>
+      <h1 class="secciones">Dejar una valoración</h1>
   <mat-card class="review-card">
     <mat-card-header>
-      <mat-card-title>Valora este grupo y cuéntanos tu experiencia</mat-card-title>
+      <h3>Valora este grupo y cuéntanos tu experiencia</h3>
       
     </mat-card-header>
     <mat-card-content>
@@ -50,7 +61,7 @@
   
     <!-- Parte superior derecha: Eventos del grupo -->
     <div class="group-events">
-      <h3>Próximos Eventos</h3>
+      <h1 class="secciones">Próximos Eventos</h1>
       <div class="events-grid">
         @if (eventos.length > 0) {
           @for (evento of eventos; track evento.id) {
@@ -71,10 +82,10 @@
                 <mat-card-content>
                   <div class="content-container">
                     <div class="content-left">
-                      <p>{{ evento.nombreEstablecimiento }}</p>
+                      <mat-card-title>{{ evento.nombreEstablecimiento }}</mat-card-title>
                     </div>
                     <div class="content-right">
-                      <p><b>Dirección: C/ {{ obtenerDireccion(evento.nombreEstablecimiento) }}</b></p>
+                      <p>Dirección: C/ {{ obtenerDireccion(evento.nombreEstablecimiento) }}</p>
                     </div>
                   </div>
                 </mat-card-content>
@@ -89,10 +100,39 @@
     </div>
     
   
-    <!-- Parte inferior derecha: Dejar una valoración -->
-    <div class="leave-review">
-      <h3>Valoraciones</h3>
-</div>
+   <!-- Parte inferior derecha: Lista de valoraciones -->
+   <div class="leave-review">
+    <h1 class="secciones">Valoraciones</h1>
+    @if (valoraciones.length > 0) {
+      @for (valoracion of valoraciones; track valoracion.id) {
+        <div class="valoracion-card">
+          <div class="valoracion-header">
+            <p class="valoracion-fecha">{{ valoracion.fechaValoracion }}</p>
+            <div class="valoracion-puntuacion">
+              <!-- Mostrar tantas estrellas como la puntuación de la valoración -->
+              @for (estrella of estrellas; track $index) {
+                @if ($index <= valoracion.puntuacion) {
+                  <mat-icon class="star">star</mat-icon>
+                } @else {
+                  <mat-icon class="star">star_border</mat-icon>
+                }
+              }
+            </div>
+          </div>
+          <div class="valoracion-usuario">
+            <p><strong>{{valoracion.cliente?.nombre}}</strong></p> <!-- Ajusta para mostrar el nombre del usuario -->
+          </div>
+          <div class="valoracion-comentario">
+            <p>{{ valoracion.comentario }}</p>
+          </div>
+        </div>
+      }
+    } @else {
+      <p>No hay valoraciones disponibles.</p>
+    }
+  </div>
+  
+
   </div>
   @if(spinner){
     <div class="spinner-container">

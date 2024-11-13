@@ -16,7 +16,11 @@ import { ValoracionDeGrupoService } from '../../services/valoracion-de-grupo.ser
 import { ClienteService } from '../../services/cliente.service';
 import { Cliente } from '../../interfaces/Cliente';
 import { FormsModule } from '@angular/forms';
-
+import { palabrasProhibidas } from '../../settings/palabrasProhibidas';
+import { ValoracionDeGrupoDTO } from '../../interfaces/ValoracionGrupo';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-ficha-grupo',
@@ -29,92 +33,201 @@ export class FichaGrupoComponent implements OnInit{
   spinner: boolean = false;
   eventos: Evento[] = [];
   grupo: Grupo | null = null;
-  grupoId: number = 0; // Guardaremos el id del grupo
-  establecimientos: Establecimiento[]= [];
-  currentDate: Date = new Date(); // Fecha actual
-  clienteId:number = 0;
+  grupoId: number = 0;
+  establecimientos: Establecimiento[] = [];
+  currentDate: Date = new Date();
+  clienteId: number = 0;
   userId: string | null = null;
+  cliente:Cliente |null = null;
 
-  comentario  = '';
+  valoraciones: ValoracionDeGrupoDTO[] = [];
+  puntuacionMedia: number = 0;
+
+  comentario = '';
   puntuacion: number = 0;
   estrellas: number[] = [1, 2, 3, 4, 5];
 
-  private clienteService = inject(ClienteService);
-  private valoracionService = inject(ValoracionDeGrupoService); 
-  private eventoService = inject(EventoService); // Inyectamos el servicio de eventos
-  private grupoService = inject(GrupoService);
-  private route = inject(ActivatedRoute); // Inyectamos ActivatedRoute para obtener el grupoId
-  private establecimientoService = inject(EstablecimientoService); // Inyectamos el servicio de eventos
+  palabrasProhibidas: string[] = [];
+  updateSubject: Subject<void> = new Subject<void>(); // Define el Subject
 
-  constructor(private router: Router){};
+  private clienteService = inject(ClienteService);
+  private valoracionService = inject(ValoracionDeGrupoService);
+  private eventoService = inject(EventoService);
+  private grupoService = inject(GrupoService);
+  private route = inject(ActivatedRoute);
+  private establecimientoService = inject(EstablecimientoService);
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    // Obtener el grupoId de la URL
-    this.grupoId = +this.route.snapshot.paramMap.get('id')!; // Extraemos el id de la URL
-console.log("grupoId", this.grupoId)
-    this.userId= localStorage.getItem("userId");
-    console.log("userId", this.userId)
-    // Llamamos al servicio para obtener los eventos del grupo
+    this.palabrasProhibidas = palabrasProhibidas;
+    this.grupoId = +this.route.snapshot.paramMap.get('id')!;
+    this.userId = localStorage.getItem("userId");
+
+    // Suscribe a updateSubject para actualizar datos
+    this.updateSubject.subscribe(() => {
+      this.cargarDatosIniciales();
+    });
+
+    this.updateSubject.next(); // Llama la primera carga
+  }
+
+  // Método separado para cargar datos iniciales
+  private cargarDatosIniciales(): void {
+    this.obtenerEventos();
+    this.obtenerGrupo();
+    this.obtenerCliente();
+    this.obtenerEstablecimientos();
+    this.obtenerValoraciones();
+  }
+
+  private obtenerEventos(): void {
     this.eventoService.getEventosPorGrupo(this.grupoId).subscribe({
-      next: (eventos: Evento[]) => {
-        this.eventos = eventos;
-      },
-      error: (error) => {
-        console.error('Error al obtener los eventos del grupo:', error);
-      }
+      next: (eventos) => { this.eventos = eventos; },
+      error: (error) => { console.error('Error al obtener los eventos del grupo:', error); }
     });
+  }
 
-    this.grupoService.getGrupoByUserId(Number(this.userId)).subscribe({
-      next: (grupo: Grupo) => {
-        this.grupo = grupo;
-      },
-      error: (error) => {
-        console.error('Error al obtener los detalles del grupo:', error);
-      }
+  private obtenerGrupo(): void {
+    this.grupoService.getGrupoById(Number(this.userId)).subscribe({
+      next: (grupo) => { this.grupo = grupo; },
+      error: (error) => { console.error('Error al obtener los detalles del grupo:', error); }
     });
+  }
 
+  private obtenerCliente(): void {
     this.clienteService.getClienteByUserId(Number(localStorage.getItem("userId"))).subscribe({
-      next:(cliente: Cliente) =>{
+      next: (cliente) => { 
         this.clienteId = cliente.id;
-      }
-    })
+        this.cliente = cliente;
+       }
+    });
+  }
 
+  private obtenerEstablecimientos(): void {
     this.establecimientoService.getEstablecimientos().subscribe({
-      next: (response: any) => {
-        this.establecimientos = response.contenido || []; // Asegúrate de obtener el array de contenido
-        
+      next: (response) => { this.establecimientos = response.contenido || []; },
+      error: (error) => { console.error('Error al obtener los establecimientos', error); }
+    });
+  }
+
+  private obtenerValoraciones(): void {
+    this.valoracionService.listarValoracionesDeGrupoPorGrupoId(this.grupoId).subscribe({
+      next: (valoraciones) => {
+        this.valoraciones = valoraciones.sort((a, b) => {
+          const [diaA, mesA, anioA] = a.fechaValoracion.split('-').map(Number);
+          const [diaB, mesB, anioB] = b.fechaValoracion.split('-').map(Number);
+  
+          // Crear objetos Date con el año, mes y día
+          const fechaA = new Date(anioA, mesA - 1, diaA); // Meses van de 0 a 11
+          const fechaB = new Date(anioB, mesB - 1, diaB);
+  
+          return fechaB.getTime() - fechaA.getTime(); // Orden descendente
+        });
+        console.log(this.valoraciones);
+        this.calcularPuntuacionMedia()
+      },
+      error: (error) => { console.error('Error al obtener las valoraciones del grupo:', error); }
+    });
+  }
+
+  private calcularPuntuacionMedia(): void {
+    if (this.valoraciones.length > 0) {
+      const sumaPuntuaciones = this.valoraciones.reduce((sum, valoracion) => sum + valoracion.puntuacion, 0);
+      this.puntuacionMedia = parseFloat((sumaPuntuaciones / this.valoraciones.length).toFixed(1)); // Redondea a un decimal
+    } else {
+      this.puntuacionMedia = 0; // Si no hay valoraciones, la puntuación media es 0
+    }
+  }
+
+  enviarValoracion(): void {
+    if (this.comentarioContienePalabrasProhibidas()) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No puedes utilizar ese vocabulario para dejar una valoración",
+      });
+      return;
+    }
+
+    if (!this.clienteId || !this.grupoId || !this.cliente || !this.grupo) {
+      console.error('Error: Cliente o Grupo no están disponibles');
+      return;
+    }
+
+    const hoy = new Date();
+    const fechaHoy = `${hoy.getDate().toString().padStart(2, '0')}-${(hoy.getMonth() + 1).toString().padStart(2, '0')}-${hoy.getFullYear()}`;
+  
+    const yaHaDejadoValoracionHoy = this.valoraciones.some(valoracion => {
+      return (
+        valoracion.cliente?.id === this.clienteId &&
+        valoracion.fechaValoracion === fechaHoy
+      );
+    });
+  
+    if (yaHaDejadoValoracionHoy) {
+      Swal.fire({
+        icon: "warning",
+        title: "Valoración ya enviada",
+        text: "Solo puedes dejar una valoración por día.",
+      });
+      this.comentario = "";
+      this.puntuacion = 0;
+      return;
+    }
+
+    const fechaValoracion = this.formatDate(new Date());
+    const valoracion = {
+      comentario: this.comentario,
+      fechaValoracion: fechaValoracion,
+      puntuacion: this.puntuacion,
+      cliente:this.cliente,
+      grupo: this.grupo
+    };
+console.log(this.cliente)
+    this.valoracionService.guardarValoracionDeGrupo(this.grupoId, this.clienteId, valoracion).subscribe({
+      next: (response) => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Valoración enviada",
+          showConfirmButton: false,
+          timer: 1500
+        });
+
+        // Añade la nueva valoración y actualiza la lista
+        this.valoraciones.push(response);
+       
+        this.calcularPuntuacionMedia();
+        this.comentario = "";
+        this.puntuacion = 0;
+
+        // Emite el evento para actualizar los datos
+        this.updateSubject.next();
       },
       error: (error) => {
-        console.error('Error al obtener los establecimientos', error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "No se ha podido dejar la valoración!",
+          footer: '<a href="#">Why do I have this issue?</a>'
+        });
+        console.error('Error al enviar la valoración:', error);
       }
     });
   }
 
-  seleccionarPuntuacion(valor: number): void {
-    this.puntuacion = valor;
-    // Selecciona todas las estrellas y aplica o quita la clase 'selected'
-    const estrellas = document.querySelectorAll('.star');
-    estrellas.forEach((estrella, index) => {
-      if (index < valor) {
-        estrella.classList.add('selected');
-      } else {
-        estrella.classList.remove('selected');
-      }
-    });
+  private formatDate(date: Date): string {
+    const dia = date.getDate().toString().padStart(2, '0');
+    const mes = (date.getMonth() + 1).toString().padStart(2, '0');
+    const anio = date.getFullYear();
+    return `${dia}-${mes}-${anio}`;
   }
 
-  obtenerDireccion(nombreEstablecimiento: string): string {
-   
-    const establecimiento = this.establecimientos.find(e => {
-    
-      return e.establecimiento === nombreEstablecimiento;
-    });
-    return establecimiento ? establecimiento.direccion : 'Dirección no disponible';
-  }
-
-  obtenerEstablecimientoId(nombreEstablecimiento: string): number | null {
-    const establecimiento = this.establecimientos.find(e => e.establecimiento === nombreEstablecimiento);
-    return Number(establecimiento?.id)
+  private comentarioContienePalabrasProhibidas(): boolean {
+    return this.palabrasProhibidas.some(palabra =>
+      this.comentario.toLowerCase().includes(palabra.toLowerCase())
+    );
   }
 
   convertirFecha(fecha: string): Date {
@@ -137,38 +250,32 @@ console.log("grupoId", this.grupoId)
     }, 1000);
   }
 
-  enviarValoracion(): void {
-    if (!this.clienteId || !this.grupoId) {
-      console.error('Error: Cliente ID o Grupo ID no están disponibles');
-      return;
-    }
-  
-    const fechaValoracion = this.formatDate(new Date());
-    const valoracion = {
-      comentario: this.comentario,
-      fechaValoracion: fechaValoracion,
-      puntuacion: this.puntuacion,
-      cliente: { id: this.clienteId }, // Usa un objeto anidado para cliente
-      grupo: { id: this.grupoId }
-    };
-  
-    this.valoracionService.guardarValoracionDeGrupo(this.grupoId, this.clienteId, valoracion).subscribe({
-      next: (response) => {
-        console.log('Valoración enviada con éxito:', response);
-        // Aquí puedes mostrar un mensaje de éxito o realizar alguna acción adicional
-        this.comentario ="";
-      },
-      error: (error) => {
-        console.error('Error al enviar la valoración:', error);
+  obtenerDireccion(nombreEstablecimiento: string): string {
+   
+    const establecimiento = this.establecimientos.find(e => {
+    
+      return e.establecimiento === nombreEstablecimiento;
+    });
+    return establecimiento ? establecimiento.direccion : 'Dirección no disponible';
+  }
+
+  obtenerEstablecimientoId(nombreEstablecimiento: string): number | null {
+    const establecimiento = this.establecimientos.find(e => e.establecimiento === nombreEstablecimiento);
+    return Number(establecimiento?.id)
+  }
+
+  seleccionarPuntuacion(valor: number): void {
+    this.puntuacion = valor;
+    // Selecciona todas las estrellas y aplica o quita la clase 'selected'
+    const estrellas = document.querySelectorAll('.star');
+    estrellas.forEach((estrella, index) => {
+      if (index < valor) {
+        estrella.classList.add('selected');
+      } else {
+        estrella.classList.remove('selected');
       }
     });
   }
-  
 
-  private formatDate(date: Date): string {
-    const dia = date.getDate().toString().padStart(2, '0');
-    const mes = (date.getMonth() + 1).toString().padStart(2, '0');
-    const anio = date.getFullYear();
-    return `${dia}-${mes}-${anio}`;
-  }
+  cerrarFicha() { /* Cierra la ficha */ }
 }
