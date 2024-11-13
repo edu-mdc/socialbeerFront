@@ -1,1 +1,143 @@
 <app-cliente></app-cliente>
+<h1 class="cabecera">{{establecimiento?.establecimiento}}</h1>
+<div class="grid-container">
+
+    <!-- Parte superior izquierda: Datos del grupo -->
+    <div class="group-info">
+        <div class="top-section">
+            <div class="group-image">
+                <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Imagen del grupo">
+            </div>
+            <div class="rating-star-container">
+              <div class="rotating-wrapper"> <!-- Contenedor que envuelve la estrella y la puntuación -->
+                <span class="star-grande">&#9733;</span> <!-- Ícono de estrella con carácter Unicode -->
+                <span class="puntuacion-media">{{ puntuacionMedia }}</span>
+              </div>
+              <div class="shadow-below"></div> <!-- Nueva sombra en el suelo -->
+            </div>
+            
+        </div>
+
+        <!-- Nombre del grupo debajo de la parte superior -->
+       
+
+        <!-- Detalles del grupo en la parte inferior izquierda -->
+        <div class="group-details">
+            <p><strong>Dirección:</strong> {{ establecimiento?.direccion }}</p>
+            <p><strong>Población:</strong> {{ establecimiento?.poblacion }}</p>
+            <p><strong>Provincia:</strong> {{ establecimiento?.provincia }}</p>
+            <p><strong>Aforo:</strong> {{ establecimiento?.aforo }}</p>
+            <p><strong>Teléfono:</strong> {{ establecimiento?.telefono }}</p>
+        </div>
+    </div>
+    
+  
+    <!-- Parte inferior izquierda: Valoraciones del grupo -->
+    <div class="group-reviews">
+      
+      <h1 class="secciones">Dejar una valoración</h1>
+  <mat-card class="review-card">
+    <mat-card-header>
+      <h3>Valora este establecimiento y cuéntanos tu experiencia</h3>
+      
+    </mat-card-header>
+    <mat-card-content>
+      <div class="full-width">
+        <label for="comentario" class="custom-label">Comentario</label>
+        <textarea id="comentario" class="custom-textarea" placeholder="Escribe tu comentario aquí..." rows="3"[(ngModel)]="comentario"></textarea>
+      </div>
+      <div class="rating-container">
+        <span class="rating-label">Calificación:</span>
+        <mat-icon class="star" (click)="seleccionarPuntuacion(1)">star_border</mat-icon>
+        <mat-icon class="star" (click)="seleccionarPuntuacion(2)">star_border</mat-icon>
+        <mat-icon class="star" (click)="seleccionarPuntuacion(3)">star_border</mat-icon>
+        <mat-icon class="star" (click)="seleccionarPuntuacion(4)">star_border</mat-icon>
+        <mat-icon class="star" (click)="seleccionarPuntuacion(5)">star_border</mat-icon>
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary" (click)="enviarValoracion()">Enviar valoración</button>
+    </mat-card-actions>
+  </mat-card>
+    </div>
+  
+    <!-- Parte superior derecha: Eventos del grupo -->
+    <div class="group-events">
+      <h1 class="secciones">Próximos Eventos</h1>
+      <div class="events-grid">
+        @if (eventos.length > 0) {
+          @for (evento of eventos; track evento.id) {
+            @if(esFechaFutura(evento.fechaEvento)){
+              <mat-card class="event-card" (click)="verGrupo(obtenerGrupoId(evento.nombreGrupo), $event)">
+                <mat-card-header>
+                  <div class="header-container">
+                    <div class="header-left">
+                      <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+                    </div>
+                    <div class="header-right">
+                      <mat-card-title>{{ evento.fechaEvento }}</mat-card-title>
+                      <mat-card-subtitle><b>{{ evento.horaEvento }}</b></mat-card-subtitle>
+                    </div>
+                  </div>
+                </mat-card-header>
+                
+                <mat-card-content>
+                  <div class="content-container">
+                    <div class="content-left">
+                      <mat-card-title>{{ evento.nombreGrupo }}</mat-card-title>
+                    </div>
+                    <div class="content-right">
+                      <p>Dirección: C/ {{ obtenerEstilo(evento.nombreGrupo) }}</p>
+                    </div>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            
+          }}} @else {
+            <p>No hay eventos disponibles en este momento.</p>
+          }
+        </div>
+            
+           
+    </div>
+    
+  
+   <!-- Parte inferior derecha: Lista de valoraciones -->
+   <div class="leave-review">
+    <h1 class="secciones">Valoraciones</h1>
+    @if (valoraciones.length > 0) {
+      @for (valoracion of valoraciones; track valoracion.id) {
+        <div class="valoracion-card">
+          <div class="valoracion-header">
+            <p class="valoracion-fecha">{{ valoracion.fechaValoracion }}</p>
+            <div class="valoracion-puntuacion">
+              <!-- Mostrar tantas estrellas como la puntuación de la valoración -->
+              @for (estrella of estrellas; track $index) {
+                @if ($index <= valoracion.puntuacion) {
+                  <mat-icon class="star">star</mat-icon>
+                } @else {
+                  <mat-icon class="star">star_border</mat-icon>
+                }
+              }
+            </div>
+          </div>
+          <div class="valoracion-usuario">
+            <p><strong>{{valoracion.cliente?.nombre}}</strong></p> <!-- Ajusta para mostrar el nombre del usuario -->
+          </div>
+          <div class="valoracion-comentario">
+            <p>{{ valoracion.comentario }}</p>
+          </div>
+        </div>
+      }
+    } @else {
+      <p>No hay valoraciones disponibles.</p>
+    }
+  </div>
+  
+
+  </div>
+  @if(spinner){
+    <div class="spinner-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  }
