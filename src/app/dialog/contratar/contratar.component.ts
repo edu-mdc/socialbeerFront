@@ -52,6 +52,20 @@ export class ContratarComponent implements OnInit{
 
   onPay(): void {
     if (this.selectedDate && this.selectedTime) {
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Reinicia la hora a medianoche para comparar solo fechas
+      const selectedDate = this.selectedDate;
+      selectedDate.setHours(0, 0, 0, 0); // Reinicia la hora para comparar solo fechas
+
+      if (selectedDate < today) {
+        Swal.fire({
+          icon: "error",
+          title: "Fecha inválida",
+          text: "No puedes seleccionar una fecha anterior a la actual.",
+        });
+        return;
+      }
       const fechaEventoFormatted = this.convertDateToString(this.selectedDate); // Convierte a 'dd-MM-yyyy'
       const [hora, minutos] = this.selectedTime.split(':'); // Desglosa la hora
   

@@ -5,7 +5,7 @@ export interface Grupo{
     provincia:string,
     poblacion:string,
     tarifa:number,
-    duracion:Date,
+    duracion:string,
     desplazamiento:number,
     telefono:number
 }

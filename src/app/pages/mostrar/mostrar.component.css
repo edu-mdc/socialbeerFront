@@ -25,10 +25,44 @@
     grid-gap: 20px; /* Espacio entre las tarjetas */
     margin-top: 20px;
   }
+
+  .link-evento-grupo{
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 0;
+    color: rgb(75, 75, 247);
+    cursor: pointer;
+  }
+
+  .link-evento-grupo:hover {
+    box-shadow: 0 4px 8px rgba(75, 75, 247, 0.5); /* Sombra del color del texto */
+  }
+
+  .link-evento-establecimiento{
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 0;
+    color: rgb(250, 75, 68);
+    cursor: pointer;
+  }
+  
+  .link-evento-establecimiento:hover {
+    box-shadow: 0 4px 8px rgba(250, 75, 68, 0.5); /* Sombra del color del texto */
+  }
+
+  .link-evento-espacio{
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 0;
+  }
   
   .card-container {
     display: flex;
     justify-content: center;
+  }
+
+  .card-container.noClick .example-card {
+    cursor: default; /* Cambia el cursor a default en lugar de pointer */
   }
   
   @media (max-width: 1024px) {
@@ -47,7 +81,7 @@
 
   .fecha-hora {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between !important;
     align-items: center;
   }
   
@@ -67,10 +101,31 @@
   
 }
 
+.evento-cuando  mat-card-header{
+  display: flex;
+  justify-content: center;
+  
+}
+
 .grupo-details{
   display: flex;
   justify-content: space-between;
 }
+
+
+
+
+
+.fecha-hora {
+  display: flex;
+  justify-content: space-between !important;
+  align-items: center;
+  margin: 0; /* Elimina margen adicional */
+  padding: 0; /* Elimina padding adicional */
+  
+}
+
+
 
 /* Estilo para separar el precio y el estado */
 .event-pricing {
@@ -141,16 +196,69 @@
   transition: color 0.2s;
 }
 
-.rating .star:hover,
-.rating .star:hover ~ .star {
-  color: gold;
-}
+
 
 .rating .selected {
   color: gold;
 }
-  
 
+.custom-card {
+  max-width: 350px; /* Tamaño similar al de la segunda imagen */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  overflow: hidden;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px;
+  font-weight: bold;
+}
+
+.image-container {
+  position: relative;
+  height: 300px; /* Ajusta la altura según sea necesario */
+  overflow: hidden;
+}
+
+.image-diagonal {
+  position: relative;
+  height: 100%;
+}
+
+.image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.img-1 {
+  clip-path: polygon(0 0, 100% 0, 0 100%); /* Imagen 1 cortada en diagonal */
+}
+
+.img-2 {
+  clip-path: polygon(100% 0, 100% 100%, 0 100%); /* Imagen 2 cortada en diagonal */
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px;
+  font-weight: bold;
+}
+
+.grupo,
+.establecimiento {
+  font-size: 14px;
+}
+
+.eventos{
+  width: 400px;
+  height: 440px;
+}
+  
 .spinner-container {
   position: fixed;
   top: 50%;
@@ -218,4 +326,13 @@
 
 .green-button:hover {
   background-color: #45A049; /* Color verde más oscuro al pasar el cursor */
+}
+
+.star {
+  font-size: 20px;
+  color: #ccc; /* Estrella vacía */
+}
+
+.star.filled {
+  color: #FFD700; /* Estrella llena */
 }

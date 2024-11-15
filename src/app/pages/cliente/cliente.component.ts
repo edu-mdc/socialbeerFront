@@ -259,5 +259,14 @@ export class ClienteComponent implements OnInit{
     });
   }
 
+
+  irInicio(){
+    this.spinner = true;
+    setTimeout(() => {
+      this.router.navigate(['/cliente']).then(() => {
+        this.spinner = false;
+      });
+    }, 1000);
+  }
   
 }

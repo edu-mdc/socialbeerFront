@@ -2,10 +2,12 @@
 .mat-expansion-panel-header {
   background-color: #3F51B5; /* Color primario */
   color: white; /* Texto blanco */
+  border-radius: 0 !important;
 }
 .mat-expansion-panel {
   position: relative; /* Necesario para que el z-index funcione */
   z-index: 1000; /* Asegura que sobresalga sobre el filtro */
+  border-radius: 0 !important;
 }
 
 .mat-expansion-panel.mat-expanded {
@@ -63,6 +65,56 @@
   .form-container > mat-form-field {
     margin: 0; /* Asegúrate de que todos los campos tengan márgenes iguales */
   }
+
+  
+.mat-accordion{
+  margin-top: 0;
+  position: sticky; /* Se queda fijo al hacer scroll */
+  top: 79px; /* Ajusta esta distancia para que esté justo debajo del menú */
+  z-index: 900; /* Asegúrate de que esté por debajo del menu-bar */
+  background-color: #fff; /* Fondo blanco para evitar traslapes visuales */
+}
+  .menu-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1d2d86; /* Color de fondo azul */
+    color: white;
+    padding: 10px 20px; /* Espacio interior */
+    max-width: 100%; /* Ocupa todo el ancho de la pantalla */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    position: sticky; /* Se queda pegado al top al hacer scroll */
+    top: 0; /* Se queda en la parte superior */
+    z-index: 1000; /* Asegúrate de que esté encima de otros elementos */
+  }
+  
+  .menu-left {
+    display: flex;
+    align-items: center;
+    padding-right: 40px;
+    cursor: pointer;
+  }
+  
+  .logo {
+    width: 40px; /* Tamaño del logo */
+    height: auto;
+    margin-right: 10px; /* Espacio entre el logo y el texto */
+  }
+  
+  .menu-item {
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .menu-right button {
+    color: white; /* Color del texto del botón */
+    font-weight: bold;
+  }
+  
+  .mat-accordion {
+    margin-top: 0; /* Elimina margen superior para juntar con el menú */
+  }
   
   @media (min-width: 768px) {
     .form-container {
@@ -99,4 +151,5 @@
     width: 100vw;
     height: 100vh;
   }
-  
+
+

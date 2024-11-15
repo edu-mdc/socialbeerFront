@@ -281,4 +281,13 @@ console.log(this.cliente)
   }
 
   cerrarFicha() { /* Cierra la ficha */ }
+
+  volver(){
+    this.spinner = true;
+    setTimeout(() => {
+      this.router.navigate(['/cliente']).then(() => {
+        this.spinner = false;
+      });
+    }, 1000);
+  }
 }

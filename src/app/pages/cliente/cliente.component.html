@@ -1,10 +1,22 @@
+
+<div class="menu-bar">
+  <div class="menu-left" (click)="irInicio()" >
+    <img src="../../../assets/imagenes/logo.png" alt="Logo" class="logo">
+    <h3>SocialBeer</h3>
+  </div>
+  <div class="menu-right">
+    <button mat-button color="warn" (click)="desconectar()">Logout</button>
+  </div>
+</div>
+
+
 <mat-accordion class="example-headers-align mat-primary contenido" multi >
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title class="texto"> {{nombreUsuario}} </mat-panel-title>
       <mat-panel-description class="texto">
         {{email}}
-        <mat-icon (click)="desconectar()">account_circle</mat-icon>
+        <mat-icon >account_circle</mat-icon>
       </mat-panel-description>
     </mat-expansion-panel-header>
 

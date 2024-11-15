@@ -43,6 +43,24 @@ color: #3f51b5;
   padding-left: 40px;
 }
 
+.cabecera-volver{
+  padding-right: 40px;
+  display: flex;          /* Convierte el h3 en un contenedor flexible */
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.cabecera-volver:active {
+  transform: scale(0.95); /* Reduce el tamaño al 95% al hacer clic */
+}
+
+.custom-icon {
+  
+  font-size: 36px;  /* Tamaño del icono */
+  color: red;       /* Color rojo */
+}
+
 .group-reviews {
   grid-column: 1;
   grid-row: 2;
@@ -402,6 +420,12 @@ color: #3f51b5;
   color: #333;
 }
 
+.titulo {
+  display: flex;
+  justify-content: space-between; /* Espacia los elementos a los extremos */
+  align-items: center; /* Alinea los elementos verticalmente en el centro */
+}
+
 @keyframes girar {
   0% {
     transform: rotateY(0deg);
@@ -458,6 +482,39 @@ color: #3f51b5;
   .valoracion-card {
     padding: 10px; /* Ajusta el espacio interno */
     margin-bottom: 10px; /* Reduce el espacio entre las tarjetas */
+  }
+  
+  .custom-icon {
+    font-size: 36px;  /* Tamaño del icono */
+    background-color: red;       /* Color rojo */
+  }
+
+  .titulo {
+    display: flex;
+    justify-content: space-between; /* Espacia los elementos a los extremos */
+    align-items: center; /* Alinea los elementos verticalmente en el centro */
+  }
+
+  .cabecera{
+    padding-left: 40px;
+  }
+  
+  .cabecera-volver{
+    padding-right: 40px;
+    display: flex;          /* Convierte el h3 en un contenedor flexible */
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .cabecera-volver:active {
+    transform: scale(0.95); /* Reduce el tamaño al 95% al hacer clic */
+  }
+  
+  .custom-icon {
+    
+    font-size: 36px;  /* Tamaño del icono */
+    color: red;       /* Color rojo */
   }
 }
 

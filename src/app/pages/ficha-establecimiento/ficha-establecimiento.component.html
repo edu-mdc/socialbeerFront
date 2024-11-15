@@ -1,5 +1,8 @@
 <app-cliente></app-cliente>
-<h1 class="cabecera">{{establecimiento?.establecimiento}}</h1>
+<div class="titulo" >
+  <h1 class="cabecera">{{establecimiento?.establecimiento}}</h1>
+  <h4 class="cabecera-volver"(click)="volver()">Volver<span class="material-symbols-outlined custom-icon">undo</span></h4>
+</div>
 <div class="grid-container">
 
     <!-- Parte superior izquierda: Datos del grupo -->

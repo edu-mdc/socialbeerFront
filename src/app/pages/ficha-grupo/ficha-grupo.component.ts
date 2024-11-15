@@ -89,7 +89,7 @@ export class FichaGrupoComponent implements OnInit{
   }
 
   private obtenerGrupo(): void {
-    this.grupoService.getGrupoById(Number(this.userId)).subscribe({
+    this.grupoService.getGrupoById(this.grupoId).subscribe({
       next: (grupo) => { this.grupo = grupo; },
       error: (error) => { console.error('Error al obtener los detalles del grupo:', error); }
     });
@@ -278,4 +278,13 @@ console.log(this.cliente)
   }
 
   cerrarFicha() { /* Cierra la ficha */ }
+
+  volver(){
+    this.spinner = true;
+    setTimeout(() => {
+      this.router.navigate(['/cliente']).then(() => {
+        this.spinner = false;
+      });
+    }, 1000);
+  }
 }
