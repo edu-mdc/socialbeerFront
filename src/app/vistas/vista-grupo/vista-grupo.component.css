@@ -17,13 +17,13 @@
 .cuerpo {
   display: flex;
   flex-grow: 1;
-  margin-top: 200px; /* Espacio debajo del navbar */
+  margin-top: 165px; /* Espacio debajo del navbar */
   height: calc(100vh - 200px); /* Altura completa menos el tamaño del navbar */
 }
 
 .filtro-container {
   position: fixed; /* Fijo a la izquierda */
-  top: 200px; /* Debajo del navbar */
+  top: 165px; /* Debajo del navbar */
   left: 0;
   width: 18%; /* Ocupa un 18% del ancho de la pantalla */
   height: calc(100vh - 200px); /* Altura completa menos el tamaño del navbar */
@@ -61,4 +61,28 @@
 .separador {
   width: 20px; /* Espacio de separación */
   background-color: transparent; /* Puede personalizarse si quieres un borde visible */
+}
+
+.custom-icon {
+  font-size: 30px;  /* Tamaño del icono */
+  color: red;       /* Color rojo */
+  vertical-align: middle;
+}
+
+.ficha{
+  cursor: pointer;
+}
+
+.spinner-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+  width: 100vw;
+  height: 100vh;
 }

@@ -18,6 +18,10 @@ export class EventoService {
     return this.http.get<any>(`${this.baseUrl}/usuarios/eventos?pageNo=${pageNo}&pageSize=${pageSize}&sortBy=${sortBy}&sortDir=${sortDir}`);
   }
 
+  getTodosLosEventos(): Observable<Evento[]> {
+    return this.http.get<Evento[]>(`${this.baseUrl}/usuarios/eventos/todos`);
+  }
+
   // Obtener eventos por grupo (opcional si lo necesitas)
   getEventosPorGrupo(grupoId: number): Observable<Evento[]> {
     return this.http.get<Evento[]>(`${this.baseUrl}/usuarios/eventos/grupo/${grupoId}`);

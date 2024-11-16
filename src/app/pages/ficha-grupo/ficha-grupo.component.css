@@ -62,15 +62,31 @@ color: #3f51b5;
 }
 
 .group-reviews {
-  grid-column: 1;
-  grid-row: 2;
- 
+  display: flex;
+  justify-content:  flex-start;
+  align-items:flex-start;
+  height: 100%; /* Usa toda la altura del contenedor */
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .group-events {
   grid-column: 2;
   grid-row: 1;
   
+}
+
+.review-card {
+  width: 100%; /* Se expande para ocupar todo el espacio horizontal */
+  max-width: 800px; /* Un ancho máximo para no estirarse demasiado */
+  margin: 0 auto; /* Centra el contenido horizontalmente */
+}
+
+.review-card h1.secciones {
+  font-size: 2rem;
+ 
+  margin-bottom: 20px;
 }
 
 .leave-review {
@@ -157,7 +173,15 @@ color: #3f51b5;
   font-weight: bold;
   margin-bottom: 8px;
 }
-
+.group-reviews img {
+  width: 100%; /* Imagen ocupa el 100% del ancho del contenedor */
+  height: auto; /* Mantiene la proporción de la imagen */
+  object-fit: contain; /* Asegura que la imagen se ajuste dentro del contenedor sin cortar partes importantes */
+  display: block; /* Elimina espacio adicional alrededor de la imagen */
+  max-width: 100%; /* Evita que la imagen crezca más allá del ancho del contenedor */
+  max-height: 100%; /* Evita que la imagen crezca más allá de la altura del contenedor */
+  align-items: center;
+}
 .custom-textarea {
   width: 90%;
   padding: 8px;
@@ -179,6 +203,44 @@ color: #3f51b5;
     justify-content: space-between;
     align-items: center;
     position: relative; 
+}
+
+.contratar-container {
+  text-align: center;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: auto;
+}
+
+.contratar-titulo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.contratar-descripcion {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.contratar-boton {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 18px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contratar-boton:hover {
+  background-color: #45A049;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .rating-star {
@@ -515,6 +577,15 @@ color: #3f51b5;
     
     font-size: 36px;  /* Tamaño del icono */
     color: red;       /* Color rojo */
+  }
+
+  .group-reviews img {
+    width: 100%; /* Imagen ocupa el 100% del ancho del contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+    object-fit: contain; /* Asegura que la imagen se ajuste dentro del contenedor sin cortar partes importantes */
+    display: block; /* Elimina espacio adicional alrededor de la imagen */
+    max-width: 100%; /* Evita que la imagen crezca más allá del ancho del contenedor */
+    max-height: 100%; /* Evita que la imagen crezca más allá de la altura del contenedor */
   }
 }
 

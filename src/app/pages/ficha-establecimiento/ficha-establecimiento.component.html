@@ -38,30 +38,44 @@
     <!-- Parte inferior izquierda: Valoraciones del grupo -->
     <div class="group-reviews">
       
-      <h1 class="secciones">Dejar una valoración</h1>
-  <mat-card class="review-card">
-    <mat-card-header>
-      <h3>Valora este establecimiento y cuéntanos tu experiencia</h3>
-      
-    </mat-card-header>
-    <mat-card-content>
-      <div class="full-width">
-        <label for="comentario" class="custom-label">Comentario</label>
-        <textarea id="comentario" class="custom-textarea" placeholder="Escribe tu comentario aquí..." rows="3"[(ngModel)]="comentario"></textarea>
+     @if(rol != 'ROLE_ESTABLECIMIENTO' && rol != 'ROLE_GRUPO'){
+      <mat-card class="review-card">
+        <h1 class="secciones">Dejar una valoración</h1>
+        <mat-card-header>
+          <h3>Valora este establecimiento y cuéntanos tu experiencia</h3>
+          
+        </mat-card-header>
+        <mat-card-content>
+          <div class="full-width">
+            <label for="comentario" class="custom-label">Comentario</label>
+            <textarea id="comentario" class="custom-textarea" placeholder="Escribe tu comentario aquí..." rows="3"[(ngModel)]="comentario"></textarea>
+          </div>
+          <div class="rating-container">
+            <span class="rating-label">Calificación:</span>
+            <mat-icon class="star" (click)="seleccionarPuntuacion(1)">star_border</mat-icon>
+            <mat-icon class="star" (click)="seleccionarPuntuacion(2)">star_border</mat-icon>
+            <mat-icon class="star" (click)="seleccionarPuntuacion(3)">star_border</mat-icon>
+            <mat-icon class="star" (click)="seleccionarPuntuacion(4)">star_border</mat-icon>
+            <mat-icon class="star" (click)="seleccionarPuntuacion(5)">star_border</mat-icon>
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-raised-button color="primary" (click)="enviarValoracion()">Enviar valoración</button>
+        </mat-card-actions>
+      </mat-card>
+     }@else if(rol == 'ROLE_ESTABLECIMIENTO'){
+      <img src="../../../assets/imagenes/logo.png">
+     }@else {
+      <div class="contact-establecimiento-container">
+        <h1 class="contact-title">¿Interesado en ofrecer tus servicios?</h1>
+        <p class="contact-description">
+          Ponte en contacto con el establecimiento y envíales un correo para ofrecer tus servicios y discutir las oportunidades.
+        </p>
+        <button mat-raised-button class="contact-button" (click)="enviarCorreo()">Enviar Correo</button>
       </div>
-      <div class="rating-container">
-        <span class="rating-label">Calificación:</span>
-        <mat-icon class="star" (click)="seleccionarPuntuacion(1)">star_border</mat-icon>
-        <mat-icon class="star" (click)="seleccionarPuntuacion(2)">star_border</mat-icon>
-        <mat-icon class="star" (click)="seleccionarPuntuacion(3)">star_border</mat-icon>
-        <mat-icon class="star" (click)="seleccionarPuntuacion(4)">star_border</mat-icon>
-        <mat-icon class="star" (click)="seleccionarPuntuacion(5)">star_border</mat-icon>
-      </div>
-    </mat-card-content>
-    <mat-card-actions align="end">
-      <button mat-raised-button color="primary" (click)="enviarValoracion()">Enviar valoración</button>
-    </mat-card-actions>
-  </mat-card>
+     }
+
+  
     </div>
   
     <!-- Parte superior derecha: Eventos del grupo -->
@@ -90,7 +104,7 @@
                       <mat-card-title>{{ evento.nombreGrupo }}</mat-card-title>
                     </div>
                     <div class="content-right">
-                      <p>Dirección: C/ {{ obtenerEstilo(evento.nombreGrupo) }}</p>
+                      <p>Dirección: C/{{ obtenerDireccion(evento.nombreEstablecimiento) }}</p>
                     </div>
                   </div>
                 </mat-card-content>

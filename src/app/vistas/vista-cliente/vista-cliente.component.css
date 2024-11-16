@@ -17,13 +17,13 @@
 .cuerpo {
   display: flex;
   flex-grow: 1;
-  margin-top: 200px; /* Espacio debajo del navbar */
+  margin-top: 165px; /* Espacio debajo del navbar */
   height: calc(100vh - 200px); /* Altura completa menos el tamaño del navbar */
 }
 
 .filtro-container {
   position: fixed; /* Fijo a la izquierda */
-  top: 200px; /* Debajo del navbar */
+  top: 165px; /* Debajo del navbar */
   left: 0;
   width: 18%; /* Ocupa un 18% del ancho de la pantalla */
   height: calc(100vh - 200px); /* Altura completa menos el tamaño del navbar */

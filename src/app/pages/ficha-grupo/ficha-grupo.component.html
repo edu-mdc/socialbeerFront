@@ -35,31 +35,45 @@
   
     <!-- Parte inferior izquierda: Valoraciones del grupo -->
     <div class="group-reviews">
+
+      @if(rol != 'ROLE_ESTABLECIMIENTO' && rol != 'ROLE_GRUPO'){
+       
+        <mat-card class="review-card">
+          <h1 class="secciones">Dejar una valoración</h1>
+          <mat-card-header>
+            <h3>Valora este grupo y cuéntanos tu experiencia</h3>
+            
+          </mat-card-header>
+          <mat-card-content>
+            <div class="full-width">
+              <label for="comentario" class="custom-label">Comentario</label>
+              <textarea id="comentario" class="custom-textarea" placeholder="Escribe tu comentario aquí..." rows="3"[(ngModel)]="comentario"></textarea>
+            </div>
+            <div class="rating-container">
+              <span class="rating-label">Calificación:</span>
+              <mat-icon class="star" (click)="seleccionarPuntuacion(1)">star_border</mat-icon>
+              <mat-icon class="star" (click)="seleccionarPuntuacion(2)">star_border</mat-icon>
+              <mat-icon class="star" (click)="seleccionarPuntuacion(3)">star_border</mat-icon>
+              <mat-icon class="star" (click)="seleccionarPuntuacion(4)">star_border</mat-icon>
+              <mat-icon class="star" (click)="seleccionarPuntuacion(5)">star_border</mat-icon>
+            </div>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <button mat-raised-button color="primary" (click)="enviarValoracion()">Enviar valoración</button>
+          </mat-card-actions>
+        </mat-card>
+      }@else if(rol == 'ROLE_GRUPO') {
+        <img src="../../../assets/imagenes/logo.png">
+      }@else {
+        <div class="contratar-container">
+          <h2 class="contratar-titulo">Contrata a este grupo para tu evento</h2>
+          <p class="contratar-descripcion">
+            Elige este grupo para hacer de tu evento una experiencia inolvidable.
+          </p>
+          <button mat-raised-button class="contratar-boton" (click)="openDialog(grupo?.id || 0, grupo?.grupo || '')" >Contratar</button>
+        </div>
+      }
       
-      <h1 class="secciones">Dejar una valoración</h1>
-  <mat-card class="review-card">
-    <mat-card-header>
-      <h3>Valora este grupo y cuéntanos tu experiencia</h3>
-      
-    </mat-card-header>
-    <mat-card-content>
-      <div class="full-width">
-        <label for="comentario" class="custom-label">Comentario</label>
-        <textarea id="comentario" class="custom-textarea" placeholder="Escribe tu comentario aquí..." rows="3"[(ngModel)]="comentario"></textarea>
-      </div>
-      <div class="rating-container">
-        <span class="rating-label">Calificación:</span>
-        <mat-icon class="star" (click)="seleccionarPuntuacion(1)">star_border</mat-icon>
-        <mat-icon class="star" (click)="seleccionarPuntuacion(2)">star_border</mat-icon>
-        <mat-icon class="star" (click)="seleccionarPuntuacion(3)">star_border</mat-icon>
-        <mat-icon class="star" (click)="seleccionarPuntuacion(4)">star_border</mat-icon>
-        <mat-icon class="star" (click)="seleccionarPuntuacion(5)">star_border</mat-icon>
-      </div>
-    </mat-card-content>
-    <mat-card-actions align="end">
-      <button mat-raised-button color="primary" (click)="enviarValoracion()">Enviar valoración</button>
-    </mat-card-actions>
-  </mat-card>
     </div>
   
     <!-- Parte superior derecha: Eventos del grupo -->

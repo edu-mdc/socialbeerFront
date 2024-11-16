@@ -11,6 +11,10 @@
       </div>
       <div class="separador"></div>
       <div class="mostrar-container">
+        <h4 class="ficha" (click)="verFicha()">Mi ficha
+          <span class="material-symbols-outlined custom-icon">
+          arrow_forward
+          </span></h4>
         <app-mostrar class="mostrar"></app-mostrar>
       </div>
     </div>
@@ -19,5 +23,10 @@
     <div class="footer-container">
      
     </div>
+    @if(spinner){
+      <div class="spinner-container">
+        <mat-spinner></mat-spinner>
+      </div>
+    }
   </div>
   

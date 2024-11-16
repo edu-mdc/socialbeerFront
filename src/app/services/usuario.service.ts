@@ -17,4 +17,8 @@ export class UsuarioService {
     // Ya no necesitas incluir el token aquí. El interceptor lo añadirá automáticamente.
     return this.http.get<Usuario>(`${this.baseUrl}/${id}`);
   }
+
+  getUsuarioPorEstablecimientoId(idEstablecimiento: number): Observable<Usuario> {
+    return this.http.get<Usuario>(`${this.baseUrl}/establecimientoId/${idEstablecimiento}`);
+  }
 }

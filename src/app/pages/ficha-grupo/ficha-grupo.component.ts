@@ -21,6 +21,9 @@ import { ValoracionDeGrupoDTO } from '../../interfaces/ValoracionGrupo';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 import { Subject } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ContratarComponent } from '../../dialog/contratar/contratar.component';
 
 @Component({
   selector: 'app-ficha-grupo',
@@ -39,6 +42,7 @@ export class FichaGrupoComponent implements OnInit{
   clienteId: number = 0;
   userId: string | null = null;
   cliente:Cliente |null = null;
+  rol: string | null = null;
 
   valoraciones: ValoracionDeGrupoDTO[] = [];
   puntuacionMedia: number = 0;
@@ -57,9 +61,10 @@ export class FichaGrupoComponent implements OnInit{
   private route = inject(ActivatedRoute);
   private establecimientoService = inject(EstablecimientoService);
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private dialog: MatDialog,) {}
 
   ngOnInit(): void {
+    this.rol = localStorage.getItem('rol');
     this.palabrasProhibidas = palabrasProhibidas;
     this.grupoId = +this.route.snapshot.paramMap.get('id')!;
     this.userId = localStorage.getItem("userId");
@@ -282,9 +287,27 @@ console.log(this.cliente)
   volver(){
     this.spinner = true;
     setTimeout(() => {
-      this.router.navigate(['/cliente']).then(() => {
+      this.router.navigate(['/grupo']).then(() => {
         this.spinner = false;
       });
     }, 1000);
   }
+
+  openDialog(grupoId: number, grupo: string): void {
+    const dialogRef = this.dialog.open(ContratarComponent, {
+      width: '550px',
+      height: '250px',
+      data: { 
+        userId: localStorage.getItem('userId'),
+        grupoId: grupoId
+       } // Puedes ajustar el tamaño según prefieras
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.eventoModificado) {
+        // Realiza las actualizaciones necesarias
+        this.updateSubject.next();
+      }
+    });
+}
 }

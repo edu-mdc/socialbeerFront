@@ -23,6 +23,8 @@ import 'sweetalert2/src/sweetalert2.scss'
 import { Subject } from 'rxjs';
 import { ValoracionDeEstablecimientoDTO } from '../../interfaces/ValoracionEstablecimiento';
 import { ValoracionDeEstablecimientoService } from '../../services/valoracion-de-establecimiento.service';
+import { Usuario } from '../../interfaces/Usuario';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-ficha-establecimiento',
@@ -41,6 +43,10 @@ export class FichaEstablecimientoComponent implements OnInit{
   clienteId: number = 0;
   userId: string | null = null;
   cliente:Cliente |null = null;
+  rol: string | null = null;
+  usuario: Usuario | null = null;
+
+  establecimientos: Establecimiento[] = [];
 
   valoraciones: ValoracionDeEstablecimientoDTO[] = [];
   puntuacionMedia: number = 0;
@@ -58,15 +64,18 @@ export class FichaEstablecimientoComponent implements OnInit{
   private grupoService = inject(GrupoService);
   private route = inject(ActivatedRoute);
   private establecimientoService = inject(EstablecimientoService);
+  private usuarioService = inject(UsuarioService);
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
+    this.rol = localStorage.getItem('rol');
     this.palabrasProhibidas = palabrasProhibidas;
     this.establecimientoId = +this.route.snapshot.paramMap.get('id')!;
     console.log("establecimientoid:" + this.establecimientoId)
     this.userId = localStorage.getItem("userId");
-
+    this.obtenerEstablecimientos();
+    this.obternerUsuarioEstablecimiento();
     // Suscribe a updateSubject para actualizar datos
     this.updateSubject.subscribe(() => {
       this.cargarDatosIniciales();
@@ -91,10 +100,28 @@ export class FichaEstablecimientoComponent implements OnInit{
     });
   }
 
+  private obternerUsuarioEstablecimiento():void{
+    this.usuarioService.getUsuarioPorEstablecimientoId(this.establecimientoId).subscribe({
+      next: (usuario) =>{
+        this.usuario = usuario;
+      },
+      error: (error) => {
+         console.error('Error al obtener el usuario:', error); 
+        }
+    })
+  }
+
   private obtenerEstablecimiento(): void {
     this.establecimientoService.getEstablecimientoById(this.establecimientoId).subscribe({
       next: (establecimiento) => { this.establecimiento = establecimiento; },
       error: (error) => { console.error('Error al obtener los detalles del establecimiento:', error); }
+    });
+  }
+
+  private obtenerEstablecimientos(): void {
+    this.establecimientoService.getEstablecimientos().subscribe({
+      next: (response) => { this.establecimientos = response.contenido || []; },
+      error: (error) => { console.error('Error al obtener los establecimientos', error); }
     });
   }
 
@@ -112,6 +139,15 @@ export class FichaEstablecimientoComponent implements OnInit{
       next: (response) => { this.grupos = response.contenido || []; },
       error: (error) => { console.error('Error al obtener los grupos', error); }
     });
+  }
+
+  obtenerDireccion(nombreEstablecimiento: string): string {
+   
+    const establecimiento = this.establecimientos.find(e => {
+    
+      return e.establecimiento === nombreEstablecimiento;
+    });
+    return establecimiento ? establecimiento.direccion : 'Dirección no disponible';
   }
 
   private obtenerValoraciones(): void {
@@ -285,9 +321,18 @@ console.log(this.cliente)
   volver(){
     this.spinner = true;
     setTimeout(() => {
-      this.router.navigate(['/cliente']).then(() => {
+      this.router.navigate(['/establecimiento']).then(() => {
         this.spinner = false;
       });
     }, 1000);
+  }
+
+  enviarCorreo(): void {
+    const destinatario = this.usuario?.email; // Reemplaza con la dirección de correo del establecimiento
+    const asunto = encodeURIComponent('Oferta de servicios');
+    const cuerpo = encodeURIComponent('Estimado/a, estoy interesado en ofrecer mis servicios...');
+  
+    // Abre el cliente de correo predeterminado
+    window.location.href = `mailto:${destinatario}?subject=${asunto}&body=${cuerpo}`;
   }
 }

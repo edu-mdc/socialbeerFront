@@ -35,9 +35,10 @@ export class MostrarComponent implements OnInit {
   spinner: boolean = false;
   userId:string | null = null;
   grupo: Grupo | null = null;
+  tabLabel: string = "Eventos";
   
   establecimiento: Establecimiento | null = null;
-  
+  fechaActual = new Date();
 
   valoracionesEstablecimiento: ValoracionDeEstablecimientoDTO[] = [];
   puntuacionesMediasEstablecimientos: { [key: string]: number } = {};
@@ -73,6 +74,7 @@ export class MostrarComponent implements OnInit {
   currentPageEventosEstablecimiento: number = 0;
 
   eventos: Evento[] = [];
+  eventosPaginados: Evento[] = [];
   totalEventos: number = 0;
   pageSizeEventos: number = 6;
   currentPageEventos: number = 0;
@@ -86,7 +88,11 @@ export class MostrarComponent implements OnInit {
     this.obtenerGrupos();
     this.obtenerEstablecimientos();
     this.obtenerEventos();
+    this.fechaActual = new Date();
     this.rol = localStorage.getItem('rol');  // Obtener eventos también
+    if(this.rol == 'ROLE_GRUPO' || this.rol == 'ROLE_ESTABLECIMIENTO'){
+      this.tabLabel = "Mis eventos"
+    }
     this.userId = localStorage.getItem('userId');
     console.log('userId desde localStorage:', this.userId);
     this.obtenerGrupoLoginYSusEventos(Number(this.userId));
@@ -125,7 +131,7 @@ export class MostrarComponent implements OnInit {
           console.log('Grupo recibido:', grupo);
           this.eventoService.getEventosPorGrupo(grupo.id).subscribe({
             next: (eventos: Evento[]) => {
-              this.eventosGrupo = eventos;
+              this.eventosGrupo =this.filterFutureEvents(eventos);
               this.totalEventosGrupo = eventos.length;
               this.actualizarEventosGrupoPaginados();
               console.log('Eventos del grupo:', eventos);
@@ -163,7 +169,7 @@ export class MostrarComponent implements OnInit {
           console.log('Establecimiento recibido:', establecimiento);
           this.eventoService.getEventosPorEstablecimiento(establecimiento.id).subscribe({
             next: (eventos: Evento[]) => {
-              this.eventosEstablecimiento = eventos;
+              this.eventosEstablecimiento = this.filterFutureEvents(eventos);
               this.totalEventosEstablecimiento = eventos.length;
               this.actualizarEventosEstablecimientoPaginados();
               console.log('Eventos del establecimiento:', eventos);
@@ -181,7 +187,7 @@ export class MostrarComponent implements OnInit {
       }
     });
   }
-  
+
   actualizarEventosEstablecimientoPaginados(): void {
     const startIndex = this.currentPageEventosEstablecimiento * this.pageSizeEventosEstablecimiento;
     const endIndex = startIndex + this.pageSizeEventosEstablecimiento;
@@ -234,15 +240,40 @@ export class MostrarComponent implements OnInit {
   }
 
   // Obtener Eventos
-  obtenerEventos(page: number = this.currentPageEventos, size: number = this.pageSizeEventos): void {
-    this.eventoService.getEventos(page, size).subscribe({
-      next: (response) => {
-        this.eventos = response.contenido;
-        this.totalEventos = response.totalElementos;
+  obtenerEventos(): void {
+    this.eventoService.getTodosLosEventos().subscribe({
+      next: (eventos) => {
+        this.eventos = this.filterFutureEvents(eventos);
+
+
+       this.totalEventos = this.eventos.length;
+        this.actualizarEventosPaginados();
+        console.log('Total eventos recibidos:', this.eventos.length);
+        this.eventos.forEach((evento) => {
+          console.log('fecha evento: ' + evento.fechaEvento);
+        });
       },
       error: (error) => console.error('Error al obtener los eventos', error)
     });
   }
+
+  actualizarEventosPaginados(): void {
+    const startIndex = this.currentPageEventos * this.pageSizeEventos;
+    const endIndex = startIndex + this.pageSizeEventos;
+    this.eventosPaginados = this.eventos.slice(startIndex, endIndex);
+  }
+
+  filterFutureEvents(events: Evento[]): Evento[] {
+  const currentDate = new Date(); // Obtén la fecha actual
+
+  return events.filter(event => {
+    // Convertir la fecha del evento desde el formato día-mes-año a un objeto Date
+    const [day, month, year] = event.fechaEvento.split('-').map(Number); // Divide y convierte cada parte a número
+    const eventDate = new Date(year, month - 1, day); // Crea un objeto Date (meses en Date empiezan desde 0)
+
+    return eventDate >= currentDate; // Compara la fecha del evento con la fecha actual
+  });
+}
 
   // Manejar la paginación para grupos
   onPageChange(event: PageEvent): void {
@@ -262,7 +293,7 @@ export class MostrarComponent implements OnInit {
   onPageChangeEventos(event: PageEvent): void {
     this.currentPageEventos = event.pageIndex;
     this.pageSizeEventos = event.pageSize;
-    this.obtenerEventos(this.currentPageEventos, this.pageSizeEventos);
+    this.actualizarEventosPaginados();
   }
 
   onPageChangeEventosGrupo(event: PageEvent): void {
@@ -380,5 +411,11 @@ openDialog2(eventoId: number): void {
       this.updateSubject.next();
     }
   });
+}
+
+esFechaFutura(fechaEvento: string): boolean {
+  const [day, month, year] = fechaEvento.split('-').map(Number);
+  const eventDate = new Date(year, month - 1, day); // Crea un objeto Date con el mes ajustado
+  return eventDate >= this.fechaActual; // Compara la fecha del evento con la fecha actual
 }
 }
