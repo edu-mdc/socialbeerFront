@@ -18,7 +18,10 @@ export class EstablecimientoService {
     return this.http.get<any>(`${this.baseUrl}/usuarios/establecimientos?pageNo=${pageNo}&pageSize=${pageSize}&sortBy=${sortBy}&sortDir=${sortDir}`);
   }
 
-  
+  // Obtener todos los establecimientos sin paginación
+getTodosLosEstablecimientos(): Observable<Establecimiento[]> {
+  return this.http.get<Establecimiento[]>(`${this.baseUrl}/usuarios/establecimientos/todos`);
+}
 
   getEstablecimientoByUserId(userId: number): Observable<Establecimiento> {
     return this.http.get<Establecimiento>(`${this.baseUrl}/usuarios/establecimientos/usuario/${userId}`);

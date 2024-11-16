@@ -320,13 +320,27 @@ console.log(this.cliente)
 
   volver(){
     this.spinner = true;
-    setTimeout(() => {
-      this.router.navigate(['/establecimiento']).then(() => {
-        this.spinner = false;
-      });
-    }, 1000);
+    if(this.rol == 'ROLE_CLIENTE'){
+    setTimeout(() => { 
+        this.router.navigate(['/cliente']).then(() => {
+          this.spinner = false;
+        });
+      }, 1000);
+      }else if (this.rol == 'ROLE_GRUPO'){
+        setTimeout(() => { 
+          this.router.navigate(['/grupo']).then(() => {
+            this.spinner = false;
+          });
+        }, 1000);
+      }else{
+        setTimeout(() => { 
+          this.router.navigate(['/establecimiento']).then(() => {
+            this.spinner = false;
+          });
+        }, 1000);
+      }
+     
   }
-
   enviarCorreo(): void {
     const destinatario = this.usuario?.email; // Reemplaza con la dirección de correo del establecimiento
     const asunto = encodeURIComponent('Oferta de servicios');

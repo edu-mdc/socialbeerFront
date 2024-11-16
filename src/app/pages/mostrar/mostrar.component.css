@@ -169,6 +169,18 @@
   margin-top: 10px;
 }
 
+.comprar-btn-eliminar {
+  background-color: rgb(252, 89, 60);
+  color: white;
+  border-radius: 60px; /* Bordes redondeados */
+  border: none;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  padding: 10px 20px; /* Un poco de padding para que se vea mejor */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transición suave */
+  margin-top: 10px;
+}
+
 .comprar-btn:hover {
   background-color: #8f9eff; /* Color más oscuro al pasar el mouse */
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3); /* Incremento de la sombra */

@@ -14,13 +14,13 @@ import { VistaEstablecimientoComponent } from './vistas/vista-establecimiento/vi
 import { VistaGrupoComponent } from './vistas/vista-grupo/vista-grupo.component';
 
 export const routes: Routes = [
-    {path:"",component:LoginComponent},
-    {path:"registro",component:RegistroComponent},
-    {path:"inicio", component:InicioComponent},
+    {path:"",component:LoginComponent, canActivate:[authGuard]},
+    {path:"registro",component:RegistroComponent, canActivate:[authGuard]},
+    {path:"inicio", component:InicioComponent, canActivate:[authGuard]},
     {path:"cliente", component:VistaClienteComponent, canActivate:[authGuard]},
     {path:"establecimiento", component:VistaEstablecimientoComponent, canActivate:[authGuard]},
     {path:"grupo", component:VistaGrupoComponent, canActivate:[authGuard]},
     {path:"fichaGrupo/:id", component:FichaGrupoComponent, canActivate:[authGuard]},
     {path:"fichaEstablecimiento/:id", component:FichaEstablecimientoComponent, canActivate:[authGuard]},
-    {path:"fichaEvento/:id", component: FichaEventoComponent}
+    {path:"fichaEvento/:id", component: FichaEventoComponent, canActivate:[authGuard]}
 ];

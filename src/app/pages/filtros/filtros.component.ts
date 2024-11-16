@@ -1,4 +1,9 @@
-import {ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import {AsyncPipe} from '@angular/common';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -6,37 +11,70 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { CommonModule } from '@angular/common'; 
+import { provinciasEspana } from '../../settings/provincias';
+import { GrupoService } from '../../services/grupo.service';
+import { EstablecimientoService } from '../../services/establecimiento.service';
+import { Establecimiento } from '../../interfaces/Establecimiento';
 
 @Component({
   selector: 'app-filtros',
   standalone: true,
-  imports: [CommonModule,MatIconModule,MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatToolbarModule],
+  imports: [CommonModule,MatIconModule,MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatToolbarModule,FormsModule,MatAutocompleteModule,ReactiveFormsModule,AsyncPipe ],
   templateUrl: './filtros.component.html',
   styleUrl: './filtros.component.css'
 })
 export class FiltrosComponent implements OnInit{
-  showFilters = false;  // Para controlar la visibilidad del contenedor
-  isMobile = false;     // Para detectar si es un dispositivo móvil
+ 
+  provinciasEspana: string[] = [];
 
-  ngOnInit(): void {
-    this.checkScreenSize();
+  myControl = new FormControl('');
+  establecimientos:Establecimiento [] = [];
+  filteredOptions: Observable<string[]> | undefined;
+
+  
+
+constructor(private grupoServicio: GrupoService, private establecimientoService: EstablecimientoService	){}
+  
+
+ngOnInit(): void {
+    
+    this.provinciasEspana = provinciasEspana;
+    // this.obtenerTodosLosEstablecimientos();
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || ''))
+    );
+  
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.checkScreenSize();
+  obtenerTodosLosGrupos():void{
+    this.grupoServicio.getGrupos()
   }
 
-  checkScreenSize() {
-    this.isMobile = window.innerWidth <= 768; // Ajustar el umbral para móviles
-    if (!this.isMobile) {
-      this.showFilters = true;  // Mostrar siempre los filtros en pantallas grandes
-    } else {
-      this.showFilters = false; // Ocultar filtros en pantallas pequeñas por defecto
-    }
+  // obtenerTodosLosEstablecimientos(): void {
+  //   this.establecimientoService.getTodosLosEstablecimientos().subscribe({
+  //     next: (response) => {
+  //       this.establecimientos = response;
+
+  //       // Verifica que `this.establecimientos` es un array antes de usar `forEach`
+       
+  //         this.establecimientos.forEach((establecimiento, index) => {
+  //           console.log("Establecimientos biscados  " + (index + 1) + ": " + establecimiento.establecimiento);
+  //         });
+       
+  //     },
+  //     error: (error) => {
+  //       console.error('Error al obtener los establecimientos:', error);
+  //     }
+  //   });
+  // }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.establecimientos
+      .map(est => est.establecimiento) // Obtener los nombres de los establecimientos
+      .filter(name => name.toLowerCase().includes(filterValue)); // Filtrar por el nombre
   }
 
-  toggleFilters() {
-    this.showFilters = !this.showFilters;  // Alternar entre mostrar y ocultar
-  }
+
 }
