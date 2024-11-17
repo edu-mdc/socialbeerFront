@@ -22,7 +22,6 @@ import { ValoracionDeEstablecimientoDTO } from '../../interfaces/ValoracionEstab
 import { ValoracionDeEstablecimientoService } from '../../services/valoracion-de-establecimiento.service';
 import { ValoracionDeGrupoService } from '../../services/valoracion-de-grupo.service';
 import { FormsModule } from '@angular/forms';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-mostrar',
@@ -419,63 +418,4 @@ esFechaFutura(fechaEvento: string): boolean {
   const eventDate = new Date(year, month - 1, day); // Crea un objeto Date con el mes ajustado
   return eventDate >= this.fechaActual; // Compara la fecha del evento con la fecha actual
 }
-
-cancelar(eventoId: number, fechaContrato: string) {
-  // Convierte la fecha de contratación (string) en un objeto Date
-  const [day, month, year] = fechaContrato.split('-').map(Number);
-  const fechaContratoDate = new Date(year, month - 1, day); // Los meses comienzan en 0 en JavaScript
-
-  // Suma 2 días a la fecha de contratación
-  const fechaLimite = new Date(fechaContratoDate);
-  fechaLimite.setDate(fechaLimite.getDate() + 2);
-
-  // Compara la fecha límite con la fecha actual
-  if (this.fechaActual > fechaLimite) {
-    // Si han pasado más de 2 días, no se puede cancelar
-    Swal.fire({
-      title: "No puedes cancelar el evento",
-      text: "Han pasado más de 2 días desde la fecha de contratación.",
-      icon: "error",
-      confirmButtonColor: "#d33",
-      confirmButtonText: "Aceptar"
-    });
-    return; // Salimos de la función
-  }
-
-  // Si no han pasado 2 días, mostrar la alerta para confirmar la cancelación
-  Swal.fire({
-    title: "¿Quieres cancelar el evento?",
-    text: "No podrás revertir esto.",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Sí, cancelar",
-    cancelButtonText: "No"
-  }).then((result) => {
-    if (result.isConfirmed) {
-      // Llamada al servicio para eliminar el evento
-      this.eventoService.eliminarEvento(eventoId).subscribe({
-        next: () => {
-          Swal.fire({
-            title: "¡Cancelado!",
-            text: "El evento ha sido cancelado exitosamente.",
-            icon: "success"
-          });
-          this.updateSubject.next();
-          // Aquí puedes actualizar la lista de eventos si es necesario
-        },
-        error: (error) => {
-          console.error('Error al eliminar el evento', error);
-          Swal.fire({
-            title: "Error",
-            text: "No se pudo cancelar el evento.",
-            icon: "error"
-          });
-        }
-      });
-    }
-  });
-}
-
 }

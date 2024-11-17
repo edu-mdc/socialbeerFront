@@ -1,97 +1,55 @@
-/* Contenedor de Filtros */
-.filter-container {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-  padding: 15px; /* Reduce el padding */
-  max-width: 280px; /* Mantén el ancho más compacto */
-  margin: 0 auto;
-}
+/* Estilos para el contenedor de filtros */
 
-/* Secciones de Filtros */
-.filter-section h3 {
-  font-size: 14px; /* Reduce aún más el tamaño de la fuente */
-  font-weight: 500; /* Haz que el texto sea más delgado */
-  margin-bottom: 5px; /* Reduce el espacio debajo del título */
-  color: #333;
-}
 
-/* Inputs y Selects */
-
-mat-select, mat-input {
-  font-size: 18px; /* Ajusta el tamaño de la fuente en los elementos de entrada */
-}
-
-/* Checkboxes */
-.checkbox-grid {
+/* Estilo para los checkboxes en pantallas grandes (2 columnas) */
+.checkbox-columns {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 5px; /* Reduce el espacio entre las opciones */
-  font-size: 11px; /* Reduce el tamaño de la fuente de las opciones */
+  gap: 10px;
 }
 
-/* Botones de Filtro */
-.filter-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 8px; /* Reduce el espacio encima de los botones */
+/* Pantallas móviles: una sola columna */
+@media (max-width: 768px) {
+  .checkbox-columns.single-column {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-container {
+    width: 100%;
+    top: 60px;
+    left: 0;
+    padding: 10px;
+    position: fixed;
+  }
 }
 
 .filter-buttons button {
-  padding: 4px 8px; /* Reduce el padding de los botones */
+  margin-top: 15px;
+  padding: 10px 20px;
+  margin-right: 10px;
+  background-color: #007bff;
   border: none;
   border-radius: 4px;
-  font-size: 11px; /* Reduce aún más el tamaño de la fuente */
-  color: #fff;
+  color: white;
   cursor: pointer;
 }
 
-#applyFilters {
-  background-color: #007bff;
-}
-
-#clearFilters {
+.filter-buttons button#clearFilters {
   background-color: #dc3545;
 }
 
-#applyFilters:hover {
+.filter-buttons button:hover {
   background-color: #0056b3;
 }
 
-#clearFilters:hover {
+.filter-buttons button#clearFilters:hover {
   background-color: #c82333;
 }
 
-/* General */
-.large-input, .large-select {
-  width: 100%;
-  font-size: 12px; /* Tamaño de fuente más pequeño para inputs y selects */
-}
-
-.example-full-width {
-  width: 100%; /* Asegúrate de que el input ocupe el 100% del contenedor */
-    
+.large-input {
+  width: 90%;
 }
 
 .large-select {
-  width: 100%; /* Asegúrate de que el select ocupe el 100% del contenedor */
- 
-}
-
-.example-form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
-}
-
-.example-full-width {
-  width: 100%;
-}
-
-.filter-section label {
-  font-size: 18px;
-  font-weight: 600;
-  color: #0056b3;
-  display: block;
- margin-bottom: 0;
+  width: 90%;
 }

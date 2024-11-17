@@ -83,8 +83,8 @@ export class ContratarComponent implements OnInit{
         next: (response) => {
           Swal.fire({
             title: "Genial!",
-            text: "el grupo y tu teneis 2 dias para cancelar el evento",
-            imageUrl: "../../../assets/imagenes/logo.png",
+            text: "Evento creado a disfrutar.!!",
+            imageUrl: "../../../assets/imagenes/2547.jpg",
             imageWidth: 400,
             imageHeight: 200,
             imageAlt: "Custom image"
