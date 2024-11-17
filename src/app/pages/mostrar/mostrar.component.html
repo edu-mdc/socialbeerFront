@@ -27,6 +27,7 @@
               <div class="event-details">
                 <p class="contratado"><b>Contratado: </b>{{ evento.fechaContratacion }}</p>
                 <button class="comprar-btn" (click)="openDialog2(evento.id)"><mat-icon>edit</mat-icon></button>
+                <button class="comprar-btn-eliminar" (click)="cancelar(evento.id, evento.fechaContratacion)"><mat-icon>delete</mat-icon></button>
               </div>
             </mat-card-content>
   
@@ -72,6 +73,7 @@
               <div class="event-details">
                 <p class="contratado"><b>Contratado: </b>{{ evento.fechaContratacion }}</p>
                 <button class="comprar-btn" (click)="openDialog2(evento.id)"><mat-icon>edit</mat-icon></button>
+                <button class="comprar-btn-eliminar" (click)="cancelar(evento.id, evento.fechaContratacion)"><mat-icon>delete</mat-icon></button>
               </div>
             </mat-card-content>
             <!-- Contenido con precio y estado separados -->
@@ -116,7 +118,7 @@
                 <mat-card-content>
                   <div class="event-details">
                     <p class="link-evento-establecimiento"  (click)="obtenerEstablecimientoPorNombre(evento.nombreEstablecimiento, $event)">{{ evento.nombreEstablecimiento }}</p>
-                    <p class="link-evento-espacio">|</p>
+                  
                     <p class="link-evento-grupo" (click)="obtenerGrupoPorNombre(evento.nombreGrupo, $event)">{{ evento.nombreGrupo }}</p>
                   </div>
                 </mat-card-content>

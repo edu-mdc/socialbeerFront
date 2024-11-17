@@ -1,50 +1,43 @@
-<!-- Toolbar visible on mobile -->
-<mat-toolbar>
-  <button mat-icon-button (click)="toggleFilters()" class="example-icon" aria-label="Example icon-button with menu icon">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span>Filtros</span>
-  <span class="example-spacer"></span>
-</mat-toolbar>
 
-<!-- Filtros desplegable controlado por showFilters -->
- @if(showFilters ){
+
+
   <div class="filter-container">
     <form class="example-form">
       <!-- Búsqueda por Nombre de Grupo -->
       <div class="filter-section">
-        <h3><u>Buscar Grupo</u></h3>
+        <h4>Buscar Grupo</h4>
         <mat-form-field class="example-full-width large-input">
           <mat-label>Grupo</mat-label>
-          <input matInput placeholder="Grupo">
+          <input matInput placeholder="">
         </mat-form-field>
       </div>
   
       <!-- Búsqueda por Nombre de Establecimiento -->
       <div class="filter-section">
-        <h3><u>Buscar Establecimiento</u></h3>
+        <h4>Buscar Establecimiento</h4>
         <mat-form-field class="example-full-width large-input">
           <mat-label>Establecimiento</mat-label>
-          <input matInput placeholder="Establecimiento">
+          <input matInput placeholder="">
         </mat-form-field>
       </div>
   
       <!-- Selección de Provincia -->
       <div class="filter-section">
-        <h3><u>Seleccionar Provincia</u></h3>
+        <h4>Seleccionar Provincia</h4>
         <mat-form-field class="large-select">
           <mat-label>- selecciona -</mat-label>
           <mat-select>
-            <mat-option value="one">First option</mat-option>
-            <mat-option value="two">Second option</mat-option>
+            @for(provincia of provincias; track $index){
+              <mat-option value="{{provincia}}"> {{provincia}}</mat-option>
+            }
           </mat-select>
         </mat-form-field>
       </div>
   
       <!-- Estilo Musical -->
       <div class="filter-section estilos-musicales">
-        <h3>Estilo Musical</h3>
-        <div class="checkbox-columns" [ngClass]="{'single-column': isMobile}">
+        <h4>Estilo Musical</h4>
+        <div class="checkbox-columns">
           <label>
             <input type="checkbox" value="rock"> Rock
           </label>
@@ -91,10 +84,9 @@
   
       <!-- Botones de Aplicar Cambios y Borrar Filtros -->
       <div class="filter-section filter-buttons">
-        <button id="applyFilters">Aplicar Cambios</button>
-        <button id="clearFilters">Borrar Filtros</button>
+        <button id="applyFilters" (click)="enviarFiltros()">Aplicar Cambios</button>
+        <button id="clearFilters" (click)="limpiarFiltros()">Borrar Filtros</button>
       </div>
     </form>
-  </div>
- }
+
 

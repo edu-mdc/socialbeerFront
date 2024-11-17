@@ -138,7 +138,7 @@ export class FichaGrupoComponent implements OnInit{
 
   private calcularPuntuacionMedia(): void {
     if (this.valoraciones.length > 0) {
-      const sumaPuntuaciones = this.valoraciones.reduce((sum, valoracion) => sum + valoracion.puntuacion, 0);
+      const sumaPuntuaciones = this.valoraciones.reduce((sum, valoracion) => sum + valoracion.puntuacion +1, 0);
       this.puntuacionMedia = parseFloat((sumaPuntuaciones / this.valoraciones.length).toFixed(1)); // Redondea a un decimal
     } else {
       this.puntuacionMedia = 0; // Si no hay valoraciones, la puntuación media es 0
@@ -185,7 +185,7 @@ export class FichaGrupoComponent implements OnInit{
     const valoracion = {
       comentario: this.comentario,
       fechaValoracion: fechaValoracion,
-      puntuacion: this.puntuacion,
+      puntuacion: this.puntuacion -1,
       cliente:this.cliente,
       grupo: this.grupo
     };
@@ -286,12 +286,28 @@ console.log(this.cliente)
 
   volver(){
     this.spinner = true;
-    setTimeout(() => {
-      this.router.navigate(['/grupo']).then(() => {
-        this.spinner = false;
-      });
-    }, 1000);
+    if(this.rol == 'ROLE_CLIENTE'){
+    setTimeout(() => { 
+        this.router.navigate(['/cliente']).then(() => {
+          this.spinner = false;
+        });
+      }, 1000);
+      }else if (this.rol == 'ROLE_GRUPO'){
+        setTimeout(() => { 
+          this.router.navigate(['/grupo']).then(() => {
+            this.spinner = false;
+          });
+        }, 1000);
+      }else{
+        setTimeout(() => { 
+          this.router.navigate(['/establecimiento']).then(() => {
+            this.spinner = false;
+          });
+        }, 1000);
+      }
+     
   }
+
 
   openDialog(grupoId: number, grupo: string): void {
     const dialogRef = this.dialog.open(ContratarComponent, {
