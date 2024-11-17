@@ -8,7 +8,7 @@
         <h4>Buscar Grupo</h4>
         <mat-form-field class="example-full-width large-input">
           <mat-label>Grupo</mat-label>
-          <input matInput placeholder="">
+          <input matInput [(ngModel)]="grupo" name="grupo" placeholder="">
         </mat-form-field>
       </div>
   
@@ -17,7 +17,7 @@
         <h4>Buscar Establecimiento</h4>
         <mat-form-field class="example-full-width large-input">
           <mat-label>Establecimiento</mat-label>
-          <input matInput placeholder="">
+          <input matInput [(ngModel)]="establecimiento" name="establecimiento" placeholder="">
         </mat-form-field>
       </div>
   
@@ -26,7 +26,7 @@
         <h4>Seleccionar Provincia</h4>
         <mat-form-field class="large-select">
           <mat-label>- selecciona -</mat-label>
-          <mat-select>
+          <mat-select [(ngModel)]="provincia" name="provincia">
             @for(provincia of provincias; track $index){
               <mat-option value="{{provincia}}"> {{provincia}}</mat-option>
             }
@@ -38,45 +38,11 @@
       <div class="filter-section estilos-musicales">
         <h4>Estilo Musical</h4>
         <div class="checkbox-columns">
-          <label>
-            <input type="checkbox" value="rock"> Rock
-          </label>
-          <label>
-            <input type="checkbox" value="jazz"> Jazz
-          </label>
-          <label>
-            <input type="checkbox" value="flamenco"> Flamenco
-          </label>
-          <label>
-            <input type="checkbox" value="clasica"> Clásica
-          </label>
-          <label>
-            <input type="checkbox" value="pop"> Pop
-          </label>
-          <label>
-            <input type="checkbox" value="hiphop"> Hip-Hop
-          </label>
-          <label>
-            <input type="checkbox" value="reggae"> Reggae
-          </label>
-          <label>
-            <input type="checkbox" value="electronica"> Electrónica
-          </label>
-          <label>
-            <input type="checkbox" value="heavymetal"> Heavy Metal
-          </label>
-          <label>
-            <input type="checkbox" value="blues"> Blues
-          </label>
-          <label>
-            <input type="checkbox" value="funk"> Funk
-          </label>
-          <label>
-            <input type="checkbox" value="salsa"> Salsa
-          </label>
-          <label>
-            <input type="checkbox" value="rnb"> R&B
-          </label>
+          @for (estilo of estilosMusicales; track $index) {
+            <label>
+              <input type="checkbox" class="check" [value]="estilo" (change)="toggleEstilo(estilo, $event)"> {{ estilo }}
+            </label>
+          }
         </div>
       </div>
   
@@ -84,7 +50,7 @@
   
       <!-- Botones de Aplicar Cambios y Borrar Filtros -->
       <div class="filter-section filter-buttons">
-        <button id="applyFilters" (click)="enviarFiltros()">Aplicar Cambios</button>
+        <button id="applyFilters" (click)="enviarFiltros()">Aplicar Filtros</button>
         <button id="clearFilters" (click)="limpiarFiltros()">Borrar Filtros</button>
       </div>
     </form>

@@ -180,7 +180,7 @@
                 <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Foto del grupo" (click)="verGrupo(grupo.id, $event)">
                 <mat-card-content (click)="verGrupo(grupo.id, $event)">
                   <div class="grupo-details">
-                  <p><span><b>Duracion: </b></span> {{grupo.duracion}}h</p>
+                  <p><span><b>Duración: </b></span> {{grupo.duracion}}h</p>
                   @if(rol == 'ROLE_ESTABLECIMIENTO'){
                     <p><span><b>Tarifa: </b></span>{{grupo.tarifa}}€</p>
                   }@else {
@@ -250,7 +250,7 @@
                   alt="Foto del establecimiento">
                 <mat-card-content>
                   <div class="location-details">
-                    <p>Direccion: {{ establecimiento.direccion }}</p>
+                    <p>Dirección: {{ establecimiento.direccion }}</p>
                     <p>Aforo: {{ establecimiento.aforo }}</p>
                   </div>
                 </mat-card-content>         

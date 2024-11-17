@@ -1,0 +1,23 @@
+export const estilosMusicales = [
+    'Rock',
+    'Jazz',
+    'Flamenco',
+    'Clásica',
+    'Pop',
+    'Hip-Hop',
+    'Reggae',
+    'Electrónica',
+    'Heavy Metal',
+    'Blues',
+    'Rumba',
+    'Gospel',
+    'Punk',
+    'Soul',
+    'Disco',
+    'Reggaeton',
+    'Trap',
+    'Indie',
+    'House',
+    'Techno',
+  ];
+  

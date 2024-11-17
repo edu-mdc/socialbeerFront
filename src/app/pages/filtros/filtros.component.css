@@ -45,8 +45,13 @@
 h4{
   color:#3f51b5 ;
   margin: 0px;
+  margin-bottom: 5px;
 }
 
 mat-label{
 font-size: 14px;
+}
+
+.checkbox-columns label {
+  font-size: 12px;
 }
