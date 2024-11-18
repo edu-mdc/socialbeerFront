@@ -6,11 +6,12 @@ import { GrupoService } from '../../services/grupo.service';
 import { Grupo } from '../../interfaces/Grupo';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
+import { FooterComponent } from "../../pages/footer/footer.component";
 
 @Component({
   selector: 'app-vista-grupo',
   standalone: true,
-  imports: [FiltrosComponent,MostrarComponent, GrupoComponent, MatProgressSpinnerModule],
+  imports: [FiltrosComponent, MostrarComponent, GrupoComponent, MatProgressSpinnerModule, FooterComponent],
   templateUrl: './vista-grupo.component.html',
   styleUrl: './vista-grupo.component.css'
 })

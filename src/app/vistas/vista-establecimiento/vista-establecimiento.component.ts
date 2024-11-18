@@ -7,11 +7,12 @@ import { Establecimiento } from '../../interfaces/Establecimiento';
 import { EstablecimientoService } from '../../services/establecimiento.service';
 import { Router } from '@angular/router';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { FooterComponent } from "../../pages/footer/footer.component";
 
 @Component({
   selector: 'app-vista-establecimiento',
   standalone: true,
-  imports: [EstablecimientoComponent, FiltrosComponent, MostrarComponent, EstablecimientoComponent, MatProgressSpinnerModule],
+  imports: [EstablecimientoComponent, FiltrosComponent, MostrarComponent, EstablecimientoComponent, MatProgressSpinnerModule, FooterComponent],
   templateUrl: './vista-establecimiento.component.html',
   styleUrl: './vista-establecimiento.component.css'
 })

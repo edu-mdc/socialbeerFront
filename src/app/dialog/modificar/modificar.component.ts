@@ -11,19 +11,20 @@ import { EstablecimientoService } from '../../services/establecimiento.service';
 import { EventoService } from '../../services/evento.service';
 import Swal from 'sweetalert2';
 import { Evento } from '../../interfaces/Evento';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-modificar',
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [MatFormFieldModule, MatInputModule, MatDatepickerModule, FormsModule, MatIconModule],
+  imports: [MatFormFieldModule, MatInputModule, MatDatepickerModule, FormsModule, MatIconModule,MatProgressSpinnerModule ],
   templateUrl: './modificar.component.html',
   styleUrl: './modificar.component.css'
 })
 export class ModificarComponent implements OnInit{
   selectedDate: Date | null = null;
   selectedTime: string | null = null;
- 
+  spinner: boolean = false;
   evento: Evento | null = null;
   rol: string | null = null;
 
@@ -44,6 +45,10 @@ export class ModificarComponent implements OnInit{
     });
   }
   onCancel(): void {
+    this.spinner = true;
+    setTimeout(() => {
+      this.spinner = false; // Ocultar el spinner después de la operación
+    }, 10000);
     this.dialogRef.close(); // Cierra el diálogo sin enviar datos
   }
 

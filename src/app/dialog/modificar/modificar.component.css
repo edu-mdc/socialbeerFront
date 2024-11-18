@@ -74,3 +74,16 @@
     background-color: #4cae4c; /* Verde más oscuro al hacer hover */
   }
   
+  .spinner-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+    width: 100vw;
+    height: 100vh;
+  }

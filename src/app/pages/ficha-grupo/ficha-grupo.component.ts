@@ -24,11 +24,12 @@ import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ContratarComponent } from '../../dialog/contratar/contratar.component';
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   selector: 'app-ficha-grupo',
   standalone: true,
-  imports: [ClienteComponent, MatButtonModule, MatCardModule, MatIconModule, MatFormFieldModule, MatProgressSpinnerModule, FormsModule],
+  imports: [ClienteComponent, MatButtonModule, MatCardModule, MatIconModule, MatFormFieldModule, MatProgressSpinnerModule, FormsModule, FooterComponent],
   templateUrl: './ficha-grupo.component.html',
   styleUrl: './ficha-grupo.component.css'
 })

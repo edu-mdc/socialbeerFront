@@ -10,15 +10,17 @@ import { provinciasEspana } from '../../settings/provincias';
 import { FiltrosService } from '../../services/filtros.service';
 import { FormsModule } from '@angular/forms';
 import { estilosMusicales } from '../../settings/estilos';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-filtros',
   standalone: true,
-  imports: [CommonModule,MatIconModule,MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatToolbarModule, FormsModule],
+  imports: [CommonModule,MatIconModule,MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatToolbarModule, FormsModule,MatProgressSpinnerModule],
   templateUrl: './filtros.component.html',
   styleUrl: './filtros.component.css'
 })
 export class FiltrosComponent implements OnInit{
+  spinner: boolean = false;
   provincias: string[] = [];
   grupo: string = '';
   establecimiento: string = '';
@@ -37,6 +39,10 @@ this.estilosMusicales = estilosMusicales;
 
 
   enviarFiltros(){
+    this.spinner = true;
+    setTimeout(() => {
+      this.spinner = false; 
+    }, 300); 
     const filtros = {
       grupo: this.grupo,
       establecimiento: this.establecimiento,
@@ -55,7 +61,10 @@ this.estilosMusicales = estilosMusicales;
     // Restablecer los checkboxes manualmente
     const checkboxes = document.querySelectorAll<HTMLInputElement>('.check');
     checkboxes.forEach(checkbox => checkbox.checked = false);
+
+     
   }
+  
   
   limpiarFiltros(){
     this.grupo = '';

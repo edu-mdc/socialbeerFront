@@ -49,7 +49,13 @@ color: #3f51b5;
   align-items: center;
   cursor: pointer;
   transition: transform 0.2s ease;
+  transition: text-shadow 0.3s ease;
 }
+
+.cabecera-volver:hover{
+  text-shadow: 0 0 5px rgba(0, 0, 255, 0.6);
+}
+
 
 .cabecera-volver:active {
   transform: scale(0.95); /* Reduce el tamaño al 95% al hacer clic */
@@ -390,6 +396,7 @@ color: #3f51b5;
   border-radius: 12px; /* Bordes redondeados */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
   transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
 }
 
 .event-card:hover {

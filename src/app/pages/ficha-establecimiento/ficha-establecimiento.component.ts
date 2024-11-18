@@ -25,11 +25,12 @@ import { ValoracionDeEstablecimientoDTO } from '../../interfaces/ValoracionEstab
 import { ValoracionDeEstablecimientoService } from '../../services/valoracion-de-establecimiento.service';
 import { Usuario } from '../../interfaces/Usuario';
 import { UsuarioService } from '../../services/usuario.service';
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   selector: 'app-ficha-establecimiento',
   standalone: true,
-  imports: [ClienteComponent, MatButtonModule, MatCardModule, MatIconModule, MatFormFieldModule, MatProgressSpinnerModule, FormsModule],
+  imports: [ClienteComponent, MatButtonModule, MatCardModule, MatIconModule, MatFormFieldModule, MatProgressSpinnerModule, FormsModule, FooterComponent],
   templateUrl: './ficha-establecimiento.component.html',
   styleUrl: './ficha-establecimiento.component.css'
 })

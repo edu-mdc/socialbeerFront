@@ -16,17 +16,20 @@ import { Cliente } from '../../interfaces/Cliente';
 import Swal from 'sweetalert2';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AccesoService } from '../../services/acceso.service';
-
+import { provinciasEspana } from '../../settings/provincias';
+import { poblacionesEspana } from '../../settings/poblaciones';
+import {MatSelectModule} from '@angular/material/select';
 
 @Component({
   selector: 'app-cliente',
   standalone: true,
-  imports: [MatProgressSpinnerModule, ReactiveFormsModule, MatExpansionModule, MatDatepickerModule, MatAccordion,MatFormFieldModule,MatIconModule,MatInputModule, MatNativeDateModule, MatButtonModule ],
+  imports: [MatProgressSpinnerModule,MatSelectModule, ReactiveFormsModule, MatExpansionModule, MatDatepickerModule, MatAccordion,MatFormFieldModule,MatIconModule,MatInputModule, MatNativeDateModule, MatButtonModule ],
   templateUrl: './cliente.component.html',
   styleUrl: './cliente.component.css'
 })
 export class ClienteComponent implements OnInit{
-
+  provinciasEspana:any;
+  poblacionesEspana: any;
   private renderer = inject(Renderer2); // Inyectamos Renderer2 para manejar eventos del DOM
   private elementRef = inject(ElementRef);
 
@@ -59,7 +62,8 @@ export class ClienteComponent implements OnInit{
   }
 
   ngOnInit() {
-    
+    this.provinciasEspana = provinciasEspana;
+    this.poblacionesEspana = poblacionesEspana;
     this.userId = localStorage.getItem('userId');
 
     if (this.userId) {

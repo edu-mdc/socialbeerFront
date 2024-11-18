@@ -22,10 +22,7 @@
     <button mat-fab color="primary" aria-label="Pagar" (click)="onPay()">Modificar&nbsp; 
       <mat-icon>payment</mat-icon>
   </button>
-  
-  <button mat-fab color="warn" aria-label="Pagar" (click)="eliminar()">Eliminar
-    <mat-icon>delete</mat-icon>
-  </button>
+
   }@else {
     <button mat-fab color="warn" aria-label="Pagar" (click)="eliminar()">Eliminar
       <mat-icon>delete</mat-icon>
@@ -34,3 +31,8 @@
  
   
 </div>
+@if(spinner){
+  <div class="spinner-container">
+  <mat-spinner></mat-spinner>
+</div>
+}
