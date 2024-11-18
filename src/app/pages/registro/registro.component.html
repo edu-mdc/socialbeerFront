@@ -1,41 +1,55 @@
-<div class="card-container">
-    <mat-card appearance="outlined">
-      <mat-card-header>
-        <mat-card-title>Registrarse</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <form class="form-custom" [formGroup]="formRegistro">
-          <mat-form-field class="input-custom">
-            <mat-label>Nombre Usuario</mat-label>
-            <input matInput formControlName="nombreUsuario" />
-          </mat-form-field>
-          <mat-form-field class="input-custom">
-            <mat-label>Password</mat-label>
-            <input matInput formControlName="password" type="password" />
-          </mat-form-field>
-          <mat-form-field class="input-custom">
-            <mat-label>Email</mat-label>
-            <input matInput formControlName="email" />
-          </mat-form-field>
-  
-          <!-- Mat Select para elegir el rol -->
-          <mat-form-field class="input-custom">
-            <mat-label>** Elige *</mat-label>
-            <!-- Asegúrate de que el formControlName esté configurado correctamente -->
-            <mat-select formControlName="rol">
-              <!-- Usando @for con track $index para iterar -->
-              @for (rol of roles; track $index) {
-                <mat-option [value]="rol.value">{{ rol.viewValue }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-  
-          <div class="flex">
-            <button mat-flat-button color="primary" (click)="registrarse()">Registrarse</button>
-            <button mat-flat-button color="warn" (click)="volver()" style="margin-left: 8px;">Volver</button>
-          </div>
-        </form>
-      </mat-card-content>
-    </mat-card>
+<div class="vista-cliente">
+  <div class="cliente-container">
+    <app-menu></app-menu>
   </div>
+
+ 
+    <div class="card-container">
+      <mat-card appearance="outlined">
+        <mat-card-header>
+          <mat-card-title>Registrarse</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form class="form-custom" [formGroup]="formRegistro">
+            <mat-form-field class="input-custom">
+              <mat-label>Nombre Usuario</mat-label>
+              <input matInput formControlName="nombreUsuario" />
+            </mat-form-field>
+            <mat-form-field class="input-custom">
+              <mat-label>Password</mat-label>
+              <input matInput formControlName="password" type="password" />
+            </mat-form-field>
+            <mat-form-field class="input-custom">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" />
+            </mat-form-field>
+
+            <mat-form-field class="input-custom">
+              <mat-label>Elige Rol</mat-label>
+              <mat-select formControlName="rol">
+                @for (rol of roles; track $index) {
+                  <mat-option [value]="rol.value">{{ rol.viewValue }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+
+            <div class="flex">
+              <button mat-flat-button color="primary" (click)="registrarse()">Registrarse</button>
+              <button mat-flat-button color="warn" (click)="volver()" style="margin-left: 8px;">Volver</button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
   
+
+  <div class="footer-container">
+    <app-footer></app-footer>
+  </div>
+
+  @if(spinner){
+    <div class="spinner-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  }
+</div>

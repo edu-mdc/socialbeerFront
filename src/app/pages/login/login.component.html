@@ -1,3 +1,8 @@
+<div class="vista-cliente">
+  <div class="cliente-container">
+    <app-menu></app-menu>
+  </div>
+
 <div class="card-container">
   <mat-card appearance="outlined">
     <mat-card-header>
@@ -23,4 +28,11 @@
 
   
   </div>
-  
+  <div class="footer-container">
+    <app-footer></app-footer>
+  </div>
+  @if(spinner){
+    <div class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+  }

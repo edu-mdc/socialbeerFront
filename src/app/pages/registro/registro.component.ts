@@ -9,16 +9,22 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { Usuario } from '../../interfaces/Usuario';
 import {MatSelectModule} from '@angular/material/select';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import Swal from 'sweetalert2';
+import { FooterComponent } from "../footer/footer.component";
+import { ClienteComponent } from "../cliente/cliente.component";
+import { MenuComponent } from "../menu/menu.component";
 
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [MatCardModule,MatFormFieldModule,MatInputModule,MatButtonModule,ReactiveFormsModule, MatSelectModule],
+  imports: [MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule, MatSelectModule, MatProgressSpinnerModule, FooterComponent, ClienteComponent, MenuComponent],
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.css'
 })
 export class RegistroComponent {
+  spinner: boolean=false;
+
 
   roles= [
     {value: 'CLIENTE', viewValue: 'CLIENTE'},
@@ -38,6 +44,7 @@ export class RegistroComponent {
   })
 
   registrarse(){
+    this.spinner = true;
     if(this.formRegistro.invalid)return;
 
     const objeto:Usuario={
@@ -50,7 +57,18 @@ export class RegistroComponent {
     this.accesoService.registrarse(objeto).subscribe({
       next: (data) => {
         console.log(data); // Verificar respuesta
-        this.router.navigate(['']);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        setTimeout(() => {
+          this.spinner = false;
+          this.router.navigate([''])
+      }, 700);
+     
       },
       error: (error) => {
         console.log("Error:", error);
@@ -61,6 +79,11 @@ export class RegistroComponent {
   }
 
   volver(){
-    this.router.navigate([''])
+    this.spinner = true;
+    setTimeout(() => {
+      this.spinner = false;
+      this.router.navigate([''])
+  }, 700);
+    
   }
 }
