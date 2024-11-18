@@ -25,6 +25,7 @@ import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { FiltrosService } from '../../services/filtros.service';
 
+
 @Component({
   selector: 'app-mostrar',
   standalone: true,
@@ -493,26 +494,44 @@ aplicarFiltros(): void {
   if (!this.filtros.grupo && !this.filtros.establecimiento && !this.filtros.provincia && (!this.filtros.estilos || this.filtros.estilos.length === 0)) {
     this.grupos = [...this.gruposOriginales];
     this.establecimientos = [...this.establecimientosOriginales];
-    this.eventosPaginados = [...this.eventos]; // Restaura los eventos originales
+    this.eventosPaginados = [...this.eventos];
+    this.eventosGrupoPaginados = [...this.eventosGrupo];
+    this.eventosEstablecimientoPaginados = [...this.eventosEstablecimiento];
 
     // Actualiza las paginaciones
     this.totalItems = this.grupos.length;
     this.totalEstablecimientos = this.establecimientos.length;
     this.totalEventos = this.eventos.length;
+    this.totalEventosGrupo = this.eventosGrupo.length;
+    this.totalEventosEstablecimiento = this.eventosEstablecimiento.length;
     return;
   }
 
   // Si hay filtros, aplica el filtrado
   let eventosFiltrados = [...this.eventos];
+  let eventosGrupoFiltrados = [...this.eventosGrupo];
+  let eventosEstablecimientoFiltrados = [...this.eventosEstablecimiento];
   let gruposFiltrados = [...this.grupos];
   let establecimientosFiltrados = [...this.establecimientos];
 
   // Filtra por nombre de grupo
   if (this.filtros.grupo) {
     const grupoFiltro = this.filtros.grupo.toLowerCase();
+    
     eventosFiltrados = eventosFiltrados.filter(evento =>
       evento.nombreGrupo.toLowerCase().includes(grupoFiltro)
     );
+    eventosGrupoFiltrados = eventosGrupoFiltrados.filter(evento =>
+      evento.nombreGrupo.toLowerCase().includes(grupoFiltro)
+    );
+
+    if (this.rol === 'ROLE_ESTABLECIMIENTO' && this.establecimiento) {
+      // Asegúrate de que el filtro de grupo también se aplica a eventosEstablecimientoFiltrados
+      eventosEstablecimientoFiltrados = eventosEstablecimientoFiltrados.filter(evento =>
+        evento.nombreGrupo.toLowerCase().includes(grupoFiltro)
+      );
+    }
+
     gruposFiltrados = gruposFiltrados.filter(grupo =>
       grupo.grupo.toLowerCase().includes(grupoFiltro)
     );
@@ -524,6 +543,23 @@ aplicarFiltros(): void {
     eventosFiltrados = eventosFiltrados.filter(evento =>
       evento.nombreEstablecimiento.toLowerCase().includes(establecimientoFiltro)
     );
+
+    if (this.rol === 'ROLE_GRUPO' && this.grupo) {
+      eventosGrupoFiltrados = eventosGrupoFiltrados.filter(evento =>
+        evento.nombreEstablecimiento.toLowerCase().includes(establecimientoFiltro)
+      );
+    } else {
+      eventosGrupoFiltrados = eventosGrupoFiltrados.filter(evento => {
+        const establecimiento = this.establecimientos.find(est =>
+          est.establecimiento.toLowerCase() === evento.nombreEstablecimiento.toLowerCase()
+        );
+        return establecimiento && establecimiento.establecimiento.toLowerCase().includes(establecimientoFiltro);
+      });
+    }
+
+    eventosEstablecimientoFiltrados = eventosEstablecimientoFiltrados.filter(evento =>
+      evento.nombreEstablecimiento.toLowerCase().includes(establecimientoFiltro)
+    );
     establecimientosFiltrados = establecimientosFiltrados.filter(establecimiento =>
       establecimiento.establecimiento.toLowerCase().includes(establecimientoFiltro)
     );
@@ -532,7 +568,28 @@ aplicarFiltros(): void {
   // Filtra por provincia
   if (this.filtros.provincia) {
     const provinciaFiltro = this.filtros.provincia.toLowerCase();
+
     eventosFiltrados = eventosFiltrados.filter(evento => {
+      const establecimiento = this.establecimientos.find(est =>
+        est.establecimiento.toLowerCase() === evento.nombreEstablecimiento.toLowerCase()
+      );
+      return establecimiento && establecimiento.provincia.toLowerCase() === provinciaFiltro;
+    });
+
+    if (this.rol === 'ROLE_GRUPO' && this.grupo) {
+      eventosGrupoFiltrados = eventosGrupoFiltrados.filter(evento =>
+        this.grupo!.provincia.toLowerCase() === provinciaFiltro
+      );
+    } else {
+      eventosGrupoFiltrados = eventosGrupoFiltrados.filter(evento => {
+        const grupo = this.grupos.find(gr =>
+          gr.grupo.toLowerCase() === evento.nombreGrupo.toLowerCase()
+        );
+        return grupo && grupo.provincia.toLowerCase() === provinciaFiltro;
+      });
+    }
+
+    eventosEstablecimientoFiltrados = eventosEstablecimientoFiltrados.filter(evento => {
       const establecimiento = this.establecimientos.find(est =>
         est.establecimiento.toLowerCase() === evento.nombreEstablecimiento.toLowerCase()
       );
@@ -549,20 +606,34 @@ aplicarFiltros(): void {
 
   // Filtra por estilos musicales
   if (this.filtros.estilos && this.filtros.estilos.length > 0) {
-    const estilosEnMinusculas = this.filtros.estilos.map((estilo:string) => estilo.toLowerCase());
+    const estilosEnMinusculas = this.filtros.estilos.map((estilo: string) => estilo.toLowerCase());
 
-    // Depuración: Muestra los estilos seleccionados en el filtro
-    console.log('Estilos del filtro:', estilosEnMinusculas);
+    // Filtrado para ROLE_GRUPO
+    if (this.rol === 'ROLE_GRUPO' && this.grupo) {
+      eventosGrupoFiltrados = eventosGrupoFiltrados.filter(evento =>
+        estilosEnMinusculas.includes(this.grupo!.estilo.toLowerCase())
+      );
+    } else {
+      eventosGrupoFiltrados = eventosGrupoFiltrados.filter(evento => {
+        const grupo = this.grupos.find(gr =>
+          gr.grupo.toLowerCase() === evento.nombreGrupo.toLowerCase()
+        );
+        return grupo && estilosEnMinusculas.includes(grupo.estilo.toLowerCase());
+      });
+    }
+
+    // Filtrado para ROLE_ESTABLECIMIENTO
+    eventosEstablecimientoFiltrados = eventosEstablecimientoFiltrados.filter(evento => {
+      const grupo = this.grupos.find(gr =>
+        gr.grupo.toLowerCase() === evento.nombreGrupo.toLowerCase()
+      );
+      return grupo && estilosEnMinusculas.includes(grupo.estilo.toLowerCase());
+    });
 
     eventosFiltrados = eventosFiltrados.filter(evento => {
       const grupo = this.grupos.find(gr =>
         gr.grupo.toLowerCase() === evento.nombreGrupo.toLowerCase()
       );
-      if (grupo) {
-        // Depuración: Muestra el estilo del grupo y si el filtro incluye este estilo
-        console.log('Estilo del grupo:', grupo.estilo);
-        console.log('¿El filtro incluye este estilo?', estilosEnMinusculas.includes(grupo.estilo.toLowerCase()));
-      }
       return grupo && estilosEnMinusculas.includes(grupo.estilo.toLowerCase());
     });
 
@@ -571,16 +642,26 @@ aplicarFiltros(): void {
     );
   }
 
-  // Asigna las listas filtradas
+  // Asigna las listas filtradas y actualiza las paginaciones
   this.eventosPaginados = eventosFiltrados.slice(
     this.currentPageEventos * this.pageSizeEventos,
     (this.currentPageEventos + 1) * this.pageSizeEventos
+  );
+  this.eventosGrupoPaginados = eventosGrupoFiltrados.slice(
+    this.currentPageEventosGrupo * this.pageSizeEventosGrupo,
+    (this.currentPageEventosGrupo + 1) * this.pageSizeEventosGrupo
+  );
+  this.eventosEstablecimientoPaginados = eventosEstablecimientoFiltrados.slice(
+    this.currentPageEventosEstablecimiento * this.pageSizeEventosEstablecimiento,
+    (this.currentPageEventosEstablecimiento + 1) * this.pageSizeEventosEstablecimiento
   );
   this.grupos = gruposFiltrados;
   this.establecimientos = establecimientosFiltrados;
 
   // Actualiza las paginaciones
   this.totalEventos = eventosFiltrados.length;
+  this.totalEventosGrupo = eventosGrupoFiltrados.length;
+  this.totalEventosEstablecimiento = eventosEstablecimientoFiltrados.length;
   this.totalItems = gruposFiltrados.length;
   this.totalEstablecimientos = establecimientosFiltrados.length;
 }
