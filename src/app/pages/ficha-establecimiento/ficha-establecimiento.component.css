@@ -590,6 +590,7 @@ color: #3f51b5;
     gap: 10px; /* Reduce el espacio entre los eventos */
   }
 
+
   .event-card {
     width: 100%; /* Haz que las tarjetas ocupen todo el ancho */
     max-width: none; /* Elimina el ancho máximo */

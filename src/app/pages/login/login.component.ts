@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject , OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { AccesoService } from '../../services/acceso.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -10,15 +11,16 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { MenuComponent } from "../menu/menu.component";
 import { FooterComponent } from "../footer/footer.component";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule, MatProgressSpinnerModule, MenuComponent, FooterComponent],
+  imports: [MatCardModule,CommonModule, MatFormFieldModule,FormsModule, MatInputModule, MatButtonModule, ReactiveFormsModule, MatProgressSpinnerModule, MenuComponent, FooterComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
   spinner: boolean=false;
 
@@ -26,7 +28,46 @@ export class LoginComponent {
   private router = inject(Router);
   public formBuild = inject(FormBuilder);
 
+  currentSlide = 0;
+  slides = [
+    { image: '../../../assets/imagenes/bar-1.jpg', title: 'Título 1' },
+    { image: '../../../assets/imagenes/bar-2.jpg', title: 'Título 2' },
+    { image: '../../../assets/imagenes/bar-3.jpg', title: 'Título 3' },
+    { image: '../../../assets/imagenes/bar-4.jpg', title: 'Título 4' },
+    { image: '../../../assets/imagenes/bar-5.jpg', title: 'Título 5' },
+    { image: '../../../assets/imagenes/bar-6.jpg', title: 'Título 6' },
+  ];
 
+  slides2 = [
+    { image: '../../../assets/imagenes/grupo1.jpg', title: 'Título 1' },
+    { image: '../../../assets/imagenes/grupo2.jpg', title: 'Título 2' },
+    { image: '../../../assets/imagenes/grupo3.jpg', title: 'Título 3' },
+    { image: '../../../assets/imagenes/grupo4.jpg', title: 'Título 4' },
+    { image: '../../../assets/imagenes/grupo5.jpg', title: 'Título 5' },
+    { image: '../../../assets/imagenes/grupo6.jpg', title: 'Título 6' },
+  ];
+  
+  private slideInterval: any;
+
+  ngOnInit() {
+    // Inicia el cambio automático de diapositivas cada 3 segundos (3000 ms)
+    this.slideInterval = setInterval(() => {
+      this.nextSlide();
+    }, 3000);
+  }
+
+  ngOnDestroy() {
+    // Limpia el intervalo cuando el componente se destruye
+    clearInterval(this.slideInterval);
+  }
+
+  prevSlide() {
+    this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+  }
+
+  nextSlide() {
+    this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+  }
 
   public formLogin: FormGroup = this.formBuild.group({
     nombreUsuario: ['', Validators.required],

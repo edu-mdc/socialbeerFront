@@ -1,10 +1,11 @@
 .card-container{
     flex-grow: 1;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    margin-top: 100px;
+    margin-top: 0px;
     max-width: 100%;
+  
     .form-custom{
         min-width: 50px;
         width: 100%;
@@ -15,9 +16,70 @@
     }
 }
 
+.letras{
+    font-weight: bolder;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.envoltura{
+    display: flex;
+    justify-content: space-between;
+}
+
+.carousel-image {
+    width: 100%; /* Asegúrate de que la imagen ocupe todo el ancho del contenedor */
+    height: 100%; /* Asegúrate de que la imagen ocupe todo el alto del contenedor */
+    object-fit: cover; /* Mantiene la proporción de la imagen y la recorta si es necesario */
+    border-radius: 15px; /* Ajusta el valor para redondear más o menos las esquinas */
+  }
+  
+
+.vista-cliente {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ocupa toda la altura de la pantalla */
+    margin: 0; /* Elimina márgenes */
+    padding: 0; /* Elimina padding */
+  }
+
+  /* Asegúrate de que solo se aplique a los mat-card dentro del carousel-container */
+  .carousel-container mat-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+  
+  .carousel-container mat-card.active {
+    opacity: 1;
+    z-index: 10;
+  }
+  
+  .carousel-container mat-card:not(.active) {
+    z-index: 1;
+  }
+  
+  .carousel-container button {
+    display: none; /* Oculta completamente los botones */
+  }
+
+  .carousel-container {
+    position: relative;
+    width: 350px; /* Ancho fijo del carrusel */
+    height: 250px; /* Ajusta la altura según lo que necesites */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
 
-.spinner-container {
+  .spinner-container {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -29,22 +91,4 @@
     background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
     width: 100vw;
     height: 100vh;
-  }
-
-  .footer-container {
-    flex-shrink: 0;
-    background-color: #f9f9f9;
-    text-align: center;
-    width: 100%;
-  
-    margin-top: auto; /* Asegura que el footer esté siempre al final */
-    margin: 0;
-  }
-
-  .vista-cliente {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Ocupa toda la altura de la pantalla */
-    margin: 0; /* Elimina márgenes */
-    padding: 0; /* Elimina padding */
   }

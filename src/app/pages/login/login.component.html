@@ -2,37 +2,65 @@
   <div class="cliente-container">
     <app-menu></app-menu>
   </div>
-
-<div class="card-container">
-  <mat-card appearance="outlined">
-    <mat-card-header>
-      <mat-card-title> Iniciar Sesion</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-<form class="form-custom" [formGroup]="formLogin">
-  <mat-form-field class="input-custom">
-    <mat-label>Nombre Usuario</mat-label>
-    <input matInput formControlName="nombreUsuario">
-  </mat-form-field>
-  <mat-form-field class="input-custom">
-    <mat-label>Password</mat-label>
-    <input matInput formControlName="password" type="password">
-  </mat-form-field>
-  <div class="flex">
-    <button mat-flat-button color="primary"(click)="iniciarSesion()">Iniciar Sesion</button>
-    <button mat-flat-button color="warn"(click)="registrarse()" style="margin-left:8px ;">Registrarse</button>
-  </div>
-</form>  
-    </mat-card-content>
-  </mat-card>
-
+  <div class="letras">
+  <h1>No te pierdas ni uno entra y disfruta de nuestra comunidad</h1>
+</div>
+  <div class="card-container">
+    <div class="carousel-container">
+      <button mat-icon-button (click)="prevSlide()">&#8249;</button>
+      <mat-card *ngFor="let slide of slides; let i = index" [ngClass]="{ 'active': i === currentSlide }">
+        <img [src]="slide.image" alt="{{ slide.title }}" class="carousel-image" />
+        <div class="carousel-caption">
+         
+        </div>
+      </mat-card>
+      <button mat-icon-button (click)="nextSlide()">&#8250;</button>
+    </div>
   
+    <!-- Formulario de Iniciar Sesión -->
+     <div class="formulario-login-container">
+    <mat-card appearance="outlined" class="form-container">
+      <mat-card-header>
+        <mat-card-title> Iniciar Sesión </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form class="form-custom" [formGroup]="formLogin">
+          <mat-form-field class="input-custom">
+            <mat-label>Nombre Usuario</mat-label>
+            <input matInput formControlName="nombreUsuario">
+          </mat-form-field>
+          <mat-form-field class="input-custom">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password">
+          </mat-form-field>
+          <div class="flex">
+            <button mat-flat-button color="primary" (click)="iniciarSesion()">Iniciar Sesión</button>
+            <button mat-flat-button color="warn" (click)="registrarse()" style="margin-left:8px;">Registrarse</button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
   </div>
+    <!-- Carrusel Derecho -->
+    <div class="carousel-container">
+      <button mat-icon-button (click)="prevSlide()">&#8249;</button>
+      <mat-card *ngFor="let slide of slides2; let i = index" [ngClass]="{ 'active': i === currentSlide }">
+        <img [src]="slide.image" alt="{{ slide.title }}" class="carousel-image" />
+        <div class="carousel-caption">
+         
+        </div>
+      </mat-card>
+      <button mat-icon-button (click)="nextSlide()">&#8250;</button>
+    </div>
+  </div>
+
   <div class="footer-container">
     <app-footer></app-footer>
   </div>
+
   @if(spinner){
     <div class="spinner-container">
-    <mat-spinner></mat-spinner>
-  </div>
+      <mat-spinner></mat-spinner>
+    </div>
   }
+</div>
