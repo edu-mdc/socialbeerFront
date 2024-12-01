@@ -12,6 +12,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { MenuComponent } from "../menu/menu.component";
 import { FooterComponent } from "../footer/footer.component";
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -121,11 +122,23 @@ export class LoginComponent implements OnInit{
           }
         } else {
           alert("Credenciales incorrectas");
+          setTimeout(() => {
+            this.spinner = false;
+            this.router.navigate(['inicio']);
+        }, 700);
         }
       },
       error: (error) => {
         console.log("Error al iniciar sesión: ", error);
-        alert("Ocurrió un error, por favor revisa las credenciales.");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Credenciales incorrectas",
+        });
+        setTimeout(() => {
+          this.spinner = false;
+          this.router.navigate(['']);
+      }, 700);
       }
     });
     

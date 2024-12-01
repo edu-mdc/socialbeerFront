@@ -30,7 +30,7 @@ import { EstablecimientoComponent } from "../establecimiento/establecimiento.com
 @Component({
   selector: 'app-ficha-establecimiento',
   standalone: true,
-  imports: [ClienteComponent, MatButtonModule, MatCardModule, MatIconModule, MatFormFieldModule, MatProgressSpinnerModule, FormsModule, EstablecimientoComponent],
+  imports: [ MatButtonModule, MatCardModule, MatIconModule, MatFormFieldModule, MatProgressSpinnerModule, FormsModule, EstablecimientoComponent],
   templateUrl: './ficha-establecimiento.component.html',
   styleUrl: './ficha-establecimiento.component.css'
 })

@@ -382,3 +382,390 @@ img.mat-card-image {
 .star.filled {
   color: #FFD700; /* Estrella llena */
 }
+
+.mat-tab-group {
+  margin-bottom: 48px;
+}
+
+.example-card {
+  max-width: 400px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Agrega sombra suave */
+transition: box-shadow 0.3s ease; /* Transición para el efecto hover */
+margin: 20px; /* Agrega separación entre las tarjetas */
+cursor: pointer;
+}
+
+.example-card:hover {
+  box-shadow: 0 8px 16px rgba(94, 46, 239, 0.3); /* Sombra más pronunciada al pasar el ratón */
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas en pantallas grandes */
+  grid-gap: 20px; /* Espacio entre las tarjetas */
+  margin-top: 20px;
+}
+
+.link-evento-grupo{
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 0;
+  color:#3f51b5;
+  cursor: pointer;
+}
+
+.link-evento-grupo:hover {
+  box-shadow: 0 4px 8px rgba(75, 75, 247, 0.5); /* Sombra del color del texto */
+}
+
+.link-evento-establecimiento{
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 0;
+  color:#3f51b5;
+  cursor: pointer;
+}
+
+.link-evento-establecimiento:hover {
+  box-shadow: 0 4px 8px rgba(250, 75, 68, 0.5); /* Sombra del color del texto */
+}
+.comprar-btn-eliminar {
+  background-color: rgb(252, 89, 60);
+  color: white;
+  border-radius: 60px; /* Bordes redondeados */
+  border: none;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  padding: 10px 20px; /* Un poco de padding para que se vea mejor */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transición suave */
+  margin-top: 10px;
+}
+
+.link-evento-espacio{
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 0;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+}
+
+.card-container.noClick .example-card {
+  cursor: default; /* Cambia el cursor a default en lugar de pointer */
+}
+
+@media (max-width: 1024px) {
+  /* Ajustar a 2 columnas en pantallas medianas */
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.tituloslink {
+  cursor: pointer;
+  color: rgb(75, 75, 247);
+}
+
+.tituloslink2 {
+  cursor: pointer;
+  
+}
+
+@media (max-width: 600px) {
+  /* Ajustar a 1 columna en pantallas pequeñas */
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fecha-hora {
+  display: flex;
+  justify-content: space-between !important;
+  align-items: center;
+}
+
+.fecha {
+  font-weight: bold;
+}
+
+.hora {
+  font-weight: bold;
+  text-align: right;
+}
+
+/* Estilo para separar la fecha y la hora */
+.event-details {
+display: flex;
+justify-content: space-between;
+
+}
+
+.evento-cuando  mat-card-header{
+display: flex;
+justify-content: center;
+
+}
+
+.grupo-details{
+display: flex;
+justify-content: space-between;
+}
+
+
+
+
+
+.fecha-hora {
+display: flex;
+justify-content: space-between !important;
+align-items: center;
+margin: 0; /* Elimina margen adicional */
+padding: 0; /* Elimina padding adicional */
+
+}
+
+
+
+/* Estilo para separar el precio y el estado */
+.event-pricing {
+display: flex;
+justify-content: space-between;
+width: 100%; /* Para que ambos elementos ocupen todo el ancho */
+margin-left: 7px;
+}
+
+/* Asegurarte de que el contenido se vea bien en diferentes tamaños de pantalla */
+@media (max-width: 600px) {
+.event-details, .event-pricing {
+  flex-direction: column; /* Para que se apilen en pantallas más pequeñas */
+  align-items: flex-start;
+}
+}
+
+.contratado{
+margin-top: 30px ;
+}
+
+.comprar-btn {
+background-color: rgb(75, 75, 247);
+color: white;
+border-radius: 60px; /* Bordes redondeados */
+border: none;
+cursor: pointer;
+box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+padding: 10px 20px; /* Un poco de padding para que se vea mejor */
+transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transición suave */
+margin-top: 10px;
+}
+
+.comprar-btn:hover {
+background-color: #8f9eff; /* Color más oscuro al pasar el mouse */
+box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3); /* Incremento de la sombra */
+}
+
+.location-details {
+display: flex;
+justify-content: space-between;
+width: 100%;
+}
+
+/* Para separar aforo y teléfono en establecimientos */
+.capacity-details {
+display: flex;
+justify-content: space-between;
+width: 100%;
+}
+
+.valoracion-details{
+display: flex;
+justify-content: space-between;
+width: 100%;
+}
+
+.rating {
+direction: rtl;
+display: inline-block;
+font-size: 30px;
+color: lightgray;
+cursor: pointer;
+}
+
+.rating .star {
+padding: 0 5px;
+transition: color 0.2s;
+}
+
+
+
+.rating .selected {
+color: gold;
+}
+
+.custom-card {
+max-width: 350px; /* Tamaño similar al de la segunda imagen */
+border-radius: 10px; /* Bordes redondeados */
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+overflow: hidden;
+}
+
+.header-content {
+display: flex;
+justify-content: space-between;
+padding: 8px 16px;
+font-weight: bold;
+}
+
+.mat-paginator {
+margin-top: 20px; /* Ajusta el margen superior según sea necesario */
+}
+
+.image-container {
+position: relative;
+height: 300px; /* Ajusta la altura según sea necesario */
+overflow: hidden;
+}
+
+.image-container-2 {
+position: relative;
+height: 300px; /* Ajusta la altura según sea necesario */
+overflow: hidden;
+}
+
+img.mat-card-image {
+width: 100%; /* Asegura que la imagen ocupe todo el ancho del contenedor */
+height: auto; /* Ajusta la altura automáticamente */
+object-fit: contain; /* Muestra toda la imagen */
+}
+
+
+.image-diagonal {
+position: relative;
+height: 100%;
+}
+
+.image {
+position: absolute;
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+.img-1 {
+clip-path: polygon(0 0, 100% 0, 0 100%); /* Imagen 1 cortada en diagonal */
+}
+
+.img-2 {
+clip-path: polygon(100% 0, 100% 100%, 0 100%); /* Imagen 2 cortada en diagonal */
+}
+
+.footer-content {
+display: flex;
+justify-content: space-between;
+padding: 8px 16px;
+font-weight: bold;
+}
+
+.grupo,
+.establecimiento {
+font-size: 14px;
+}
+
+.eventos{
+width: 400px;
+height: 440px;
+}
+
+.spinner-container {
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+width: 100vw;
+height: 100vh;
+}
+
+.example-label {
+display: table-cell;
+font-size: 14px;
+margin-left: 8px;
+min-width: 120px;
+}
+
+.example-button-row {
+display: table-cell;
+max-width: 600px;
+}
+
+.example-button-row .mat-mdc-button-base {
+margin: 8px 8px 8px 0;
+}
+
+.example-flex-container {
+display: flex;
+justify-content: space-between;
+flex-wrap: wrap;
+}
+
+.example-button-container {
+display: flex;
+justify-content: center;
+width: 120px;
+}
+
+
+.header-container {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 0 16px;
+}
+
+.title-section {
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+}
+
+.button-section {
+margin-left: auto;
+}
+
+.green-button {
+background-color:rgb(75, 75, 247); /* Color verde */
+color: white; /* Color del texto */
+border-radius: 0px; /* Bordes no redondeados */
+width: 100%; /* Ancho completo de la tarjeta */
+padding: 12px; /* Ajusta el padding según sea necesario */
+text-align: center; /* Centrar el texto */
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+margin: 0; /* Elimina el margen extra */
+}
+
+.green-button:hover {
+background-color:  #8f9eff;; /* Color verde más oscuro al pasar el cursor */
+
+}
+
+.star {
+font-size: 20px;
+color: #ccc; /* Estrella vacía */
+
+}
+
+.star.filled {
+color: #FFD700; /* Estrella llena */
+}
+
+

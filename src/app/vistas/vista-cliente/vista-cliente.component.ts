@@ -12,5 +12,9 @@ import { FooterComponent } from "../../pages/footer/footer.component";
   styleUrl: './vista-cliente.component.css'
 })
 export class VistaClienteComponent {
+  filtrosVisibles = false;
 
+  toggleFiltros() {
+    this.filtrosVisibles = !this.filtrosVisibles;
+  }
 }

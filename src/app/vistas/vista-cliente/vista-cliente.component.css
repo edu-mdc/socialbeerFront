@@ -70,3 +70,60 @@
   width: 50px; /* Espacio de separación */
   background-color: transparent; /* Puede personalizarse si quieres un borde visible */
 }
+
+
+@media (max-width: 768px) {
+  /* Contenedor de los filtros */
+  .filtro-container {
+    position: fixed;
+    top: 70px; /* Justo debajo del navbar */
+    left: 0;
+    width: 100%; /* Que ocupe todo el ancho */
+    height: 100%; /* Ocupa toda la altura de la pantalla */
+    background: white; /* Fondo blanco */
+    z-index: 2000; /* Coloca los filtros sobre otros elementos */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+    display: none; /* Ocultar por defecto */
+    padding: 20px; /* Espaciado interno */
+    overflow-y: auto; /* Habilitar desplazamiento si es necesario */
+  }
+
+  /* Mostrar los filtros cuando se expande */
+  .filtro-container.visible {
+    display: block; /* Mostrar los filtros */
+  }
+
+  /* Botón flotante */
+  .toggle-filtros-btn {
+    position: fixed;
+    bottom: 16px; /* Ajustar para que no se superponga al contenido */
+    right: 16px;
+    background-color: #3f51b5;
+    color: white;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 2100; /* Asegúrate de que esté encima de todo */
+    text-align: center;
+    line-height: 56px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  /* Ajustar el contenido principal */
+  .mostrar-container {
+    width: 100%; /* Ocupa todo el ancho */
+    margin-top: 20px; /* Espacio entre los filtros y el contenido */
+    border-radius: 8px; /* Esquinas redondeadas */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra más ligera */
+    overflow-y: auto; /* Habilitar desplazamiento vertical si es necesario */
+  }
+
+  /* Ocultar el separador */
+  .separador {
+    display: none;
+  }
+}
+
+

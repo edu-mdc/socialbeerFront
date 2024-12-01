@@ -505,94 +505,105 @@ color: #3f51b5;
 
 
 @media (max-width: 768px) {
+  /* Contenedor principal: apila las secciones en orden específico */
   .grid-container {
-    display: block; /* Cambia el diseño de grid a bloque */
-    height: auto; /* Ajusta la altura para permitir desplazamiento */
-    padding: 20px; /* Añade espacio interno para móviles */
+    display: flex;
+    flex-direction: column; /* Cambia a diseño vertical */
+    gap: 20px; /* Espacio entre las secciones */
+    height: auto; /* Ajusta altura para contenido fluido */
+    padding: 15px; /* Padding reducido para móviles */
   }
 
-  .group-info,
-  .group-reviews,
-  .group-events,
+  /* Reordenar secciones según prioridad */
+  .group-info {
+    order: 1; /* Primero: Datos del grupo */
+  }
+
+  .group-events {
+    order: 2; /* Segundo: Eventos del grupo */
+  }
+
+  .group-reviews {
+    order: 3; /* Tercero: Dejar la valoración */
+  }
+
   .leave-review {
-    margin-bottom: 20px; /* Espacio entre las secciones */
-    padding: 15px; /* Espacio interno para móviles */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Ajusta la sombra */
+    order: 4; /* Cuarto: Lista de valoraciones */
   }
 
-  .group-name {
-    font-size: 20px; /* Ajusta el tamaño de la fuente */
-    text-align: center; /* Centra el texto */
+  /* Ajustar cada sección individualmente */
+  .group-info,
+  .group-events,
+  .group-reviews,
+  .leave-review {
+    width: 100%; /* Ocupa todo el ancho */
+    padding: 15px; /* Espacio interno ajustado */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra más suave */
   }
 
+  /* Centrar contenido y ajustar tamaños */
   .group-image {
-    width: 100px; /* Ajusta el tamaño de la imagen */
-    height: 100px; /* Ajusta el tamaño de la imagen */
-    margin: 0 auto 10px; /* Centra la imagen y añade espacio debajo */
+    width: 100px; /* Imagen más pequeña */
+    height: 100px;
+    margin: 0 auto 10px; /* Centrar y añadir espacio debajo */
   }
 
   .rating-star-container {
-    top: -20px; /* Ajusta la posición de la estrella */
-    right: 50%; /* Centra la estrella */
-    transform: translateX(50%); /* Centra la estrella horizontalmente */
+    top: -15px; /* Ajusta posición */
+    right: 50%; /* Centra horizontalmente */
+    transform: translateX(50%);
   }
 
   .events-grid {
-    display: block; /* Cambia el diseño de grid a bloque */
-    gap: 10px; /* Reduce el espacio entre los eventos */
+    display: flex;
+    flex-direction: column; /* Apilar eventos */
+    gap: 15px; /* Espacio entre eventos */
   }
 
   .event-card {
-    width: 100%; /* Haz que las tarjetas ocupen todo el ancho */
-    max-width: none; /* Elimina el ancho máximo */
-    cursor: pointer;
+    width: 100%; /* Ocupa todo el ancho */
+    max-width: none; /* Sin límite máximo */
   }
 
   .valoracion-card {
-    padding: 10px; /* Ajusta el espacio interno */
-    margin-bottom: 10px; /* Reduce el espacio entre las tarjetas */
-  }
-  
-  .custom-icon {
-    font-size: 36px;  /* Tamaño del icono */
-    background-color: red;       /* Color rojo */
+    padding: 10px; /* Espacio interno reducido */
+    margin-bottom: 15px; /* Espacio entre tarjetas */
+    font-size: 14px; /* Texto más pequeño */
   }
 
-  .titulo {
-    display: flex;
-    justify-content: space-between; /* Espacia los elementos a los extremos */
-    align-items: center; /* Alinea los elementos verticalmente en el centro */
+  .valoracion-header {
+    flex-direction: column; /* Apilar fecha y puntuación */
+    text-align: center; /* Centrar texto */
   }
 
-  .cabecera{
-    padding-left: 40px;
-  }
-  
-  .cabecera-volver{
-    padding-right: 40px;
-    display: flex;          /* Convierte el h3 en un contenedor flexible */
-    align-items: center;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-  }
-  
-  .cabecera-volver:active {
-    transform: scale(0.95); /* Reduce el tamaño al 95% al hacer clic */
-  }
-  
-  .custom-icon {
-    
-    font-size: 36px;  /* Tamaño del icono */
-    color: red;       /* Color rojo */
+  /* Botones y texto centrados */
+  .contratar-container,
+  .review-card {
+    text-align: center;
+    margin: 0 auto;
   }
 
-  .group-reviews img {
-    width: 100%; /* Imagen ocupa el 100% del ancho del contenedor */
-    height: auto; /* Mantiene la proporción de la imagen */
-    object-fit: contain; /* Asegura que la imagen se ajuste dentro del contenedor sin cortar partes importantes */
-    display: block; /* Elimina espacio adicional alrededor de la imagen */
-    max-width: 100%; /* Evita que la imagen crezca más allá del ancho del contenedor */
-    max-height: 100%; /* Evita que la imagen crezca más allá de la altura del contenedor */
+  /* Ajustar encabezados */
+  h1.secciones,
+  h2.contratar-titulo,
+  h3 {
+    text-align: center; /* Centrar encabezados */
+    font-size: 1.2rem; /* Ajustar tamaño */
+  }
+
+  /* Spinner para vista móvil */
+  .spinner-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 100%;
+    height: 100%;
+  }
+
+  .rating-star-container {
+    display: none; /* Oculta el contenedor de la estrella y la puntuación */
   }
 }
-

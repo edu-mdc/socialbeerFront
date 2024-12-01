@@ -553,94 +553,72 @@ color: #3f51b5;
 
 
 @media (max-width: 768px) {
+  /* Cambiar a diseño en bloque para móvil */
   .grid-container {
-    display: block; /* Cambia el diseño de grid a bloque */
-    height: auto; /* Ajusta la altura para permitir desplazamiento */
-    padding: 20px; /* Añade espacio interno para móviles */
+    display: flex;
+    flex-direction: column; /* Ordenar en columna */
+    height: auto; /* Permitir altura dinámica */
+    padding: 20px; /* Espaciado interno */
+    gap: 20px; /* Espacio entre las secciones */
   }
 
-  .group-info,
-  .group-reviews,
-  .group-events,
+  /* Orden de las secciones */
+  .group-info {
+    order: 1; /* Primero: Datos del establecimiento */
+  }
+
+  .group-events {
+    order: 2; /* Segundo: Próximos eventos */
+  }
+
+  .group-reviews {
+    order: 3; /* Tercero: Dejar una valoración */
+  }
+
   .leave-review {
-    margin-bottom: 20px; /* Espacio entre las secciones */
-    padding: 15px; /* Espacio interno para móviles */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Ajusta la sombra */
+    order: 4; /* Cuarto: Lista de valoraciones */
   }
 
-  .group-name {
-    font-size: 20px; /* Ajusta el tamaño de la fuente */
-    text-align: center; /* Centra el texto */
-  }
-
-  .group-image {
-    width: 100px; /* Ajusta el tamaño de la imagen */
-    height: 100px; /* Ajusta el tamaño de la imagen */
-    margin: 0 auto 10px; /* Centra la imagen y añade espacio debajo */
-  }
-
+  /* Ocultar estrella y puntuación media */
   .rating-star-container {
-    top: -20px; /* Ajusta la posición de la estrella */
-    right: 50%; /* Centra la estrella */
-    transform: translateX(50%); /* Centra la estrella horizontalmente */
+    display: none; /* Ocultar estrella y puntuación */
   }
 
+  /* Ajustar imagen del establecimiento */
+  .group-image {
+    width: 100px; /* Tamaño reducido */
+    height: 100px;
+    margin: 0 auto 10px; /* Centrar imagen con espaciado inferior */
+  }
+
+  /* Tarjetas de eventos en formato bloque */
   .events-grid {
-    display: block; /* Cambia el diseño de grid a bloque */
-    gap: 10px; /* Reduce el espacio entre los eventos */
+    display: block; /* Cambiar de cuadrícula a bloque */
+    gap: 10px; /* Reducir espacio entre eventos */
   }
-
 
   .event-card {
-    width: 100%; /* Haz que las tarjetas ocupen todo el ancho */
-    max-width: none; /* Elimina el ancho máximo */
+    width: 100%; /* Tarjetas ocupan todo el ancho */
+    max-width: none; /* Eliminar límite de ancho */
   }
 
+  /* Tarjetas de valoraciones */
   .valoracion-card {
-    padding: 10px; /* Ajusta el espacio interno */
-    margin-bottom: 10px; /* Reduce el espacio entre las tarjetas */
-  }
-  
-  .custom-icon {
-    font-size: 36px;  /* Tamaño del icono */
-    background-color: red;       /* Color rojo */
+    padding: 10px; /* Reducir espaciado interno */
+    margin-bottom: 10px; /* Reducir espacio entre tarjetas */
   }
 
-  .titulo {
-    display: flex;
-    justify-content: space-between; /* Espacia los elementos a los extremos */
-    align-items: center; /* Alinea los elementos verticalmente en el centro */
+  /* Ajustar texto del título */
+  .group-name {
+    font-size: 20px; /* Reducir tamaño de fuente */
+    text-align: center; /* Centrar texto */
   }
 
-  .cabecera{
-    padding-left: 40px;
-  }
-  
-  .cabecera-volver{
-    padding-right: 40px;
-    display: flex;          /* Convierte el h3 en un contenedor flexible */
-    align-items: center;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-  }
-  
-  .cabecera-volver:active {
-    transform: scale(0.95); /* Reduce el tamaño al 95% al hacer clic */
-  }
-  
-  .custom-icon {
-    
-    font-size: 36px;  /* Tamaño del icono */
-    color: red;       /* Color rojo */
-  }
-
-  .group-reviews img {
-    width: 100%; /* Imagen ocupa el 100% del ancho del contenedor */
-    height: auto; /* Mantiene la proporción de la imagen */
-    object-fit: contain; /* Asegura que la imagen se ajuste dentro del contenedor sin cortar partes importantes */
-    display: block; /* Elimina espacio adicional alrededor de la imagen */
-    max-width: 100%; /* Evita que la imagen crezca más allá del ancho del contenedor */
-    max-height: 100%; /* Evita que la imagen crezca más allá de la altura del contenedor */
+  /* Ocultar elementos con animación */
+  .rotating-wrapper {
+    display: none; /* Ocultar animación giratoria */
   }
 }
+
+
 

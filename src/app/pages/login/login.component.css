@@ -92,3 +92,55 @@
     width: 100vw;
     height: 100vh;
   }
+
+  @media (max-width: 768px) {
+    .card-container {
+      flex-direction: column; /* Cambiar a disposición vertical */
+      align-items: center;
+      gap: 15px;
+    }
+  
+    .carousel-container {
+      max-width: 100%;
+      height: 200px; /* Reducir la altura */
+    }
+  
+    .formulario-login-container {
+      width: 90%; /* Ancho reducido */
+      margin: 0 auto; /* Centrar el formulario */
+    }
+  
+    .letras {
+      font-size: 20px; /* Reducir tamaño de texto */
+      padding: 10px;
+    }
+  
+    .carousel-container button {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  
+  /* --- Pantallas muy pequeñas (móvil pequeño) --- */
+  @media (max-width: 480px) {
+    .card-container {
+      gap: 10px; /* Reducir el espaciado */
+    }
+  
+    .carousel-container {
+      height: 180px; /* Aún más pequeño */
+    }
+  
+    .letras {
+      font-size: 18px;
+      margin: 10px;
+    }
+  
+    .form-container {
+      padding: 15px;
+    }
+  
+    .carousel-container button {
+      display: none; /* Ocultar botones en pantallas muy pequeñas */
+    }
+  }
