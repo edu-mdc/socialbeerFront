@@ -1,4 +1,4 @@
-<app-cliente></app-cliente>
+<app-establecimiento></app-establecimiento>
 <div class="titulo" >
   <h1 class="cabecera">{{establecimiento?.establecimiento}}</h1>
   <h4 class="cabecera-volver"(click)="volver()">Volver<span class="material-symbols-outlined custom-icon">undo</span></h4>
@@ -9,7 +9,7 @@
     <div class="group-info">
         <div class="top-section">
             <div class="group-image">
-                <img src="../../../assets/imagenes/logo.png" alt="Imagen del grupo">
+                <img src="../../../assets/imagenes/{{establecimientoNombre}}.jpg"  alt="Imagen del grupo">
             </div>
             <div class="rating-star-container">
               <div class="rotating-wrapper"> <!-- Contenedor que envuelve la estrella y la puntuación -->
@@ -89,7 +89,7 @@
                 <mat-card-header>
                   <div class="header-container">
                     <div class="header-left">
-                      <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+                      <img mat-card-sm-image src="../../../assets/imagenes/{{evento.nombreGrupo}}.jpg" alt="GRUPO">
                     </div>
                     <div class="header-right">
                       <mat-card-title>{{ evento.fechaEvento }}</mat-card-title>
@@ -158,4 +158,3 @@
       <mat-spinner></mat-spinner>
     </div>
   }
-  <app-footer></app-footer>

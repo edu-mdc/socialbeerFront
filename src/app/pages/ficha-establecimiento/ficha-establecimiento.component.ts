@@ -25,12 +25,12 @@ import { ValoracionDeEstablecimientoDTO } from '../../interfaces/ValoracionEstab
 import { ValoracionDeEstablecimientoService } from '../../services/valoracion-de-establecimiento.service';
 import { Usuario } from '../../interfaces/Usuario';
 import { UsuarioService } from '../../services/usuario.service';
-import { FooterComponent } from "../footer/footer.component";
+import { EstablecimientoComponent } from "../establecimiento/establecimiento.component";
 
 @Component({
   selector: 'app-ficha-establecimiento',
   standalone: true,
-  imports: [ClienteComponent, MatButtonModule, MatCardModule, MatIconModule, MatFormFieldModule, MatProgressSpinnerModule, FormsModule, FooterComponent],
+  imports: [ClienteComponent, MatButtonModule, MatCardModule, MatIconModule, MatFormFieldModule, MatProgressSpinnerModule, FormsModule, EstablecimientoComponent],
   templateUrl: './ficha-establecimiento.component.html',
   styleUrl: './ficha-establecimiento.component.css'
 })
@@ -46,6 +46,7 @@ export class FichaEstablecimientoComponent implements OnInit{
   cliente:Cliente |null = null;
   rol: string | null = null;
   usuario: Usuario | null = null;
+  establecimientoNombre: string = '';
 
   establecimientos: Establecimiento[] = [];
 
@@ -89,7 +90,10 @@ export class FichaEstablecimientoComponent implements OnInit{
   private cargarDatosIniciales(): void {
     this.obtenerEventos();
     this.obtenerEstablecimiento();
-    this.obtenerCliente();
+    if(this.rol == "ROLE_CLIENTE"){
+      this.obtenerCliente();
+    }
+    
     this.obtenerGrupos();
     this.obtenerValoraciones();
   }
@@ -114,7 +118,9 @@ export class FichaEstablecimientoComponent implements OnInit{
 
   private obtenerEstablecimiento(): void {
     this.establecimientoService.getEstablecimientoById(this.establecimientoId).subscribe({
-      next: (establecimiento) => { this.establecimiento = establecimiento; },
+      next: (establecimiento) => { this.establecimiento = establecimiento;
+        this.establecimientoNombre = establecimiento.establecimiento
+       },
       error: (error) => { console.error('Error al obtener los detalles del establecimiento:', error); }
     });
   }

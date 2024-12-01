@@ -7,4 +7,5 @@ export interface Establecimiento{
     provincia:string,
     poblacion:string,
     telefono:number
+    foto?:string
 }

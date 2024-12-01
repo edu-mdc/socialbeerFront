@@ -18,6 +18,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AccesoService } from '../../services/acceso.service';
 import { GrupoService } from '../../services/grupo.service';
 import { Grupo } from '../../interfaces/Grupo';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-grupo',
@@ -27,7 +28,7 @@ import { Grupo } from '../../interfaces/Grupo';
   styleUrl: './grupo.component.css'
 })
 export class GrupoComponent implements OnInit{
-
+  selectedFile: File | null = null;
   private renderer = inject(Renderer2); // Inyectamos Renderer2 para manejar eventos del DOM
   private elementRef = inject(ElementRef);
 
@@ -44,7 +45,7 @@ export class GrupoComponent implements OnInit{
   private usuarioService = inject(UsuarioService);
   private grupoService = inject(GrupoService);
   private accesoService = inject(AccesoService);
-  constructor() {
+  constructor(private http: HttpClient) {
     // Inicializamos el formulario usando FormBuilder
     this.grupoForm = this.formBuilder.group({
       grupo: ['', Validators.required],
@@ -106,6 +107,10 @@ export class GrupoComponent implements OnInit{
     });
   }
 
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
+
 
   guardar() {
     Object.keys(this.grupoForm.controls).forEach(field => {
@@ -130,6 +135,20 @@ export class GrupoComponent implements OnInit{
   
       this.grupoService.updateGrupo(+this.userId!, grupoData).subscribe({
         next: (response) => {
+          if (this.selectedFile) {
+            const formData = new FormData();
+            formData.append('file', this.selectedFile);
+      
+            // Enviar archivo al backend
+            this.http.post('http://localhost:8080/api/uploads', formData, { responseType: 'text' }).subscribe(
+              (response) => {
+                console.log('Archivo subido exitosamente:', response);
+              },
+              (error) => {
+                console.error('Error al subir el archivo', error);
+              }
+            );
+          }
           this.spinner = false;
           this.accordion().closeAll();
           Swal.fire({

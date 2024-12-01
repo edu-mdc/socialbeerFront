@@ -247,6 +247,19 @@
   overflow: hidden;
 }
 
+.image-container-2 {
+  position: relative;
+  height: 300px; /* Ajusta la altura según sea necesario */
+  overflow: hidden;
+}
+
+img.mat-card-image {
+  width: 100%; /* Asegura que la imagen ocupe todo el ancho del contenedor */
+  height: auto; /* Ajusta la altura automáticamente */
+  object-fit: contain; /* Muestra toda la imagen */
+}
+
+
 .image-diagonal {
   position: relative;
   height: 100%;

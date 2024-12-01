@@ -6,7 +6,7 @@
       <div class="card-grid">
         @for(evento of eventosGrupoPaginados; track $index){
         <div class="card-container noClick">
-          <mat-card class="example-card" appearance="outlined">
+          <mat-card class="example-card eventos" appearance="outlined">
             <mat-card-header class="header-container">
               <div class="title-section">
               <mat-card-title class="tituloslink" (click)="obtenerGrupoPorNombre(evento.nombreGrupo, $event)" >{{ evento.nombreGrupo }}</mat-card-title>
@@ -21,8 +21,9 @@
               </mat-card-actions>
             </div>
             </mat-card-header>
-            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Foto del evento">
-  
+            <div class="image-container">
+            <img mat-card-image src="../../../assets/imagenes/{{evento.nombreEstablecimiento}}.jpg" alt="Foto del evento" class="image">
+          </div>
             <!-- Contenido con fecha y hora separadas -->
             <mat-card-content>
               <div class="event-details">
@@ -53,7 +54,7 @@
       <div class="card-grid">
         @for(evento of eventosEstablecimientoPaginados; track $index){
         <div class="card-container noClick">
-          <mat-card class="example-card" appearance="outlined">
+          <mat-card class="example-card eventos" appearance="outlined">
             <mat-card-header class="header-container">
               <div class="title-section">
               <mat-card-title class="tituloslink" (click)="obtenerGrupoPorNombre(evento.nombreGrupo, $event)">{{ evento.nombreGrupo }}</mat-card-title>
@@ -67,8 +68,10 @@
               </div>
               </mat-card-actions>
             </div>
-            </mat-card-header>  
-            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Foto del evento">
+            </mat-card-header> 
+            <div class="image-container">
+            <img mat-card-image src="../../../assets/imagenes/{{evento.nombreGrupo}}.jpg" alt="Foto del evento" class="image">
+            </div>
             <!-- Contenido con fecha y hora separadas -->
             <mat-card-content>
               <div class="event-details">
@@ -110,8 +113,8 @@
                 
                 <div class="image-container">
                   <div class="image-diagonal">
-                    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Foto del evento" class="image img-1">
-                    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Foto del evento" class="image img-2" />
+                    <img mat-card-image src="../../../assets/imagenes/{{evento.nombreGrupo}}.jpg" alt="Foto del evento" class="image img-1">
+                    <img mat-card-image src="../../../assets/imagenes/{{evento.nombreEstablecimiento}}.jpg" alt="Foto del evento" class="image img-2" />
                   </div>
                 </div>
       
@@ -155,7 +158,7 @@
         @for (grupo of grupos; track $index) {
           @if(grupo.grupo != "" && grupo.estilo != "" && grupo.duracion != "" && grupo.provincia != '' && grupo.tarifa > 0){
             <div class="card-container" >
-              <mat-card class="example-card" appearance="outlined">
+              <mat-card class="example-card eventos" appearance="outlined">
                 <mat-card-header class="header-container" (click)="verGrupo(grupo.id, $event)">
                   <div class="title-section">
                   <mat-card-title class="tituloslink">{{ grupo.grupo }}</mat-card-title>
@@ -178,7 +181,9 @@
                  
                 </div>
                 </mat-card-header>
-                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Foto del grupo" (click)="verGrupo(grupo.id, $event)">
+                <div class="image-container-2">
+                <img mat-card-image src="../../../assets/imagenes/{{grupo.grupo}}.jpg" alt="Foto del grupo" (click)="verGrupo(grupo.id, $event)" class="image">
+              </div>
                 <mat-card-content (click)="verGrupo(grupo.id, $event)">
                   <div class="grupo-details">
                   <p><span><b>Duración: </b></span> {{grupo.duracion}}h</p>
@@ -224,7 +229,7 @@
         @for (establecimiento of establecimientos; track $index){
           @if(establecimiento.establecimiento != "" && establecimiento.direccion != "" && establecimiento.aforo != 0 && establecimiento.provincia != ''){
             <div class="card-container" (click)="verEstablecimiento(establecimiento.id, $event)">
-              <mat-card class="example-card" appearance="outlined">
+              <mat-card class="example-card eventos" appearance="outlined">
                 <mat-card-header class="header-container">
                   <div class="title-section">
                   <mat-card-title class="tituloslink">{{ establecimiento.establecimiento }}</mat-card-title>
@@ -247,8 +252,10 @@
       
                     </div>
                 </mat-card-header>
-                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-                  alt="Foto del establecimiento">
+                <div class="image-container-2">
+                <img mat-card-image src="../../../assets/imagenes/{{establecimiento.establecimiento}}.jpg"
+                  alt="Foto del establecimiento" class="image">
+                </div>
                 <mat-card-content>
                   <div class="location-details">
                     <p>Dirección: {{ establecimiento.direccion }}</p>

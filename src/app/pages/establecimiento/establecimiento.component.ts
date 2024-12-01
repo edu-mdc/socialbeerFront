@@ -17,6 +17,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { EstablecimientoService } from '../../services/establecimiento.service';
 import { Establecimiento } from '../../interfaces/Establecimiento';
 import { AccesoService } from '../../services/acceso.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-establecimiento',
@@ -26,7 +27,7 @@ import { AccesoService } from '../../services/acceso.service';
   styleUrl: './establecimiento.component.css'
 })
 export class EstablecimientoComponent implements OnInit{
-
+  selectedFile: File | null = null;
   private renderer = inject(Renderer2); // Inyectamos Renderer2 para manejar eventos del DOM
   private elementRef = inject(ElementRef);
 
@@ -44,7 +45,7 @@ export class EstablecimientoComponent implements OnInit{
   private establecimientoService = inject(EstablecimientoService);
   private accesoService = inject(AccesoService);
 
-  constructor() {
+  constructor(private http: HttpClient) {
     // Inicializamos el formulario usando FormBuilder
     this.establecimientoForm = this.formBuilder.group({
       establecimiento: ['', Validators.required],
@@ -105,7 +106,14 @@ export class EstablecimientoComponent implements OnInit{
     });
   }
 
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
 
+  onSubmit(event: Event) {
+    event.preventDefault();
+   
+  }
 
   guardar() {
     Object.keys(this.establecimientoForm.controls).forEach(field => {
@@ -121,6 +129,20 @@ export class EstablecimientoComponent implements OnInit{
   
       this.establecimientoService.updateEstablecimiento(+this.userId!, establecimientoData).subscribe({
         next: (response) => {
+          if (this.selectedFile) {
+            const formData = new FormData();
+            formData.append('file', this.selectedFile);
+      
+            // Enviar archivo al backend
+            this.http.post('http://localhost:8080/api/uploads', formData, { responseType: 'text' }).subscribe(
+              (response) => {
+                console.log('Archivo subido exitosamente:', response);
+              },
+              (error) => {
+                console.error('Error al subir el archivo', error);
+              }
+            );
+          }
           this.spinner = false;
           this.accordion().closeAll();
           Swal.fire({

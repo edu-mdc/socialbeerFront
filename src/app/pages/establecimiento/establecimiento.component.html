@@ -53,6 +53,12 @@
           <mat-label>Población</mat-label>
           <input matInput formControlName="poblacion" />
         </mat-form-field>
+
+        <div class="file-upload">
+          
+          <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+        
+        </div>
   
         <div class="flex">
           <button mat-flat-button color="primary" (click)="guardar()"> <span class="material-symbols-outlined">save</span></button>

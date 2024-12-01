@@ -25,11 +25,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ContratarComponent } from '../../dialog/contratar/contratar.component';
 import { FooterComponent } from "../footer/footer.component";
+import { GrupoComponent } from "../grupo/grupo.component";
+import { EstablecimientoComponent } from "../establecimiento/establecimiento.component";
 
 @Component({
   selector: 'app-ficha-grupo',
   standalone: true,
-  imports: [ClienteComponent, MatButtonModule, MatCardModule, MatIconModule, MatFormFieldModule, MatProgressSpinnerModule, FormsModule, FooterComponent],
+  imports: [ClienteComponent, MatButtonModule, MatCardModule, MatIconModule, MatFormFieldModule, MatProgressSpinnerModule, FormsModule, FooterComponent, GrupoComponent, EstablecimientoComponent],
   templateUrl: './ficha-grupo.component.html',
   styleUrl: './ficha-grupo.component.css'
 })
@@ -44,6 +46,7 @@ export class FichaGrupoComponent implements OnInit{
   userId: string | null = null;
   cliente:Cliente |null = null;
   rol: string | null = null;
+  nombreGrupo: string = '';
 
   valoraciones: ValoracionDeGrupoDTO[] = [];
   puntuacionMedia: number = 0;
@@ -82,7 +85,10 @@ export class FichaGrupoComponent implements OnInit{
   private cargarDatosIniciales(): void {
     this.obtenerEventos();
     this.obtenerGrupo();
-    this.obtenerCliente();
+    if(this.rol == "ROLE_CLIENTE"){
+      this.obtenerCliente();
+    }
+    
     this.obtenerEstablecimientos();
     this.obtenerValoraciones();
   }
@@ -96,7 +102,9 @@ export class FichaGrupoComponent implements OnInit{
 
   private obtenerGrupo(): void {
     this.grupoService.getGrupoById(this.grupoId).subscribe({
-      next: (grupo) => { this.grupo = grupo; },
+      next: (grupo) => { this.grupo = grupo;
+        this.nombreGrupo= grupo.grupo
+       },
       error: (error) => { console.error('Error al obtener los detalles del grupo:', error); }
     });
   }
@@ -262,7 +270,7 @@ console.log(this.cliente)
     
       return e.establecimiento === nombreEstablecimiento;
     });
-    return establecimiento ? establecimiento.direccion : 'Dirección no disponible';
+    return establecimiento ? establecimiento.direccion  : 'Dirección no disponible';
   }
 
   obtenerEstablecimientoId(nombreEstablecimiento: string): number | null {
