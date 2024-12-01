@@ -19,15 +19,18 @@ import { AccesoService } from '../../services/acceso.service';
 import { GrupoService } from '../../services/grupo.service';
 import { Grupo } from '../../interfaces/Grupo';
 import { HttpClient } from '@angular/common/http';
+import { provinciasEspana } from '../../settings/provincias';
+import {MatSelectModule} from '@angular/material/select';
 
 @Component({
   selector: 'app-grupo',
   standalone: true,
-  imports: [MatProgressSpinnerModule, ReactiveFormsModule, MatExpansionModule, MatDatepickerModule, MatAccordion,MatFormFieldModule,MatIconModule,MatInputModule, MatNativeDateModule, MatButtonModule ],
+  imports: [MatProgressSpinnerModule,MatSelectModule, ReactiveFormsModule, MatExpansionModule, MatDatepickerModule, MatAccordion,MatFormFieldModule,MatIconModule,MatInputModule, MatNativeDateModule, MatButtonModule ],
   templateUrl: './grupo.component.html',
   styleUrl: './grupo.component.css'
 })
 export class GrupoComponent implements OnInit{
+  provinciasEspana:any;
   selectedFile: File | null = null;
   private renderer = inject(Renderer2); // Inyectamos Renderer2 para manejar eventos del DOM
   private elementRef = inject(ElementRef);
@@ -60,7 +63,7 @@ export class GrupoComponent implements OnInit{
   }
 
   ngOnInit() {
-    
+    this.provinciasEspana = provinciasEspana;
     this.userId = localStorage.getItem('userId');
 
     if (this.userId) {

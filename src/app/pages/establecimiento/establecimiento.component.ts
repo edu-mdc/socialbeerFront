@@ -18,15 +18,17 @@ import { EstablecimientoService } from '../../services/establecimiento.service';
 import { Establecimiento } from '../../interfaces/Establecimiento';
 import { AccesoService } from '../../services/acceso.service';
 import { HttpClient } from '@angular/common/http';
-
+import { provinciasEspana } from '../../settings/provincias';
+import {MatSelectModule} from '@angular/material/select';
 @Component({
   selector: 'app-establecimiento',
   standalone: true,
-  imports: [MatProgressSpinnerModule, ReactiveFormsModule, MatExpansionModule, MatDatepickerModule, MatAccordion,MatFormFieldModule,MatIconModule,MatInputModule, MatNativeDateModule, MatButtonModule ],
+  imports: [MatProgressSpinnerModule,MatSelectModule, ReactiveFormsModule, MatExpansionModule, MatDatepickerModule, MatAccordion,MatFormFieldModule,MatIconModule,MatInputModule, MatNativeDateModule, MatButtonModule ],
   templateUrl: './establecimiento.component.html',
   styleUrl: './establecimiento.component.css'
 })
 export class EstablecimientoComponent implements OnInit{
+  provinciasEspana:any;
   selectedFile: File | null = null;
   private renderer = inject(Renderer2); // Inyectamos Renderer2 para manejar eventos del DOM
   private elementRef = inject(ElementRef);
@@ -46,6 +48,7 @@ export class EstablecimientoComponent implements OnInit{
   private accesoService = inject(AccesoService);
 
   constructor(private http: HttpClient) {
+    
     // Inicializamos el formulario usando FormBuilder
     this.establecimientoForm = this.formBuilder.group({
       establecimiento: ['', Validators.required],
@@ -59,7 +62,7 @@ export class EstablecimientoComponent implements OnInit{
   }
 
   ngOnInit() {
-    
+    this.provinciasEspana = provinciasEspana;
     this.userId = localStorage.getItem('userId');
 
     if (this.userId) {

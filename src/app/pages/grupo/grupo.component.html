@@ -51,7 +51,14 @@
   
         <mat-form-field>
           <mat-label>Provincia</mat-label>
-          <input matInput formControlName="provincia" />
+          <mat-select formControlName="provincia">
+            @for(provincia of provinciasEspana; track $index){
+              <mat-option value="{{provincia}}">
+                {{ provincia }}
+              </mat-option>
+            }
+            
+          </mat-select>
         </mat-form-field>
   
         <mat-form-field>
